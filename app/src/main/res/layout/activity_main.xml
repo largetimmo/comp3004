@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/topPanel"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="18sp"
-            tools:text= "test" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:layout_alignParentBottom="true">
-        </View>
-    </RelativeLayout>
 
 
     <LinearLayout android:id="@+id/bottom_nav"
@@ -27,22 +12,24 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_alignParentBottom="true">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Recording"
-            android:drawablePadding="3dp"
-            android:gravity="center" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Transaction"
             android:drawablePadding="3dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="Transaction" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:text="Accounts" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -59,7 +46,27 @@
             android:drawablePadding="3dp"
             android:gravity="center"
             android:text="Setting" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recording"
+        android:layout_marginTop="78dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/multiAutoCompleteTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button3"
+        android:layout_marginTop="35dp"
+        android:text="MultiAutoCompleteTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
