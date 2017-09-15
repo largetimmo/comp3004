@@ -7,14 +7,14 @@ package com.comp3004groupx.smartaccount.Core;
 public class Account {
     private int ID;
     private String name;
-    private Type type;
+    private String type;
     private double balance;
-    public Account(String name, Type type, double balance){
+    public Account(String name, String type, double balance){
         this.name = name;
         this.type = type;
         this.balance = balance;
     }
-    public Account(int ID,String name, Type type, double balance){
+    public Account(int ID,String name, String type, double balance){
         this.ID= ID;
         this.name=name;
         this.type=type;
@@ -27,7 +27,7 @@ public class Account {
     public String getName(){
         return name;
     }
-    public Type getType(){
+    public String getType(){
         return type;
     }
     public double getBalance(){
