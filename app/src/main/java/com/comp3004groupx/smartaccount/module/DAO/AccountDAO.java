@@ -76,7 +76,6 @@ public class AccountDAO {
         }
         return flag;
     }
-
     public boolean removeAccount(int id){
         boolean flag = false;
         SQLiteDatabase database = null;
