@@ -15,8 +15,7 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     private final String NAME = "AccountDBHelper";
     private static final String DB_NAME = "ACCOUNT.db";
     private static final int VERSION = 1;
-
-    private AccountDBHelper(Context context){
+    public AccountDBHelper(Context context){
         super(context,DB_NAME,null,VERSION);
     }
 
@@ -32,7 +31,6 @@ public class AccountDBHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(NAME,"WE dont support this");
+        Log.d(NAME, "WE dont support this");
     }
-
 }
