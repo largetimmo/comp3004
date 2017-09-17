@@ -16,7 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.Transaction" />
+        <activity android:name=".view.Transaction"></activity>
+        <activity android:name=".view.Setting"></activity>
+        <activity android:name=".view.Statistics"></activity>
+        <activity android:name=".view.Account"></activity>
     </application>
 
 </manifest>
