@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.comp3004groupx.smartaccount.R;
 /**
- * Created by Owner on 2017-09-16.
+ * Created by devray on 2017-09-16.
  */
 
 
