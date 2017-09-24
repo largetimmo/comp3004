@@ -1,0 +1,11 @@
+Week 1  deveric Guanhong Wu  101014234
+
+This week we talk about the which functions we need finish and which function are option of this project.
+
+I finished the d1 assignment and the slide of presentation.
+
+Also we talk about the structure of SQL.
+
+I created some layouts and learn how to write layout file because I did not write any mobile app before.
+
+Did a simple design of main page's layout.
