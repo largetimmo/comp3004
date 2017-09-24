@@ -19,8 +19,11 @@ public class PurchaseTypeDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlquery = "CREATE TABLE IF NOT EXIST PURCHASETYPE(NAME VARCHAR(20))";
+        String sqlquery = "CREATE TABLE IF NOT EXIST PURCHASETYPE(NAME VARCHAR(20) UNIQUE)";
         db.execSQL(sqlquery);
+        sqlquery  = "INSERT INTO PURCHASETYPE VALUES('Utility')";
+        db.execSQL(sqlquery);
+
     }
 
     @Override

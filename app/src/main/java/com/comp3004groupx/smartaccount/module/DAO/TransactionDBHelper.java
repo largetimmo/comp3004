@@ -19,7 +19,7 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlquery = "CREATE TABLE IF NOT EXIST TRANSACTION(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, DATE DATE, BALANCE REAL, ACCOUNTID INTEGER, NOTE VARCHAR(200)";
+        String sqlquery = "CREATE TABLE IF NOT EXIST TRANSACTION(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, DATE DATE, BALANCE REAL, ACCOUNT VARCHAR(20), NOTE VARCHAR(200), TYPE VARCHAR(20)";
         db.execSQL(sqlquery);
         Log.i(NAME,"on create");
 

@@ -19,8 +19,14 @@ public class AccountTypeDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlquery = "CREATE TABLE IF NOT EXIST ACCOUNTTYPE( NAME VARCHAR(20))";
+        String sqlquery = "CREATE TABLE IF NOT EXIST ACCOUNTTYPE( NAME VARCHAR(20) UNIQUE)";
         db.execSQL(sqlquery);
+        sqlquery = "INSERT INTO ACCOUNTTYPE VALUES(?)";
+        String[] types = {"Cash","Chequing","Saving","Credit Card"};
+        for (String s : types){
+            db.execSQL(s,new Object[]{s});
+        }
+
     }
 
     @Override
