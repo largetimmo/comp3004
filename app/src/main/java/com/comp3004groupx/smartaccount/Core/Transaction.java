@@ -9,8 +9,9 @@ import java.sql.*;
 public class Transaction {
     private int id;
     private Date date;
+    private String type;
     private double amount;
-    private Account account;
+    private String account;
     private String note;
 
     public int getId() {
@@ -25,7 +26,7 @@ public class Transaction {
         return amount;
     }
 
-    public Account getAccount() {
+    public String getAccount() {
         return account;
     }
 
@@ -33,18 +34,24 @@ public class Transaction {
         return note;
     }
 
-    public Transaction(Date date, double amount, Account account, String note) {
+    public String getType() {
+        return type;
+    }
+
+    public Transaction(Date date, double amount, String account, String note, String type) {
         this.date = date;
         this.amount = amount;
         this.account = account;
         this.note = note;
+        this.type = type;
     }
 
-    public Transaction(int id, Date date, double amount, Account account, String note) {
+    public Transaction(int id, Date date, double amount, String account, String note, String type) {
         this.id = id;
         this.date = date;
         this.amount = amount;
         this.account = account;
+        this.type = type;
         this.note = note;
     }
 }
