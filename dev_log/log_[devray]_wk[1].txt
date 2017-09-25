@@ -1,0 +1,14 @@
+Week_1
+101010914
+Runyu Jiang
+
+01
+created several layout files and start learning with "new transaction"'s layout.
+first program on android studio, still learning.
+
+02
+discussed the basic design and data structure with group mamber
+start the UML diagram, it will help us during the dev.
+
+03
+prepared and practiced the project intro presentation.
