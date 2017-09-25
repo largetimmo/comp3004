@@ -1,0 +1,20 @@
+Create and finish Account and Transaction Entity Classes
+    These two classes is for transform data between front-end and back-end easily
+
+Create and finish AccountDBHelper, AccountTypeDBHelper, AutoDescDBHelper, PurchaseTypeDBHelper, TransactionDBHelper
+    Purpose: Create a drive for each tables
+
+Create and finish basic CRUD operation for AccountDAO, AccountTypeDAO, PurchaseTypeDAO, TransactionDAO, AutoDescDAO(NOT finish yet)
+    Purpose: The connection between back-end modules and database.
+
+Discuss and database structures with Eric
+
+Design the databases
+
+Discuss UI design with Ray
+
+Discuss functioning and features with Ray,Eric,Alex
+
+Create DAO class Unit Tests and working on it.
+    Purpose: To test if the methods are working correctly
+
