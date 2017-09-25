@@ -1,3 +1,5 @@
+Junhao Chen----------101010964
+
 Create and finish Account and Transaction Entity Classes
     These two classes is for transform data between front-end and back-end easily
 
