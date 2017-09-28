@@ -3,6 +3,9 @@ GroupProject
 -------------------------------------------------------------------
 -01 working on newTrans class and interface
     -01 spinner finish tonight.
+        https://www.mkyong.com/android/android-spinner-drop-down-list-example/
+        link might be useful.
+        -   ask about references.
     -02 two account list ( one in expanse and one in income )is the unnecessary , update
         later.
     -03 forgot to add "Note" input box. add later.
@@ -31,7 +34,7 @@ GroupProject
 
 mySelf
 -------------------------------------------------------------------
--01 wtf is ArrayAdapter
+-01 ArrayAdapter???
 
 
 
