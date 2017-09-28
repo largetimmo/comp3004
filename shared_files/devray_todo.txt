@@ -1,0 +1,42 @@
+
+GroupProject
+-------------------------------------------------------------------
+-01 working on newTrans class and interface
+    -01 spinner finish tonight.
+    -02 two account list ( one in expanse and one in income )is the unnecessary , update
+        later.
+    -03 forgot to add "Note" input box. add later.
+    -04 button onclick event
+        -01 exp
+        -02 inc
+        -??
+    -05 ask kyle about operation of database.
+        -01 get data
+            -01 for 1 account, 2 expTypes, 3 incTypes spinner
+        -02 set data
+            -01 add multi info into accounts(amount, type, note)
+
+-02 working on newAccount?
+-03 working on accountTab(list)?
+
+
+
+
+
+
+
+
+
+
+
+mySelf
+-------------------------------------------------------------------
+-01 wtf is ArrayAdapter
+
+
+
+
+
+
+
+
