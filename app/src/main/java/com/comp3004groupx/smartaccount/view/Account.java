@@ -15,7 +15,7 @@ public class Account extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account);
-
+        this.setTitle("Accounts");
     }
 }
 
