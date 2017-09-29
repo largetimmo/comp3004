@@ -14,5 +14,6 @@ public class Transaction extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction);
+        this.setTitle("Transaction");
     }
 }
