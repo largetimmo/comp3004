@@ -23,6 +23,15 @@
         <activity android:name=".view.Setting"></activity>
         <activity android:name=".view.Statistics"></activity>
         <activity android:name=".view.Account"></activity>
+        <activity android:name=".view.Account_List"></activity>
+        <activity android:name=".view.Add_Account"></activity>
+
+        <activity android:name=".view.NewTransaction"></activity>
+
+        <activity android:name=".view.Transaction_List_Account"></activity>
+        <activity android:name=".view.Transaction_List_Date"></activity>
+        <activity android:name=".view.Transaction_List_Type"></activity>
+        <activity android:name=".view.View_Transaction"></activity>
     </application>
 
 </manifest>

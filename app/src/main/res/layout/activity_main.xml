@@ -8,41 +8,26 @@
     >
 
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView3"
-        android:layout_width="382dp"
-        android:layout_height="68dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="319dp"
-        android:text="Transaction3"
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="117dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="16dp"
+        android:text="Today Cost"
+        android:textColor="#000000"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp" />
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView4"
-        android:layout_width="382dp"
-        android:layout_height="68dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="387dp"
-        android:text="Transaction4"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
-    <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView2"
-        android:layout_width="382dp"
-        android:layout_height="68dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="251dp"
-        android:text="Transaction2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="253dp"
+        android:layout_height="24dp"
+        android:text="-XXX"
+        app:layout_constraintLeft_toRightOf="@+id/textView19"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
     <LinearLayout android:id="@+id/bottom_nav"
         android:layout_height="56dp"
@@ -57,9 +42,8 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginBottom="0dp">
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.0">
 
         <TextView
             android:id="@+id/textView3"
@@ -101,25 +85,61 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="63dp"
         android:text="Recording"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="101dp"
+        android:layout_marginRight="142dp"
+        android:layout_marginEnd="142dp" />
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView"
-        android:layout_width="382dp"
-        android:layout_height="68dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="183dp"
-        android:text="Transaction1"
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="116dp"
+        android:layout_height="36dp"
+        android:text="Balance"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="267dp"
+        android:layout_height="36dp"
+        android:text="TextView"
+        app:layout_constraintLeft_toRightOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="117dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Today income"
+        android:textColor="#000000"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        android:layout_marginStart="16dp" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="253dp"
+        android:layout_height="24dp"
+        android:text="XXX"
+        app:layout_constraintLeft_toRightOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="270dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
