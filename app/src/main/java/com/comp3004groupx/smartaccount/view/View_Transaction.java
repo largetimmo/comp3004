@@ -13,6 +13,6 @@ public class View_Transaction extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.transaction);
+        setContentView(R.layout.view_transaction);
     }
 }

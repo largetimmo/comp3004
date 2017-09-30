@@ -13,6 +13,6 @@ public class Transaction_List_Date extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.transaction);
+        setContentView(R.layout.transaction_list_date);
     }
 }
