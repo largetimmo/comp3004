@@ -1,0 +1,7 @@
+Week 2  deveric Guanhong Wu  101014234
+
+This week I learn how to use constraint layout. Fix the error of layout files.
+
+Finished draft design of account, activity_main, add_account, transatction, transaction_list_account, transaction_list_date, transaction_list_type, view_transaction files.
+
+Waiting the database to contact.
