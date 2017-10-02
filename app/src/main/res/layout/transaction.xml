@@ -94,13 +94,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.947" />
 
-    <ListView
-        android:layout_width="394dp"
-        android:layout_height="337dp"
-        android:layout_marginBottom="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
     <TextView
         android:id="@+id/textView29"
         android:layout_width="383dp"
@@ -112,4 +105,13 @@
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:layout_width="394dp"
+        android:layout_height="337dp"
+        android:layout_marginBottom="56dp"
+        android:layout_marginLeft="-5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

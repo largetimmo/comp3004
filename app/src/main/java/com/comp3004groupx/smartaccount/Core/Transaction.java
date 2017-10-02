@@ -1,7 +1,5 @@
 package com.comp3004groupx.smartaccount.Core;
 
-import java.sql.*;
-
 /**
  * Created by chenjunhao on 2017/9/15.
  */
