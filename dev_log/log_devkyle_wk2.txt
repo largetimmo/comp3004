@@ -1,0 +1,9 @@
+Junhao Chen -------------101010964
+
+Finish the rest of the DAO classes
+
+Use Unit test to test all dao classes
+
+Dubug all DAO classes, find the database open helper is limited to one. I was created five helper classes for different table. It caused NullPointerException when the program needs get writable or readable databases.
+
+Remove unnecessary Database Helper classes

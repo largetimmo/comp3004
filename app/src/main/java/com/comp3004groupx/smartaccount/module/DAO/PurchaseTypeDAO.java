@@ -12,16 +12,16 @@ import java.util.List;
  */
 
 public class PurchaseTypeDAO {
-    PurchaseTypeDBHelper purchaseTypeDBHelper = null;
+    DBHelper dbHelper;
+    SQLiteDatabase database;
     public PurchaseTypeDAO(Context context){
-        purchaseTypeDBHelper = new PurchaseTypeDBHelper(context);
+        dbHelper = new DBHelper(context);
+        database = dbHelper.getWritableDatabase();
     }
     public List<String> getalltypes(){
         List<String> alltypes = new ArrayList<>();
         String sqlquery = "SELECT * FROM PURCHASETYPE";
-        SQLiteDatabase database = null;
         try {
-            database = purchaseTypeDBHelper.getReadableDatabase();
             Cursor cursor = database.rawQuery(sqlquery,null);
             while (cursor.moveToNext()){
                 String name = cursor.getString(cursor.getColumnIndex("NAME"));
@@ -37,9 +37,7 @@ public class PurchaseTypeDAO {
     public boolean addType(String type){
         Boolean flag = false;
         String sqlquery = "INSERT INTO PURCHASETYPE(NAME) VALUES(?)";
-        SQLiteDatabase database = null;
         try {
-            database = purchaseTypeDBHelper.getWritableDatabase();
             database.execSQL(sqlquery,new Object[]{type});
             flag= true;
         }catch (Exception e){
@@ -52,9 +50,7 @@ public class PurchaseTypeDAO {
     public boolean removeType(String type){
         Boolean flag = false;
         String sqlquery = "DELETE FROM PURCHASETYPE WHERE NAME = ?";
-        SQLiteDatabase database = null;
         try {
-            database = purchaseTypeDBHelper.getWritableDatabase();
             database.execSQL(sqlquery,new Object[]{type});
             flag = true;
         }catch (Exception e){

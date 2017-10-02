@@ -10,23 +10,21 @@ import com.comp3004groupx.smartaccount.Core.Transaction;
  */
 
 public class AutoDescDAO {
-    AutoDescDBHelper autoDescDBHelper = null;
+    DBHelper dbHelper;
+    SQLiteDatabase database;
     public AutoDescDAO(Context context){
-        autoDescDBHelper = new AutoDescDBHelper(context);
+        dbHelper = new DBHelper(context);
+        database = dbHelper.getWritableDatabase();
     }
     public boolean addAutoDesc(Transaction transaction){
         boolean flag = false;
         String sqlquery = "INSERT INTO AUTODESC VALUES(AMOUNT,DATE,PUCHASETYPE,ACCOUNT,NOTE) VALUES (?,?,?,?,?)";
-        SQLiteDatabase database = null;
         try{
-            database = autoDescDBHelper.getWritableDatabase();
             database.execSQL(sqlquery ,new Object[]{transaction.getAmount(),transaction.getDate(),transaction.getType(),transaction.getAccount(),transaction.getNote()});
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            database.close();
-        }
+        }   database.close();
         return flag;
     }
 

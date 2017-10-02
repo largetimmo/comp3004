@@ -18,17 +18,6 @@ public class Add_Account extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account);
         this.setTitle("Add a New Account");
-        Button ok = (Button) findViewById(R.id.button);
-        EditText accountName = (EditText)findViewById(R.id.editText);
-        EditText password = (EditText)findViewById(R.id.editText2);
-        EditText confirmPassword = (EditText)findViewById(R.id.editText3);
-        /*ok.setOnClickListener(
-                new View.OnClickListener()
-                {
-                    public void onClick(View view)
-                    {
 
-                    }
-                });*/
     }
 }
