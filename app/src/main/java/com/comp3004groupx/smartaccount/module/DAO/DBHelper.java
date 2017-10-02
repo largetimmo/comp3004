@@ -35,13 +35,16 @@ public class DBHelper extends SQLiteOpenHelper {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         sqlquery = "CREATE TABLE IF NOT EXISTS AUTODESC(ID INTEGER PRIMARY KEY AUTOINCREMENT,AMOUNT REAL, DATE DATE, PURCHASETYPE VARCHAR(20), ACCOUNT VARCHAR(20), NOTE VARCHAR(200))";
         db.execSQL(sqlquery);
         sqlquery = "CREATE TABLE IF NOT EXISTS PURCHASETYPE(NAME VARCHAR(20) UNIQUE)";
         db.execSQL(sqlquery);
         sqlquery  = "INSERT INTO PURCHASETYPE VALUES('Utility')";
-        db.execSQL(sqlquery);
+        try {
+            db.execSQL(sqlquery);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         sqlquery = "CREATE TABLE IF NOT EXISTS TRANS(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, DATE DATE, BALANCE REAL, ACCOUNT VARCHAR(20), NOTE VARCHAR(200), TYPE VARCHAR(20))";
         db.execSQL(sqlquery);
     }
