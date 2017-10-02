@@ -1,6 +1,7 @@
 package com.comp3004groupx.smartaccount.module.DAO;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class AccountDAO {
     private DBHelper DBHelper;
     private SQLiteDatabase database;
+
     public AccountDAO(Context context){
         DBHelper = new DBHelper(context);
         database = DBHelper.getWritableDatabase();
@@ -27,12 +29,7 @@ public class AccountDAO {
         try{
             Cursor cursor = database.rawQuery(sqlquery,null);
             while (cursor.moveToNext()){
-                int id = cursor.getInt(cursor.getColumnIndex("ID"));
-                String name = cursor.getString(cursor.getColumnIndex("NAME"));
-                String type = cursor.getString(cursor.getColumnIndex("TYPE"));
-                double balance = cursor.getDouble(cursor.getColumnIndex("BALANCE"));
-                Account account = new Account(id,name,type,balance);
-                allaccount.add(account);
+                allaccount.add(parseAccount(cursor));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -40,6 +37,31 @@ public class AccountDAO {
         return allaccount;
     }
 
+    public Account getAccount(String name){
+        String sqlquery = "SELECT * FROM ACCOUNT WHERE NAME = ?";
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,new String[]{name});
+            if(cursor.moveToNext()){
+                return parseAccount(cursor);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Account getAccount(int id){
+        String sqlquery = "SELECT * FROM ACCOUNT WHERE ID = ?";
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,new String[]{Integer.toString(id)});
+            if (cursor.moveToNext()){
+                return parseAccount(cursor);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public boolean addAccount(Account account) {
         boolean flag = false;
@@ -75,5 +97,12 @@ public class AccountDAO {
         }
         return flag;
     }
-
+    private Account parseAccount(Cursor cursor){
+        int id = cursor.getInt(cursor.getColumnIndex("ID"));
+        String name = cursor.getString(cursor.getColumnIndex("NAME"));
+        String type = cursor.getString(cursor.getColumnIndex("TYPE"));
+        double balance = cursor.getDouble(cursor.getColumnIndex("BALANCE"));
+        Account account = new Account(id,name,type,balance);
+        return account;
+    }
 }

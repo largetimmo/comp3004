@@ -22,15 +22,20 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(NAME,"On Create");
-        String sqlquery = "CREATE TABLE IF NOT EXISTS ACCOUNT(NAME VARCHAR(20),BALANCE REAL,TYPE INTEGER,ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT)";
+        String sqlquery = "CREATE TABLE IF NOT EXISTS ACCOUNT(NAME VARCHAR(20) UNIQUE ,BALANCE REAL,TYPE INTEGER,ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT)";
         db.execSQL(sqlquery);
         sqlquery = "CREATE TABLE IF NOT EXISTS ACCOUNTTYPE( NAME VARCHAR(20) UNIQUE)";
         db.execSQL(sqlquery);
         sqlquery = "INSERT INTO ACCOUNTTYPE VALUES(?)";
         String[] types = {"Cash","Chequing","Saving","Credit Card"};
-        for (String s : types){
-            db.execSQL(sqlquery,new Object[]{s});
+        try {
+            for (String s : types){
+                db.execSQL(sqlquery,new Object[]{s});
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
         sqlquery = "CREATE TABLE IF NOT EXISTS AUTODESC(ID INTEGER PRIMARY KEY AUTOINCREMENT,AMOUNT REAL, DATE DATE, PURCHASETYPE VARCHAR(20), ACCOUNT VARCHAR(20), NOTE VARCHAR(200))";
         db.execSQL(sqlquery);
         sqlquery = "CREATE TABLE IF NOT EXISTS PURCHASETYPE(NAME VARCHAR(20) UNIQUE)";
