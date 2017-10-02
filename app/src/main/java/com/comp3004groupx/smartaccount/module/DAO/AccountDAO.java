@@ -14,19 +14,18 @@ import java.util.List;
  */
 
 public class AccountDAO {
-    private AccountDBHelper accountDBHelper = null;
-
+    private DBHelper DBHelper;
+    private SQLiteDatabase database;
     public AccountDAO(Context context){
-        accountDBHelper = new AccountDBHelper(context);
+        DBHelper = new DBHelper(context);
+        database = DBHelper.getWritableDatabase();
     }
 
-    public List<Account> getAllAccount(){
-        List<Account> allaccount = new ArrayList<>();
+    public ArrayList<Account> getAllAccount(){
+        ArrayList<Account> allaccount = new ArrayList<>();
         String sqlquery = "SELECT * FROM ACCOUNT";
-        SQLiteDatabase db = null;
         try{
-            db = accountDBHelper.getReadableDatabase();
-            Cursor cursor = db.rawQuery(sqlquery,null);
+            Cursor cursor = database.rawQuery(sqlquery,null);
             while (cursor.moveToNext()){
                 int id = cursor.getInt(cursor.getColumnIndex("ID"));
                 String name = cursor.getString(cursor.getColumnIndex("NAME"));
@@ -37,8 +36,6 @@ public class AccountDAO {
             }
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            db.close();
         }
         return allaccount;
     }
@@ -46,47 +43,35 @@ public class AccountDAO {
 
     public boolean addAccount(Account account) {
         boolean flag = false;
-        SQLiteDatabase database = null;
-        String sqlquery = "INSERT INTO ACCOUNT (NAME,TYPE,BALANCE) VALUES(?,?,?,?,?)";
+        String sqlquery = "INSERT INTO ACCOUNT (NAME,TYPE,BALANCE) VALUES(?,?,?)";
         try {
-            database = accountDBHelper.getWritableDatabase();
             database.execSQL(sqlquery,new Object[]{account.getName(),account.getType(),account.getBalance()});
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            database.close();
         }
         return flag;
     }
     public boolean updateAccount(Account account){
         boolean flag = false;
         String sqlquery = "UPDATE ACCOUNT SET NAME = ? TYPE = ? WHERE ID = ?";
-        SQLiteDatabase database = null;
         try {
-            database = accountDBHelper.getWritableDatabase();
             database.execSQL(sqlquery,new Object[]{account.getName(),account.getType(),account.getID()});
             flag = true;
 
-        }catch (Exception e){
+        }catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            database.close();
         }
         return flag;
     }
     public boolean removeAccount(int id){
         boolean flag = false;
-        SQLiteDatabase database = null;
         String sqlquery = "DELETE FROM ACCOUNT WHWRE ID = ?";
         try {
-            database = accountDBHelper.getWritableDatabase();
             database.execSQL(sqlquery,new Object[]{id});
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            database.close();
         }
         return flag;
     }

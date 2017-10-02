@@ -12,16 +12,16 @@ import java.util.List;
  */
 
 public class AccountTypeDAO  {
-    private AccountTypeDBHelper accountTypeDBHelper = null;
+    private DBHelper DBHelper = null;
+    private SQLiteDatabase database;
     public AccountTypeDAO(Context context){
-        accountTypeDBHelper = new AccountTypeDBHelper(context);
+        DBHelper = new DBHelper(context);
+        database = DBHelper.getWritableDatabase();
     }
     public List<String> getAllType(){
         List<String> alltypes = new ArrayList<>();
         String sqlquery = "SELECT * FROM ACCOUNTTYPE";
-        SQLiteDatabase database = null;
         try{
-            database = accountTypeDBHelper.getReadableDatabase();
             Cursor cursor = database.rawQuery(sqlquery,null);
             if(cursor.getCount() == 0) {
                 addTypes();
@@ -40,9 +40,7 @@ public class AccountTypeDAO  {
     }
     private void addTypes(){
         String sqlquery = "INSERT INTO ACCOUNTTYPE(NAME) VALUES(?)";
-        SQLiteDatabase database = null;
         try{
-            database = accountTypeDBHelper.getWritableDatabase();
             database.execSQL(sqlquery,new Object[]{"Cash"});
             database.execSQL(sqlquery,new Object[]{"Chequing"});
             database.execSQL(sqlquery,new Object[]{"Saving"});

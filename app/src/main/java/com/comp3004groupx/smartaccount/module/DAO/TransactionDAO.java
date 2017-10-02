@@ -17,16 +17,16 @@ import java.util.List;
  */
 
 public class TransactionDAO {
-    TransactionDBHelper transactionDBHelper = null;
+    DBHelper dbHelper;
+    SQLiteDatabase database;
     public TransactionDAO(Context context){
-        transactionDBHelper = new TransactionDBHelper(context);
+        dbHelper = new DBHelper(context);
+        database = dbHelper.getWritableDatabase();
     }
     public List<Transaction> getAllTransaction(){
         List<Transaction> allTrans = new ArrayList<>();
         String sqlquery = "SELECT * FROM TRANSACTION ORDER BY ID ASC";
-        SQLiteDatabase database = null;
         try{
-            database = transactionDBHelper.getReadableDatabase();
             Cursor cursor = database.rawQuery(sqlquery,null);
             while (cursor.moveToNext()){
                 int id = cursor.getInt(cursor.getColumnIndex("ID"));
@@ -50,9 +50,7 @@ public class TransactionDAO {
     public boolean addTrans(Transaction transaction){
         Boolean flag = false;
         String sqlquery = "INSERT INTO TRANSACTION(DATE,BALANCE,ACCOUNT,NOTE,TYPE) VALUES(?,?,?,?,?)";
-        SQLiteDatabase database = null;
         try{
-            database = transactionDBHelper.getWritableDatabase();
             database.execSQL(sqlquery,new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getAccount(),transaction.getNote(),transaction.getType()});
             flag=true;
         }catch (Exception e){
@@ -65,9 +63,7 @@ public class TransactionDAO {
     public boolean modifyTrans(Transaction transaction){
         Boolean flag = false;
         String sqlquery = "UPDATE TRANSACTION SET DATE = ?, BALANCE = ?, ACCOUNT =?, NOTE = ? TYPE = ? WHERE ID = ? ";
-        SQLiteDatabase database = null;
         try{
-            database = transactionDBHelper.getWritableDatabase();
             database.execSQL(sqlquery, new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getNote(),transaction.getType(),transaction.getId()});
             flag = true;
         }catch (Exception e){
@@ -80,9 +76,7 @@ public class TransactionDAO {
     public boolean removeTrans(int id){
         Boolean flag = false;
         String sqlquery = "DELETE FROM TRANSACTION WHERE ID = ?";
-        SQLiteDatabase database = null;
         try {
-            database = transactionDBHelper.getWritableDatabase();
             database.execSQL(sqlquery,new Object[]{id});
             flag = true;
         }catch (Exception e){
