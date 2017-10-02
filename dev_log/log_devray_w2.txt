@@ -1,0 +1,13 @@
+Week_1
+101010914
+Runyu Jiang
+
+01
+finish the layout of NewTransaction.
+
+02
+finish most of the code of Class NewTransaction.
+database part will be added in the future after kyle finish the database.
+
+03
+trying to fix the problem on tab host, many hours on it still not work.
