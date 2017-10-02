@@ -20,10 +20,5 @@ public class Transaction extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction);
         this.setTitle("Transaction");
-        AccountDAO accountDAO = new AccountDAO(getApplicationContext());
-        accountDAO.addAccount(new Account("TEST","TEST",0.00));
-        String name = accountDAO.getAllAccount().get(0).getName();
-        TextView textView = (TextView) findViewById(R.id.textView15);
-        textView.setText(name);
     }
 }
