@@ -1,0 +1,3 @@
+Sep 29th
+	Add some functions and build UI for Add_Account.
+	Give titles to Account, Transaction, Setting, and Statistics.
