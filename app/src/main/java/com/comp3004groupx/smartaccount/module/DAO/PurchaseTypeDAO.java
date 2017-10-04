@@ -29,8 +29,6 @@ public class PurchaseTypeDAO {
             }
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            database.close();
         }
         return alltypes;
     }
@@ -42,8 +40,6 @@ public class PurchaseTypeDAO {
             flag= true;
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            database.close();
         }
         return flag;
     }
@@ -55,8 +51,6 @@ public class PurchaseTypeDAO {
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            database.close();
         }
         return flag;
     }

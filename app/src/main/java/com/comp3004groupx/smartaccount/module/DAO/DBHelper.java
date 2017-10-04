@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.comp3004groupx.smartaccount.Core.Account;
-
 /**
  * Created by chenjunhao on 2017/9/14.
  */
