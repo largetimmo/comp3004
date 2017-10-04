@@ -4,11 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,29 +21,19 @@ public class TransactionDAO {
         dbHelper = new DBHelper(context);
         database = dbHelper.getWritableDatabase();
     }
+    public ArrayList<Transaction> getTopTrans(int num){
+        String sqlquery = "SELECT * FROM TRANS ORDER BY DATE DESC LIMIT ?";
+        return acquireData(sqlquery,new String[]{Integer.toString(num)});
+    }
+    public ArrayList<Transaction> getAllTransThisMonth(int year, int month){
+        return acquireData("SELECT * FROM TRANS WHERE DATE LIKE ?-?% ORDER BY ID",new String[]{Integer.toString(year),Integer.toString(month)});
+    }
+    public ArrayList<Transaction> getOneDayTrans(int year, int month, int day){
+        return acquireData("SELECT * FROM TRANS WHERE DATE = ?-?-? ORDER BY ID",new String[]{Integer.toString(year),Integer.toString(month),Integer.toString(day)});
+    }
     public List<Transaction> getAllTransaction(){
-        List<Transaction> allTrans = new ArrayList<>();
         String sqlquery = "SELECT * FROM TRANS ORDER BY ID ASC";
-        try{
-            Cursor cursor = database.rawQuery(sqlquery,null);
-            while (cursor.moveToNext()){
-                int id = cursor.getInt(cursor.getColumnIndex("ID"));
-                String account = cursor.getString(cursor.getColumnIndex("ACCOUNT"));
-                String date_string = cursor.getString(cursor.getColumnIndex("DATE"));
-                Date date = new Date(date_string);
-                Double balance = cursor.getDouble(cursor.getColumnIndex("BALANCE"));
-                String note = cursor.getString(cursor.getColumnIndex("NOTE"));
-                String type = cursor.getString(cursor.getColumnIndex("TYPE"));
-                Transaction transaction = new Transaction(id,date,balance,account,note,type);
-                allTrans.add(transaction);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            database.close();
-        }
-        return allTrans;
+        return acquireData(sqlquery,null);
     }
     public boolean addTrans(Transaction transaction){
         Boolean flag = false;
@@ -55,8 +43,6 @@ public class TransactionDAO {
             flag=true;
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            database.close();
         }
         return flag;
     }
@@ -68,8 +54,6 @@ public class TransactionDAO {
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            database.close();
         }
         return flag;
     }
@@ -81,9 +65,32 @@ public class TransactionDAO {
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            database.close();
         }
         return flag;
+    }
+
+    private ArrayList<Transaction> acquireData(String sqlquery, String[] paras){
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,paras);
+            while (cursor.moveToNext()){
+                transactions.add(parseTrans(cursor));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return transactions;
+    }
+
+    private Transaction parseTrans(Cursor cursor){
+        int id = cursor.getInt(cursor.getColumnIndex("ID"));
+        String account = cursor.getString(cursor.getColumnIndex("ACCOUNT"));
+        String date_string = cursor.getString(cursor.getColumnIndex("DATE"));
+        Date date = new Date(date_string);
+        Double balance = cursor.getDouble(cursor.getColumnIndex("BALANCE"));
+        String note = cursor.getString(cursor.getColumnIndex("NOTE"));
+        String type = cursor.getString(cursor.getColumnIndex("TYPE"));
+        Transaction transaction = new Transaction(id,date,balance,account,note,type);
+        return transaction;
     }
 }
