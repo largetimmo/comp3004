@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Button;
 
 import com.comp3004groupx.smartaccount.R;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         TextView accounts = (TextView)findViewById(R.id.textView4);
         TextView setting = (TextView)findViewById(R.id.textView);
         TextView statistics = (TextView)findViewById(R.id.textView2);
+        Button newTrans = (Button) findViewById(R.id.button3);
         transaction.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), Transaction.class);
@@ -42,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
         statistics.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), Statistics.class);
+                startActivity(intent);
+            }
+        });
+        newTrans.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(v.getContext(), NewTransaction.class);
                 startActivity(intent);
             }
         });

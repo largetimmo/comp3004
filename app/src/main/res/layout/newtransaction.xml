@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TabHost
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -38,142 +39,104 @@
                     <EditText
                         android:id="@+id/expenseAmount"
                         android:layout_width="match_parent"
-                        android:layout_height="99dp"
+                        android:layout_height="100dp"
                         android:layout_weight="0.02"
                         android:ems="10"
-                        android:gravity="center"
-                        android:inputType="textPersonName"
-                        android:text="Amount"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="false"
+                        android:singleLine="true"
+                        android:text="0.00"
+                        android:textAlignment="textEnd"
                         android:textColor="#AAA"
                         android:textSize="50sp" />
 
                     <!--translist-->
-                    <LinearLayout
+                    <Spinner
+                        android:id="@+id/expenseTypeSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/expenseTypeText"
-                            android:layout_width="120dp"
-                            android:layout_height="70dp"
-                            android:text="Type"
-                            android:textColor="#AAA"
-                            android:textSize="50sp" />
-
-                        <Spinner
-                            android:id="@+id/expenseTypeSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp" />
-
-                    </LinearLayout>
+                        android:layout_height="60dp"
+                        android:layout_weight="0.02" />
 
                     <!--accountlist-->
-                    <LinearLayout
+                    <Spinner
+                        android:id="@+id/expenseAccountSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:orientation="horizontal">
+                        android:layout_height="60dp"
+                        android:layout_weight="0.02" />
 
-                        <TextView
-                            android:id="@+id/expenseAccountText"
-                            android:layout_width="120dp"
-                            android:layout_height="70dp"
-                            android:text="Type"
-                            android:textColor="#AAA"
-                            android:textSize="50sp" />
+                    <!-- add income note box-->
 
-                        <Spinner
-                            android:id="@+id/expenseAccountSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp" />
-
-                    </LinearLayout>
-
-                    <!--TODO add expense note box-->
+                    <EditText
+                        android:id="@+id/expenseNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:ems="10"
+                        android:inputType="textMultiLine"
+                        android:text="expense notes" />
 
                     <!--addexpense-->
                     <Button
                         android:id="@+id/addExpenseButton"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.09"
+                        android:layout_height="60dp"
                         android:text="ADD EXPENSE" />
 
                 </LinearLayout>
+
 
                 <!--income-->
                 <LinearLayout
                     android:id="@+id/income"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
 
                     <!--enternumber-->
                     <EditText
                         android:id="@+id/incomeAmount"
                         android:layout_width="match_parent"
-                        android:layout_height="99dp"
+                        android:layout_height="100dp"
                         android:layout_weight="0.02"
                         android:ems="10"
-                        android:gravity="center"
-                        android:inputType="textPersonName"
-                        android:text="Amount"
+                        android:inputType="numberDecimal"
+                        android:selectAllOnFocus="false"
+                        android:singleLine="true"
+                        android:text="0.00"
+                        android:textAlignment="textEnd"
                         android:textColor="#AAA"
                         android:textSize="50sp" />
 
                     <!--transtype-->
-                    <LinearLayout
+                    <Spinner
+                        android:id="@+id/incomeTypeSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.02"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/incomeTypeText"
-                            android:layout_width="120dp"
-                            android:layout_height="70dp"
-                            android:text="Type"
-                            android:textColor="#AAA"
-                            android:textSize="50sp" />
-
-                        <Spinner
-                            android:id="@+id/incomeTypeSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp" />
-
-                    </LinearLayout>
+                        android:layout_height="60dp"
+                        android:layout_weight="0.02" />
 
                     <!--accounttype-->
-                    <LinearLayout
+                    <Spinner
+                        android:id="@+id/incomeAccountSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.02"
-                        android:orientation="horizontal">
+                        android:layout_height="60dp"
+                        android:layout_weight="0.02" />
 
-                        <TextView
-                            android:id="@+id/incomeAcountText"
-                            android:layout_width="120dp"
-                            android:layout_height="70dp"
-                            android:text="Type"
-                            android:textColor="#AAA"
-                            android:textSize="50sp" />
+                    <!-- add income note box-->
 
-                        <Spinner
-                            android:id="@+id/incomeAccountSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            android:layout_weight="1" />
-
-                    </LinearLayout>
-
-                    <!--TODO add income note box-->
+                    <EditText
+                        android:id="@+id/incomeNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:ems="10"
+                        android:inputType="textMultiLine"
+                        android:text="income notes" />
 
                     <!--addincome-->
                     <Button
                         android:id="@+id/addIncomeButton"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.02"
+                        android:layout_height="60dp"
                         android:text="ADD INCOME" />
 
                 </LinearLayout>
