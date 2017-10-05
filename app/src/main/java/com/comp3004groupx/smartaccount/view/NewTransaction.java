@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.EditText;
 import android.widget.ArrayAdapter;
+import android.widget.TabHost;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -49,6 +50,21 @@ public class NewTransaction extends AppCompatActivity {
         addIncome();
 
 
+        TabHost host = (TabHost)findViewById(R.id.tabs);
+        host.setup();
+
+        //expense tab
+        TabHost.TabSpec spec = host.newTabSpec("Tab Expense");
+        spec.setContent(R.id.expense);
+        spec.setIndicator("Eab Expense");
+        host.addTab(spec);
+
+        //income tab
+        spec = host.newTabSpec("Tab Income");
+        spec.setContent(R.id.income);
+        spec.setIndicator("Tab Income");
+        host.addTab(spec);
+
     }
 
     public void setUpExpenseSpinner() {
@@ -65,18 +81,18 @@ public class NewTransaction extends AppCompatActivity {
 //        find ArrayAdapter online, don't really know how to work, leave to future
 
 //        setup account spinner
-        accountList.add("list 1");
-        accountList.add("list 2");
-        accountList.add("list 3");
+        accountList.add("EA list 1");
+        accountList.add("EA list 2");
+        accountList.add("EA list 3");
         ArrayAdapter<String> accountDataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, accountList);
         accountDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         expAccountSpinner.setAdapter(accountDataAdapter);
 
 //        setup type spinner
-        typeList.add("list 1");
-        typeList.add("list 2");
-        typeList.add("list 3");
+        typeList.add("ET list 1");
+        typeList.add("ET list 2");
+        typeList.add("ET list 3");
         ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, typeList);
         typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -113,21 +129,24 @@ public class NewTransaction extends AppCompatActivity {
 //        TODO (income)ask kyle about how to access database, add account to list
 
 
+
+        //TODO: clear number when user tap text edit.
+
 //        find ArrayAdapter online, don't really know how to work, leave to future
 
 //        setup account spinner
-        accountList.add("list 1");
-        accountList.add("list 2");
-        accountList.add("list 3");
+        accountList.add("IA list 1");
+        accountList.add("IA list 2");
+        accountList.add("IA list 3");
         ArrayAdapter<String> accountDataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, accountList);
         accountDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         incAccountSpinner.setAdapter(accountDataAdapter);
 
 //        setup type spinner
-        typeList.add("list 1");
-        typeList.add("list 2");
-        typeList.add("list 3");
+        typeList.add("IT list 1");
+        typeList.add("IT list 2");
+        typeList.add("IT list 3");
         ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, typeList);
         typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
