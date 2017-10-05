@@ -1,0 +1,9 @@
+Junhao Chen ---------- 101010964
+
+Add more methods in AutoDescDAO class
+
+fix minor bugs in DBHelper
+
+fix incorrect setting and element id in layout file
+
+write and update DAO classes API file
