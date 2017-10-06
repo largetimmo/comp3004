@@ -13,12 +13,9 @@ import java.util.ArrayList;
  * Created by chenjunhao on 2017/9/15.
  */
 
-public class AutoDescDAO {
-    DBHelper dbHelper;
-    SQLiteDatabase database;
+public class AutoDescDAO extends AbstractDAO {
     public AutoDescDAO(Context context){
-        dbHelper = new DBHelper(context);
-        database = dbHelper.getWritableDatabase();
+        super(context);
     }
     public boolean addAutoDesc(Transaction transaction){
         boolean flag = false;

@@ -11,15 +11,12 @@ import java.util.List;
  * Created by chenjunhao on 2017/9/15.
  */
 
-public class PurchaseTypeDAO {
-    DBHelper dbHelper;
-    SQLiteDatabase database;
+public class PurchaseTypeDAO extends AbstractDAO{
     public PurchaseTypeDAO(Context context){
-        dbHelper = new DBHelper(context);
-        database = dbHelper.getWritableDatabase();
+        super(context);
     }
-    public List<String> getalltypes(){
-        List<String> alltypes = new ArrayList<>();
+    public ArrayList<String> getalltypes(){
+        ArrayList<String> alltypes = new ArrayList<>();
         String sqlquery = "SELECT * FROM PURCHASETYPE";
         try {
             Cursor cursor = database.rawQuery(sqlquery,null);

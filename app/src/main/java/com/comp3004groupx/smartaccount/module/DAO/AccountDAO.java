@@ -14,15 +14,10 @@ import java.util.List;
  * Created by chenjunhao on 2017/9/14.
  */
 
-public class AccountDAO {
-    private DBHelper DBHelper;
-    private SQLiteDatabase database;
-
+public class AccountDAO extends AbstractDAO{
     public AccountDAO(Context context){
-        DBHelper = new DBHelper(context);
-        database = DBHelper.getWritableDatabase();
+        super(context);
     }
-
     public ArrayList<Account> getAllAccount(){
         ArrayList<Account> allaccount = new ArrayList<>();
         String sqlquery = "SELECT * FROM ACCOUNT";
