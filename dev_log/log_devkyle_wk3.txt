@@ -2,6 +2,8 @@ Junhao Chen ---------- 101010964
 
 Add more methods in AutoDescDAO class
 
+add more methods and optimize structure in TransactionDAO class
+
 fix minor bugs in DBHelper
 
 fix incorrect setting and element id in layout file

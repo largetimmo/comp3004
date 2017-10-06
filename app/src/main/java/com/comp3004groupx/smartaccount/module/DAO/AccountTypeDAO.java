@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +12,12 @@ import java.util.List;
  * Created by chenjunhao on 2017/9/15.
  */
 
-public class AccountTypeDAO  {
-    private DBHelper DBHelper = null;
-    private SQLiteDatabase database;
+public class AccountTypeDAO  extends AbstractDAO{
     public AccountTypeDAO(Context context){
-        DBHelper = new DBHelper(context);
-        database = DBHelper.getWritableDatabase();
+        super(context);
     }
-    public List<String> getAllType(){
-        List<String> alltypes = new ArrayList<>();
+    public ArrayList<String> getAllType(){
+        ArrayList<String> alltypes = new ArrayList<>();
         String sqlquery = "SELECT * FROM ACCOUNTTYPE";
         try{
             Cursor cursor = database.rawQuery(sqlquery,null);

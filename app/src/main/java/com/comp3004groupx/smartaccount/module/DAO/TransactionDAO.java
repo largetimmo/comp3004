@@ -2,24 +2,19 @@ package com.comp3004groupx.smartaccount.module.DAO;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by chenjunhao on 2017/9/15.
  */
 
-public class TransactionDAO {
-    DBHelper dbHelper;
-    SQLiteDatabase database;
+public class TransactionDAO extends AbstractDAO{
     public TransactionDAO(Context context){
-        dbHelper = new DBHelper(context);
-        database = dbHelper.getWritableDatabase();
+        super(context);
     }
     public ArrayList<Transaction> getTopTrans(int num){
         String sqlquery = "SELECT * FROM TRANS ORDER BY DATE DESC LIMIT ?";
@@ -31,7 +26,7 @@ public class TransactionDAO {
     public ArrayList<Transaction> getOneDayTrans(int year, int month, int day){
         return acquireData("SELECT * FROM TRANS WHERE DATE = ?-?-? ORDER BY ID",new String[]{Integer.toString(year),Integer.toString(month),Integer.toString(day)});
     }
-    public List<Transaction> getAllTransaction(){
+    public ArrayList<Transaction> getAllTransaction(){
         String sqlquery = "SELECT * FROM TRANS ORDER BY ID ASC";
         return acquireData(sqlquery,null);
     }
@@ -81,7 +76,6 @@ public class TransactionDAO {
         }
         return transactions;
     }
-
     private Transaction parseTrans(Cursor cursor){
         int id = cursor.getInt(cursor.getColumnIndex("ID"));
         String account = cursor.getString(cursor.getColumnIndex("ACCOUNT"));

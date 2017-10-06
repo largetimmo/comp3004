@@ -13,7 +13,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private final String NAME = "DBHelper";
     private static final String DB_NAME = "SmartAccountDatabase.db";
     private static final int VERSION = 1;
-    public DBHelper(Context context){
+    protected DBHelper(Context context){
         super(context,DB_NAME,null,VERSION);
     }
 
@@ -36,6 +36,8 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlquery = "CREATE TABLE IF NOT EXISTS AUTODESC(ID INTEGER PRIMARY KEY AUTOINCREMENT,AMOUNT REAL, DATE DATE, PURCHASETYPE VARCHAR(20), ACCOUNT VARCHAR(20), NOTE VARCHAR(200))";
         db.execSQL(sqlquery);
         sqlquery = "CREATE TABLE IF NOT EXISTS PURCHASETYPE(NAME VARCHAR(20) UNIQUE)";
+        db.execSQL(sqlquery);
+        sqlquery = "CREATE TABLE IF NOT EXISTS INCOMETYPE(NAME VARCHAR(20) UNIQUE)";
         db.execSQL(sqlquery);
         sqlquery  = "INSERT INTO PURCHASETYPE VALUES('Utility')";
         try {
