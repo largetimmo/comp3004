@@ -15,6 +15,9 @@ import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 
 public class Transaction extends AppCompatActivity {
 
+    public Transaction(Date currDate, Double amount, String accountName, String note, String type) {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

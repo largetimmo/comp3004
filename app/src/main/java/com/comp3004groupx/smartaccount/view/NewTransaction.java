@@ -1,23 +1,30 @@
 package com.comp3004groupx.smartaccount.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-//import android.provider.Settings; 这他妈是什么玩意
-
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.EditText;
 import android.widget.ArrayAdapter;
 import android.widget.TabHost;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
 
+import com.comp3004groupx.smartaccount.Core.Transaction;
+import com.comp3004groupx.smartaccount.Core.Date;
+import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.R;
-
+import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
+import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
+import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
 /**
  * Created by devray on 2017-09-16.
@@ -27,138 +34,252 @@ import com.comp3004groupx.smartaccount.R;
 public class NewTransaction extends AppCompatActivity {
 
 
+    AccountDAO accounts;
+    PurchaseTypeDAO purchaseTypeList;
+
+    TabHost host;
+
     Button expButton;
-    EditText expText;
+    EditText expAmount;
     Spinner expAccountSpinner;
     Spinner expTypeSpinner;
+    EditText expNote;
 
     Button incButton;
-    EditText incText;
+    EditText incAmount;
     Spinner incAccountSpinner;
     Spinner incTypeSpinner;
-
+    EditText incNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.newtransaction);
+
+        setupTabHost();
+        clearDefaultValue();
 
         setUpExpenseSpinner();
         addExpense();
 
         setUpIncomeSpinner();
         addIncome();
+    }
 
-
-        TabHost host = (TabHost)findViewById(R.id.tabs);
+    //    setup----------------------------------------------------------------------------------------------------------------------------------
+    public void setupTabHost() {
+        host = (TabHost) findViewById(R.id.tabs);
         host.setup();
 
         //expense tab
-        TabHost.TabSpec spec = host.newTabSpec("Tab Expense");
+        TabHost.TabSpec spec = host.newTabSpec("Expense");
         spec.setContent(R.id.expense);
-        spec.setIndicator("Eab Expense");
+        spec.setIndicator("Expense");
         host.addTab(spec);
 
         //income tab
-        spec = host.newTabSpec("Tab Income");
+        spec = host.newTabSpec("Income");
         spec.setContent(R.id.income);
-        spec.setIndicator("Tab Income");
+        spec.setIndicator("Income");
         host.addTab(spec);
 
+
     }
+
+    public void clearDefaultValue() {
+        incAmount = (EditText) findViewById(R.id.incomeAmount);
+        expAmount = (EditText) findViewById(R.id.incomeAmount);
+
+        incAmount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                incAmount.setText("");
+            }
+        });
+        expAmount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expAmount.setText("");
+            }
+        });
+
+
+    }
+
+    public Date getDate() {
+
+        Calendar newCalendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+        String[] date = dateFormat.format(newCalendar.getTime()).split(" ");
+
+        int year, month, day;
+
+
+        year = Integer.parseInt(date[0]);
+
+        switch(date[1])
+        {
+            case "Jan":month = 1;break;
+            case "Feb":month = 2;break;
+            case "Mar":month = 3;break;
+            case "Apr":month = 4;break;
+            case "May":month = 5;break;
+            case "Jun":month = 6;break;
+            case "Jul":month = 7;break;
+            case "Aug":month = 8;break;
+            case "Sep":month = 9;break;
+            case "Oct":month = 10;break;
+            case "Nov":month = 11;break;
+            case "Dec":month = 12;break;
+            default:month = 0;break;
+        }
+        day = Integer.parseInt(date[2]);
+
+        Date currDate = new Date(year, month, day);
+
+        return currDate;
+    }
+
+//    expense----------------------------------------------------------------------------------------------------------------------------------
 
     public void setUpExpenseSpinner() {
 
-        expAccountSpinner = (Spinner) findViewById(R.id.expenseAccountSpinner);
+//        setup type spinner
         expTypeSpinner = (Spinner) findViewById(R.id.expenseTypeSpinner);
+        purchaseTypeList = new PurchaseTypeDAO(getApplicationContext());
+        List<String> expenseTypeList = purchaseTypeList.getalltypes();         //list get at start
 
-        List<String> accountList = new ArrayList<>();
-        List<String> typeList = new ArrayList<>();
+        List<String> typeSpinnerList = new ArrayList<>();                       //list add to spinner
+        typeSpinnerList.add("----Select Expense Type------------------------------");
+        for (int i = 0; i < expenseTypeList.size(); i++) {
+            typeSpinnerList.add(expenseTypeList.get(i));
+        }
 
-//        TODO (expense)ask kyle about how to access database, add account to list
-
-
-//        find ArrayAdapter online, don't really know how to work, leave to future
+        ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, typeSpinnerList);
+        typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        expTypeSpinner.setAdapter(typeDataAdapter);
 
 //        setup account spinner
-        accountList.add("EA list 1");
-        accountList.add("EA list 2");
-        accountList.add("EA list 3");
-        ArrayAdapter<String> accountDataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, accountList);
+        expAccountSpinner = (Spinner) findViewById(R.id.expenseAccountSpinner);
+        accounts = new AccountDAO(getApplicationContext());
+        ArrayList<Account> accountList = accounts.getAllAccount();              //list get at start
+
+        List<String> accountSpinnerList = new ArrayList<>();                    //list add to spinner
+        accountSpinnerList.add("----Select Account---------------------------------------");
+        for (int i = 0; i < accountList.size(); i++) {
+            accountSpinnerList.add(accountList.get(i).getName());
+        }
+
+        ArrayAdapter<String> accountDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, accountSpinnerList);
         accountDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         expAccountSpinner.setAdapter(accountDataAdapter);
 
-//        setup type spinner
-        typeList.add("ET list 1");
-        typeList.add("ET list 2");
-        typeList.add("ET list 3");
-        ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, typeList);
-        typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        expTypeSpinner.setAdapter(typeDataAdapter);
     }
-
 
     public void addExpense() {
 
-        expButton = (Button) findViewById(R.id.addExpenseButton);
-        expText = (EditText) findViewById(R.id.expenseAmount);
 
-//        click on add expense
+        expButton = (Button) findViewById(R.id.addExpenseButton);
+        expAmount = (EditText) findViewById(R.id.expenseAmount);
+        expAccountSpinner = (Spinner) findViewById(R.id.expenseAccountSpinner);
+        expTypeSpinner = (Spinner) findViewById(R.id.expenseTypeSpinner);
+        expNote = (EditText) findViewById(R.id.expenseNotes);
+
+
         expButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Date currDate = getDate();
+                Double Amount = Double.parseDouble(expAmount.getText().toString());  //FIXME if the input type is number? pase?
+                String accountName = expAccountSpinner.getSelectedItem().toString();
+                String Note = expNote.getText().toString();
+                String Type = expTypeSpinner.getSelectedItem().toString();
+                TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
 
-                float expAmount = Float.parseFloat(expText.getText().toString());
-//                TODO addexpense event
-//                later, later
+                //TODO check if exist before insert
+                //new obj
+                Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
+                //insert
+                TransDAO.addTrans(newTrans);
+                //back to main
+//                Intent intent = new Intent(view.getContext(), MainActivity.class);
+//                startActivity(intent);
+                finish();
             }
         });
     }
 
 
+//    income----------------------------------------------------------------------------------------------------------------------------------
+
     public void setUpIncomeSpinner() {
 
-        incAccountSpinner = (Spinner) findViewById(R.id.incomeAccountSpinner);
-        incTypeSpinner = (Spinner) findViewById(R.id.incomeTypeSpinner);
-
-        List<String> accountList = new ArrayList<>();
-        List<String> typeList = new ArrayList<>();
-
-//        TODO (income)ask kyle about how to access database, add account to list
-
-
-
-        //TODO: clear number when user tap text edit.
-
-//        find ArrayAdapter online, don't really know how to work, leave to future
-
-//        setup account spinner
-        accountList.add("IA list 1");
-        accountList.add("IA list 2");
-        accountList.add("IA list 3");
-        ArrayAdapter<String> accountDataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, accountList);
-        accountDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        incAccountSpinner.setAdapter(accountDataAdapter);
-
 //        setup type spinner
-        typeList.add("IT list 1");
-        typeList.add("IT list 2");
-        typeList.add("IT list 3");
-        ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, typeList);
+        incTypeSpinner = (Spinner) findViewById(R.id.incomeTypeSpinner);
+        //purchaseTypeList = new PurchaseTypeDAO(getApplicationContext());   TODO: income list when it ready
+        //List<String> incomeTypeList = purchaseTypeList.getalltypes();         //list get at start
+
+        List<String> typeSpinnerList = new ArrayList<>();                       //list add to spinner
+        typeSpinnerList.add("----Select Income Type--------------------------------");
+        //for (int i = 0; i < expenseTypeList.size(); i++) {
+        //    typeSpinnerList.add(expenseTypeList.get(i));
+        //}
+        ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, typeSpinnerList);
         typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         incTypeSpinner.setAdapter(typeDataAdapter);
 
+//        setup account spinner
+        incAccountSpinner = (Spinner) findViewById(R.id.incomeAccountSpinner);
+        accounts = new AccountDAO(getApplicationContext());
+        ArrayList<Account> accountList = accounts.getAllAccount();              //list get at start
+
+        List<String> accountSpinnerList = new ArrayList<>();                    //list add to spinner
+        accountSpinnerList.add("----Select Account---------------------------------------");
+        for (int i = 0; i < accountList.size(); i++) {
+            accountSpinnerList.add(accountList.get(i).getName());
+        }
+
+        ArrayAdapter<String> accountDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, accountSpinnerList);
+        accountDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        incAccountSpinner.setAdapter(accountDataAdapter);
+
+
     }
 
-
     public void addIncome() {
+
+
         incButton = (Button) findViewById(R.id.addIncomeButton);
-        incText = (EditText) findViewById(R.id.incomeAmount);
-//        TODO addincome event
+        incAmount = (EditText) findViewById(R.id.incomeAmount);
+        incAccountSpinner = (Spinner) findViewById(R.id.incomeAccountSpinner);
+        incTypeSpinner = (Spinner) findViewById(R.id.incomeTypeSpinner);
+        incNote = (EditText) findViewById(R.id.incomeNotes);
+
+
+        incButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Date currDate = getDate();
+                Double Amount = Double.parseDouble(incAmount.getText().toString());  //FIXME if the input type is number? pase?
+                String accountName = incAccountSpinner.getSelectedItem().toString();
+                String Note = incNote.getText().toString();
+                String Type = incTypeSpinner.getSelectedItem().toString();
+                TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
+
+                //TODO check if exist before insert
+                //new obj
+                Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
+                //insert
+                TransDAO.addTrans(newTrans);
+
+                finish();
+            }
+        });
+
+        incButton = (Button) findViewById(R.id.addIncomeButton);
+        incAmount = (EditText) findViewById(R.id.incomeAmount);
     }
 
 

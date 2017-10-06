@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -36,6 +37,7 @@
                     android:weightSum="1">
 
                     <!--enternumber-->
+
                     <EditText
                         android:id="@+id/expenseAmount"
                         android:layout_width="match_parent"
@@ -45,12 +47,12 @@
                         android:inputType="numberDecimal"
                         android:selectAllOnFocus="false"
                         android:singleLine="true"
-                        android:text="0.00"
+                        android:hint="Amount"
                         android:textAlignment="textEnd"
-                        android:textColor="#AAA"
                         android:textSize="50sp" />
 
                     <!--translist-->
+
                     <Spinner
                         android:id="@+id/expenseTypeSpinner"
                         android:layout_width="match_parent"
@@ -58,28 +60,34 @@
                         android:layout_weight="0.02" />
 
                     <!--accountlist-->
+
                     <Spinner
                         android:id="@+id/expenseAccountSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_weight="0.02" />
 
-                    <!-- add income note box-->
+                    <!-- add expense note box-->
 
                     <EditText
                         android:id="@+id/expenseNotes"
                         android:layout_width="match_parent"
-                        android:layout_height="170dp"
+                        android:layout_height="100dp"
                         android:ems="10"
-                        android:inputType="textMultiLine"
-                        android:text="expense notes" />
+                        android:gravity="top"
+                        android:hint="Notes"
+                        android:inputType="textMultiLine" />
 
                     <!--addexpense-->
+
                     <Button
                         android:id="@+id/addExpenseButton"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:text="ADD EXPENSE" />
+                        android:background="?attr/colorControlHighlight"
+                        android:text="ADD EXPENSE"
+                        android:textColor="@android:color/black" />
 
                 </LinearLayout>
 
@@ -103,9 +111,8 @@
                         android:inputType="numberDecimal"
                         android:selectAllOnFocus="false"
                         android:singleLine="true"
-                        android:text="0.00"
+                        android:hint="Amount"
                         android:textAlignment="textEnd"
-                        android:textColor="#AAA"
                         android:textSize="50sp" />
 
                     <!--transtype-->
@@ -127,17 +134,21 @@
                     <EditText
                         android:id="@+id/incomeNotes"
                         android:layout_width="match_parent"
-                        android:layout_height="170dp"
+                        android:layout_height="100dp"
                         android:ems="10"
-                        android:inputType="textMultiLine"
-                        android:text="income notes" />
+                        android:gravity="top"
+                        android:hint="Notes"
+                        android:inputType="textMultiLine" />
 
                     <!--addincome-->
                     <Button
                         android:id="@+id/addIncomeButton"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:text="ADD INCOME" />
+                        android:background="?attr/colorControlHighlight"
+                        android:text="ADD INCOME"
+                        android:textColor="@android:color/black" />
 
                 </LinearLayout>
 
