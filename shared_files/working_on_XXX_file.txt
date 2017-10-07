@@ -1,0 +1,11 @@
+before you step on next progress, write down the files name that you will working with.
+
+
+java    /view       /NewTransaction                 --devray
+java    /view       /Transaction                    --devray
+
+
+
+
+res     /layout     /NewTransaction                 --devray
+res     /layout     /transaction                    --devray
