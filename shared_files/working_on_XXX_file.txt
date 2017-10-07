@@ -1,5 +1,6 @@
 before you step on next progress, write down the files name that you will working with.
 
+and also, comment on the files you with with.
 
 java    /view       /NewTransaction                 --devray
 java    /view       /Transaction                    --devray
