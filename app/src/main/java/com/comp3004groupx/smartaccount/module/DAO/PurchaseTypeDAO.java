@@ -2,10 +2,8 @@ package com.comp3004groupx.smartaccount.module.DAO;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by chenjunhao on 2017/9/15.
@@ -14,6 +12,7 @@ import java.util.List;
 public class PurchaseTypeDAO extends AbstractDAO{
     public PurchaseTypeDAO(Context context){
         super(context);
+        dbname = "PURCHASETYPE";
     }
     public ArrayList<String> getalltypes(){
         ArrayList<String> alltypes = new ArrayList<>();

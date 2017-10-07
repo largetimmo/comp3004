@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class TransactionDAO extends AbstractDAO{
     public TransactionDAO(Context context){
         super(context);
+        dbname = "TRANS";
     }
     public ArrayList<Transaction> getTopTrans(int num){
         String sqlquery = "SELECT * FROM TRANS ORDER BY DATE DESC LIMIT ?";
@@ -84,7 +85,6 @@ public class TransactionDAO extends AbstractDAO{
         Double balance = cursor.getDouble(cursor.getColumnIndex("BALANCE"));
         String note = cursor.getString(cursor.getColumnIndex("NOTE"));
         String type = cursor.getString(cursor.getColumnIndex("TYPE"));
-        Transaction transaction = new Transaction(id,date,balance,account,note,type);
-        return transaction;
+        return new Transaction(id,date,balance,account,note,type);
     }
 }

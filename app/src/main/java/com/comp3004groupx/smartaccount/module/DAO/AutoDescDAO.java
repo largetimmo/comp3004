@@ -2,7 +2,6 @@ package com.comp3004groupx.smartaccount.module.DAO;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 public class AutoDescDAO extends AbstractDAO {
     public AutoDescDAO(Context context){
         super(context);
+        dbname = "AUTODESC";
     }
     public boolean addAutoDesc(Transaction transaction){
         boolean flag = false;
