@@ -3,9 +3,11 @@ before you step on next progress, write down the files name that you will workin
 
 java    /view       /NewTransaction                 --devray
 java    /view       /Transaction                    --devray
-
+java    /DAO        /ALL                            --devkyle
 
 
 
 res     /layout     /NewTransaction                 --devray
 res     /layout     /transaction                    --devray
+
+
