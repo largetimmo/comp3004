@@ -23,6 +23,18 @@ public class MainActivity extends AppCompatActivity {
         TextView setting = (TextView)findViewById(R.id.textView);
         TextView statistics = (TextView)findViewById(R.id.textView2);
         Button newTrans = (Button) findViewById(R.id.button3);
+
+        //DEBUG CODE STARTS HERE
+        Button debug_button  = (Button) findViewById(R.id.DEBUG);
+        debug_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),DebugDatabase.class);
+                startActivity(intent);
+            }
+        });
+
+
         transaction.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), Transaction.class);

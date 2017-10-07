@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class IncomeTypeDAO extends AbstractDAO{
     public IncomeTypeDAO(Context context) {
         super(context);
+        dbname = "INCOMETYPE";
     }
     public boolean addType(String type){
         String sqlquery = "INSERT INTO INCOMETYPE VALUES(?)";

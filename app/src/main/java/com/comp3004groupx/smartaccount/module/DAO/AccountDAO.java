@@ -1,14 +1,11 @@
 package com.comp3004groupx.smartaccount.module.DAO;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.comp3004groupx.smartaccount.Core.Account;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by chenjunhao on 2017/9/14.
@@ -17,6 +14,7 @@ import java.util.List;
 public class AccountDAO extends AbstractDAO{
     public AccountDAO(Context context){
         super(context);
+        dbname = "ACCOUNT";
     }
     public ArrayList<Account> getAllAccount(){
         ArrayList<Account> allaccount = new ArrayList<>();

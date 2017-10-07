@@ -4,7 +4,7 @@ and also, comment on the files you with with.
 
 java    /view       /NewTransaction                 --devray
 java    /view       /Transaction                    --devray
-java    /DAO        /ALL                            --devkyle
+java    /DAO        ALL                             --devkyle
 
 
 
