@@ -11,6 +11,9 @@ import com.comp3004groupx.smartaccount.R;
 
 public class Account extends AppCompatActivity {
 
+    public Account(int id, String name, String type, Double amount) {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -33,8 +33,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
+        //Add Account Button
+        Button add_account = (Button)findViewById(R.id.Add);
+        add_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),Add_Account.class);
+                startActivity(intent);
+            }
+        });
         transaction.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), Transaction.class);
