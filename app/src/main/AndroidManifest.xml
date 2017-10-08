@@ -19,10 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.Transaction"></activity>
+
         <activity android:name=".view.Setting"></activity>
         <activity android:name=".view.Statistics"></activity>
-        <activity android:name=".view.Account"></activity>
+        <activity android:name=".view.AccountInfo"></activity>
         <activity android:name=".view.Account_List"></activity>
         <activity android:name=".view.Add_Account"></activity>
 
