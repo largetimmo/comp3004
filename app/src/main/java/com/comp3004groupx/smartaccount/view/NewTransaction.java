@@ -1,6 +1,6 @@
 package com.comp3004groupx.smartaccount.view;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.EditText;
 import android.widget.ArrayAdapter;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -59,7 +60,7 @@ public class NewTransaction extends AppCompatActivity {
         setContentView(R.layout.newtransaction);
 
         setupTabHost();
-        clearDefaultValue();
+//        clearDefaultValue();
 
         setUpExpenseSpinner();
         addExpense();
@@ -68,7 +69,7 @@ public class NewTransaction extends AppCompatActivity {
         addIncome();
     }
 
-//    setup----------------------------------------------------------------------------------------------------------------------------------
+    //    setup----------------------------------------------------------------------------------------------------------------------------------
     public void setupTabHost() {
         host = (TabHost) findViewById(R.id.tabs);
         host.setup();
@@ -84,29 +85,27 @@ public class NewTransaction extends AppCompatActivity {
         spec.setContent(R.id.income);
         spec.setIndicator("Income");
         host.addTab(spec);
-
-
     }
 
-    public void clearDefaultValue() {
-        incAmount = (EditText) findViewById(R.id.incomeAmount);
-        expAmount = (EditText) findViewById(R.id.incomeAmount);
-
-        incAmount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                incAmount.setText("");
-            }
-        });
-        expAmount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                expAmount.setText("");
-            }
-        });
-
-
-    }
+//    public void clearDefaultValue() {
+//        incAmount = (EditText) findViewById(R.id.incomeAmount);
+//        expAmount = (EditText) findViewById(R.id.incomeAmount);
+//
+//        incAmount.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                incAmount.setText("");
+//            }
+//        });
+//        expAmount.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                expAmount.setText("");
+//            }
+//        });
+//
+//
+//    }
 
     public Date getDate() {
 
@@ -116,24 +115,48 @@ public class NewTransaction extends AppCompatActivity {
 
         int year, month, day;
 
-
         year = Integer.parseInt(date[0]);
 
-        switch(date[1])
-        {
-            case "Jan":month = 1;break;
-            case "Feb":month = 2;break;
-            case "Mar":month = 3;break;
-            case "Apr":month = 4;break;
-            case "May":month = 5;break;
-            case "Jun":month = 6;break;
-            case "Jul":month = 7;break;
-            case "Aug":month = 8;break;
-            case "Sep":month = 9;break;
-            case "Oct":month = 10;break;
-            case "Nov":month = 11;break;
-            case "Dec":month = 12;break;
-            default:month = 0;break;
+        switch (date[1]) {
+            case "Jan":
+                month = 1;
+                break;
+            case "Feb":
+                month = 2;
+                break;
+            case "Mar":
+                month = 3;
+                break;
+            case "Apr":
+                month = 4;
+                break;
+            case "May":
+                month = 5;
+                break;
+            case "Jun":
+                month = 6;
+                break;
+            case "Jul":
+                month = 7;
+                break;
+            case "Aug":
+                month = 8;
+                break;
+            case "Sep":
+                month = 9;
+                break;
+            case "Oct":
+                month = 10;
+                break;
+            case "Nov":
+                month = 11;
+                break;
+            case "Dec":
+                month = 12;
+                break;
+            default:
+                month = 0;
+                break;
         }
         day = Integer.parseInt(date[2]);
 
@@ -179,8 +202,6 @@ public class NewTransaction extends AppCompatActivity {
     }
 
     public void addExpense() {
-
-
         expButton = (Button) findViewById(R.id.addExpenseButton);
         expAmount = (EditText) findViewById(R.id.expenseAmount);
         expAccountSpinner = (Spinner) findViewById(R.id.expenseAccountSpinner);
@@ -191,22 +212,21 @@ public class NewTransaction extends AppCompatActivity {
         expButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Date currDate = getDate();
-                Double Amount = Double.parseDouble(expAmount.getText().toString());  //FIXME if the input type is number? pase?
-                String accountName = expAccountSpinner.getSelectedItem().toString();
-                String Note = expNote.getText().toString();
-                String Type = expTypeSpinner.getSelectedItem().toString();
-                TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
+                if (errCheck("expense")) {
+                    Date currDate = getDate();
+                    double Amount = Double.parseDouble(expAmount.getText().toString());
+                    String accountName = expAccountSpinner.getSelectedItem().toString();
+                    String Note = expNote.getText().toString();
+                    String Type = expTypeSpinner.getSelectedItem().toString();
+                    TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
 
-                //TODO check if exist before insert
-                //new obj
-                Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
-                //insert
-                TransDAO.addTrans(newTrans);
-                //back to main
-//                Intent intent = new Intent(view.getContext(), MainActivity.class);
-//                startActivity(intent);
-                finish();
+                    //new obj
+                    Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
+                    //insert
+                    TransDAO.addTrans(newTrans);
+                    //back to main
+                    finish();
+                }
             }
         });
     }
@@ -262,25 +282,70 @@ public class NewTransaction extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Date currDate = getDate();
-                Double Amount = Double.parseDouble(incAmount.getText().toString());  //FIXME if the input type is number? pase?
-                String accountName = incAccountSpinner.getSelectedItem().toString();
-                String Note = incNote.getText().toString();
-                String Type = incTypeSpinner.getSelectedItem().toString();
-                TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
+                if (errCheck("income")) {
+                    Date currDate = getDate();
+                    double Amount = Double.parseDouble(incAmount.getText().toString());
+                    String accountName = incAccountSpinner.getSelectedItem().toString();
+                    String Note = incNote.getText().toString();
+                    String Type = incTypeSpinner.getSelectedItem().toString();
+                    TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
 
-                //TODO check if exist before insert
-                //new obj
-                Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
-                //insert
-                TransDAO.addTrans(newTrans);
-
-                finish();
+                    //new obj
+                    Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
+                    //insert
+                    TransDAO.addTrans(newTrans);
+                    finish();
+                }
             }
         });
 
         incButton = (Button) findViewById(R.id.addIncomeButton);
         incAmount = (EditText) findViewById(R.id.incomeAmount);
+    }
+
+
+    public boolean errCheck(String transType) {
+
+        Context context = getApplicationContext();
+        boolean noErr = true;
+        CharSequence text = "";
+
+        if (transType.equals("expense")) {
+            if (expAmount.getText().toString().equals("")) {
+                text = "Please enter amount.";
+                noErr = false;
+            }
+            if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
+                text = "Please select a account.";
+                noErr = false;
+            }
+            if (expTypeSpinner.getSelectedItem().toString().equals("----Select Expense Type------------------------------")) {
+                text = "Please select a type.";
+                noErr = false;
+            }
+
+        }
+        if (transType.equals("income")) {
+            if (expAmount.getText().toString().equals("")) {
+                text = "Please enter amount.";
+                noErr = false;
+            }
+            if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
+                text = "Please select a account.";
+                noErr = false;
+            }
+            if (expTypeSpinner.getSelectedItem().toString().equals("----Select Income Type--------------------------------")) {
+                text = "Please select a type.";
+                noErr = false;
+            }
+
+        }
+        if (!noErr) {
+            int duration = Toast.LENGTH_SHORT;
+            Toast.makeText(context, text, duration).show();
+        }
+
+        return noErr;
     }
 
 
