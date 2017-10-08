@@ -5,10 +5,11 @@ and also, comment on the files you with with.
 java    /view       /NewTransaction                 --devray
 java    /view       /Transaction                    --devray
 java    /DAO        ALL                             --devkyle
-
+java    /view       /Add_Account                    --devalex
 
 
 res     /layout     /NewTransaction                 --devray
 res     /layout     /transaction                    --devray
+res     /layout     /Add_Account                    --devalex
 
 
