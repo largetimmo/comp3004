@@ -1,0 +1,18 @@
+Week_3
+101010914
+Runyu Jiang
+
+01
+NewTransaction finished and past the DAO test.
+(some new feature in future such as prepayment)
+
+02
+Debug on NewTransaction class.
+    fixed tab host problem
+    fixed the layout of income tab
+    fixed date exchange
+    fixed transaction amount null string to double
+Err checking with Toaster in NewTransaction.
+
+03
+Start on view\Transaction class.
