@@ -12,22 +12,22 @@
         android:id="@+id/textView19"
         android:layout_width="117dp"
         android:layout_height="24dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="147dp"
         android:text="Today Cost"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="-20dp" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/cost"
         android:layout_width="253dp"
         android:layout_height="24dp"
         android:text="-XXX"
         app:layout_constraintLeft_toRightOf="@+id/textView19"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/income" />
 
     <LinearLayout android:id="@+id/bottom_nav"
         android:layout_height="56dp"
@@ -105,10 +105,10 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/balance"
         android:layout_width="267dp"
         android:layout_height="36dp"
-        android:text="TextView"
+        android:text="Balance"
         app:layout_constraintLeft_toRightOf="@+id/textView13"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,12 +126,12 @@
         android:layout_marginStart="16dp" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/income"
         android:layout_width="253dp"
         android:layout_height="24dp"
         android:text="XXX"
         app:layout_constraintLeft_toRightOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintTop_toBottomOf="@+id/balance" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -149,7 +149,7 @@
         app:layout_constraintLeft_toRightOf="@+id/button3"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintTop_toBottomOf="@+id/cost" />
 
     <Button
         android:id="@+id/Add"

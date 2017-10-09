@@ -1,0 +1,5 @@
+Week 3  deveric Guanhong Wu  101014234
+
+This week I finished Add_Account function. And test it.
+
+Decide the detail of error checking with teammates.

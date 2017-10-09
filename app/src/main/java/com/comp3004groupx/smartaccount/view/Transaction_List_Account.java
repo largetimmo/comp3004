@@ -77,12 +77,12 @@ public class Transaction_List_Account extends AppCompatActivity {
     public void showAccountInfo(){
         accounts = new AccountDAO(getApplicationContext());
         balance = (TextView) findViewById(R.id.Balance);
-        AccountName = (TextView) findViewById(R.id.AccountName);
+        //AccountName = (TextView) findViewById(R.id.AccountName);
         TransList = (ListView)findViewById(R.id.TransByAccount);
         AccountSpinner = (Spinner)findViewById(R.id.AccountList);
 
         String name = AccountSpinner.getSelectedItem().toString();
-        AccountName.setText(name);
+        //AccountName.setText(name);
         Account thisAccount = accounts.getAccount(name);
         balance.setText(Double.toString(thisAccount.getBalance()));
 
