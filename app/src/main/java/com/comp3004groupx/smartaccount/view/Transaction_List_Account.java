@@ -1,23 +1,20 @@
 package com.comp3004groupx.smartaccount.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.comp3004groupx.smartaccount.Core.*;
+import com.comp3004groupx.smartaccount.Core.Account;
+import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
-import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
-import com.comp3004groupx.smartaccount.Core.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +27,9 @@ public class Transaction_List_Account extends AppCompatActivity {
     AccountDAO accounts;
     TransactionDAO trans;
     TextView balance;
-    TextView AccountName;
     Spinner AccountSpinner;
     ListView TransList;
+    ArrayAdapter<String> AccountTransList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +43,12 @@ public class Transaction_List_Account extends AppCompatActivity {
         AccountSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                TransList.setAdapter(null);
                 showAccountInfo();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                TransList.setAdapter(null);
-               // showDefault();
+                showDefault();
             }
         });
     }
@@ -62,7 +57,7 @@ public class Transaction_List_Account extends AppCompatActivity {
         accounts = new AccountDAO(getApplicationContext());
 
         ArrayList<Account> AccountList = accounts.getAllAccount();
-        List<String> AccountsNameList = new ArrayList<>();
+        List<String> AccountsNameList = new ArrayList<String>();
         for (int i = 0; i < AccountList.size(); i++) {
             AccountsNameList.add(AccountList.get(i).getName());
         }
@@ -70,21 +65,19 @@ public class Transaction_List_Account extends AppCompatActivity {
         AccountsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         AccountSpinner.setAdapter(AccountsAdapter);
     }
-    //Don't know what to do in this method
-    /*public void showDefault(){
-
-    }*/
+    public void showDefault(){
+        AccountTransList.clear();
+        AccountSpinner.setAdapter(AccountTransList);
+    }
     public void showAccountInfo(){
         accounts = new AccountDAO(getApplicationContext());
         balance = (TextView) findViewById(R.id.Balance);
-        //AccountName = (TextView) findViewById(R.id.AccountName);
         TransList = (ListView)findViewById(R.id.TransByAccount);
         AccountSpinner = (Spinner)findViewById(R.id.AccountList);
 
         String name = AccountSpinner.getSelectedItem().toString();
-        //AccountName.setText(name);
         Account thisAccount = accounts.getAccount(name);
-        balance.setText(Double.toString(thisAccount.getBalance()));
+        balance.setText(String.format("%.2f",thisAccount.getBalance()));
 
         ArrayList<Transaction> AccountTrans = findTransactionByAccount(name);
         List<String> TransStrings = new ArrayList<>(AccountTrans.size());
@@ -92,8 +85,9 @@ public class Transaction_List_Account extends AppCompatActivity {
         for(int i=0; i<TransStrings.size(); i++){
             TransStrings.set(i,AccountTrans.get(i).getDate().toString()+"  "+AccountTrans.get(i).getAmount());
         }
-        ArrayAdapter<String> AccountTransList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, TransStrings);
-        TransList.setAdapter((ListAdapter) TransStrings);
+        AccountTransList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, TransStrings);
+        TransList.setAdapter(AccountTransList);
+        AccountTransList.clear();
     }
     public ArrayList<Transaction> findTransactionByAccount(String name){
 
@@ -108,8 +102,6 @@ public class Transaction_List_Account extends AppCompatActivity {
             if(allTrans.get(i).getAccount()==name)
                 accountTrans.add(allTrans.get(i));
         }
-
-        //TODO Sort transactions by Date.
         //MergeSort(accountTrans);
         return accountTrans;
     }
@@ -122,17 +114,30 @@ public class Transaction_List_Account extends AppCompatActivity {
         if(start<end){
             int middle = start+(end-start)/2;
             doMerge(start,middle,account,temp);
-            doMerge(middle,end,account,temp);
-            mergeParts()
+            doMerge(middle+1,end,account,temp);
+            mergeParts(start, middle, end, account, temp);
         }
     }
     public void mergeParts(int start, int middle, int end,List<Transaction> account,List<Transaction> temp){
         for(int i=start; i<end; i++){
             temp.set(i,account.get(i));
         }
-        int x = start, y = middle + 1, z = end;
+        int x = start, y = middle + 1, z = start;
         while(x<=middle&&y<=end){
-            if(temp.get(x)<=temp.get(y))
+            if(temp.get(x).getDate().compareTo(temp.get(y).getDate())<=0){
+                account.set(z, temp.get(x));
+                x++;
+            }
+            else{
+                account.set(z, temp.get(y));
+                y++;
+            }
+            z++;
+        }
+        while(x<=middle){
+            account.set(z, temp.get(x));
+            z++;
+            x++;
         }
     }*/
 }
