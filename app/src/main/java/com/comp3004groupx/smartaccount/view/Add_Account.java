@@ -40,7 +40,7 @@ public class Add_Account extends AppCompatActivity{
 
         accountDAO = new AccountDAO(getApplicationContext());
         setUpAccountTypeSpinner();
-        cleanDefaultValue();
+        //cleanDefaultValue();
         createAccount();
     }
 
