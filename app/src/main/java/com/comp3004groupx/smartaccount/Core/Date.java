@@ -33,9 +33,7 @@ public class Date {
         sb.append(this.day);
         return sb.toString();
     }
-    public int getYear() {
-        return year;
-    }
+    public int getYear() { return year; }
 
     public int getMonth() {
         return month;
@@ -43,5 +41,30 @@ public class Date {
 
     public int getDay() {
         return day;
+    }
+
+    //Simple compare function
+    public int compareTo(Date another){
+        if(this.getYear()>another.getYear()) {
+            return 1;
+        }
+        else if(this.getYear()==another.getYear()){
+            if(this.getMonth()>another.getMonth()){
+                return 1;
+            }
+            else if(this.getMonth()==another.getMonth()){
+                if(this.getDay()>another.getDay()){
+                    return 1;
+                }
+                else if(this.getDay()==another.getDay())
+                    return 0;
+                else
+                    return -1;
+            }
+            else
+                return -1;
+        }
+        else
+            return -1;
     }
 }
