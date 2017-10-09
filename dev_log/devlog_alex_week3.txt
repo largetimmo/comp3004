@@ -1,0 +1,5 @@
+Finished Transaction_List_Account without optimizing.
+
+Found bug in Transaction_List_Account
+	Spinner keep crashing when new account was created.
+	Balance cannot show.
