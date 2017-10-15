@@ -1,26 +1,36 @@
 
 GroupProject
 -------------------------------------------------------------------
-                                                                                                        -01 working on newTrans class and interface
-                                                                                                            -01 spinner finish tonight.
-                                                                                                                https://www.mkyong.com/android/android-spinner-drop-down-list-example/
-                                                                                                                link might be useful.
-                                                                                                                -   ask about references.
-                                                                                                            -02 two account list ( one in expanse and one in income )is the unnecessary , update
-                                                                                                                later.
-                                                                                                            -03 forgot to add "Note" input box. add later.
+                                                                                                    -01 working on newTrans class and interface
+                                                                                                        -01 spinner finish tonight.
+                                                                                                            https://www.mkyong.com/android/android-spinner-drop-down-list-example/
+                                                                                                            link might be useful.
+                                                                                                            -   ask about references.
+                                                                                                        -02 two account list ( one in expanse and one in income )is the unnecessary , update
+                                                                                                            later.
+                                                                                                        -03 forgot to add "Note" input box. add later.
 newTrans done                                                                                                            -04 button onclick event
-                                                                                                                -01 exp
-                                                                                                                -02 inc
-                                                                                                                -??
-                                                                                                            -05 ask kyle about operation of database.
-                                                                                                                -01 get data
-                                                                                                                    -01 for 1 account, 2 expTypes, 3 incTypes spinner
-                                                                                                                -02 set data
-                                                                                                                    -01 add multi info into accounts(amount, type, note)
+                                                                                                            -01 exp
+                                                                                                            -02 inc
+                                                                                                            -??
+                                                                                                        -05 ask kyle about operation of database.
+                                                                                                            -01 get data
+                                                                                                                -01 for 1 account, 2 expTypes, 3 incTypes spinner
+                                                                                                            -02 set data
+                                                                                                                -01 add multi info into accounts(amount, type, note)
 
 
--02 TransList Class
+trans list pass to alex                                                                             -02 TransList Class
+
+-03 Statistics
+    -01     res/layout
+        -01
+
+
+
+
+    -02     java/view
+        -01
 
 
 
