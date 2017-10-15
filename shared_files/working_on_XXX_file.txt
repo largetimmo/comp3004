@@ -3,13 +3,15 @@ before you step on next progress, write down the files name that you will workin
 and also, comment on the files you with with.
 
 java    /view       /NewTransaction                 --devray
-java    /view       /Transaction                    --devray
+java    /view       /Statistics                     --devray
+
 java    /DAO        ALL                             --devkyle
 java    /view       /Add_Account                    --devalex
 java    /view       /Transaction_List_Account       --devalex
 
-res     /layout     /NewTransaction                 --devray
-res     /layout     /transaction                    --devray
+res     /layout     /newtransaction                 --devray
+res     /layout     /statistics                     --devray
+
 res     /layout     /Add_Account                    --devalex
 res     /layout     /transaction_list_account       --devalex
 
