@@ -1,0 +1,5 @@
+Week 3  deveric Guanhong Wu  101014234
+
+Debug in Add_Account.
+
+Writen the guide of error checking. Make sure each part of the app's error checking is same
