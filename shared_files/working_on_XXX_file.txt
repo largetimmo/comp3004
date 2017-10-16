@@ -15,3 +15,5 @@ res     /layout     /statistics                     --devray
 res     /layout     /Add_Account                    --devalex
 res     /layout     /transaction_list_account       --devalex
 
+res     /layout     /add_account                    --deveric
+res     /view       /Add_Account                    --deveric
