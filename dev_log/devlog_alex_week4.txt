@@ -1,0 +1,6 @@
+Fixed the bugs found last week.
+
+Found new bug
+	transaction cannot show properly.
+
+Still working on the bug
