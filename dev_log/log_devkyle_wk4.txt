@@ -1,0 +1,7 @@
+Junhao Chen ------ 101010964
+Still working on Database Access Object classes
+
+fix bugs on update querys
+
+add RealAmount in Account and its table in order to satisfy further requirement
+

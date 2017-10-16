@@ -62,7 +62,7 @@ public class AutoDescDAO extends AbstractDAO {
     public boolean modifyAutoDesc(Transaction transaction){
         boolean flag = false;
         try{
-            String sqlquery = "UPDATE AUTODESC SET AMOUNT = ? DATE = ? PURCHASETYPE = ? ACCOUNT = ? NOTE = ? WHERE ID = ?";
+            String sqlquery = "UPDATE AUTODESC SET AMOUNT = ? ,DATE = ? ,PURCHASETYPE = ? ,ACCOUNT = ? ,NOTE = ? WHERE ID = ?";
             database.execSQL(sqlquery, new Object[]{transaction.getAmount(),transaction.getDate(),transaction.getType(),transaction.getAccount(),transaction.getNote(),transaction.getId()});
             flag = true;
         }catch (Exception e){

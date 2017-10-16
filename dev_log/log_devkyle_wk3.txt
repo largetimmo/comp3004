@@ -9,3 +9,12 @@ fix minor bugs in DBHelper
 fix incorrect setting and element id in layout file
 
 write and update DAO classes API file
+
+modify DAO classes structure
+
+add debug method in abstract class
+
+add debug feature---developers can directly see the contents of databases
+
+
+

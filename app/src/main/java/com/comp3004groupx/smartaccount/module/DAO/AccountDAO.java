@@ -58,9 +58,9 @@ public class AccountDAO extends AbstractDAO{
 
     public boolean addAccount(Account account) {
         boolean flag = false;
-        String sqlquery = "INSERT INTO ACCOUNT (NAME,TYPE,BALANCE) VALUES(?,?,?)";
+        String sqlquery = "INSERT INTO ACCOUNT (NAME,TYPE,BALANCE,REALAMOUNT) VALUES(?,?,?,?)";
         try {
-            database.execSQL(sqlquery,new Object[]{account.getName(),account.getType(),account.getBalance()});
+            database.execSQL(sqlquery,new Object[]{account.getName(),account.getType(),account.getBalance(),account.getRealAmount()});
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,9 +69,9 @@ public class AccountDAO extends AbstractDAO{
     }
     public boolean updateAccount(Account account){
         boolean flag = false;
-        String sqlquery = "UPDATE ACCOUNT SET NAME = ? TYPE = ? WHERE ID = ?";
+        String sqlquery = "UPDATE ACCOUNT SET NAME = ? ,TYPE = ? ,BALANCE = ? ,REALAMOUNT = ? WHERE ID = ?";
         try {
-            database.execSQL(sqlquery,new Object[]{account.getName(),account.getType(),account.getID()});
+            database.execSQL(sqlquery,new Object[]{account.getName(),account.getType(),account.getBalance(),account.getRealAmount(),account.getID()});
             flag = true;
 
         }catch (Exception e) {
@@ -95,7 +95,8 @@ public class AccountDAO extends AbstractDAO{
         String name = cursor.getString(cursor.getColumnIndex("NAME"));
         String type = cursor.getString(cursor.getColumnIndex("TYPE"));
         double balance = cursor.getDouble(cursor.getColumnIndex("BALANCE"));
-        Account account = new Account(id,name,type,balance);
+        double realAmount = cursor.getDouble(cursor.getColumnIndex("REALAMOUNT"));
+        Account account = new Account(id,name,type,balance,realAmount);
         return account;
     }
 }

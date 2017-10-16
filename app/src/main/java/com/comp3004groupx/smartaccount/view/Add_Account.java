@@ -94,7 +94,7 @@ public class Add_Account extends AppCompatActivity{
                 String accountType = accountTypeSpinner.getSelectedItem().toString();
 
                 //TODO CHECK all data.
-                Account newAccount = new Account(accountName, accountType, amount);
+                Account newAccount = new Account(accountName, accountType, amount,amount);
 
                 isCreate = accountDAO.addAccount(newAccount);
                 //isCreate = false; //Test Code
