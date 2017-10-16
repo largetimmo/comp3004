@@ -14,7 +14,9 @@ public abstract class AbstractDAO {
     protected DBHelper dbHelper;
     protected SQLiteDatabase database;
     protected String dbname;
+    protected Context context;
     public AbstractDAO(Context context){
+        this.context = context;
         dbHelper = new DBHelper(context);
         database = dbHelper.getWritableDatabase();
     }

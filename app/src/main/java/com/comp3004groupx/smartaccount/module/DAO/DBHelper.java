@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(NAME,"On Create");
-        String sqlquery = "CREATE TABLE IF NOT EXISTS ACCOUNT(NAME VARCHAR(20) UNIQUE ,BALANCE REAL,TYPE INTEGER,ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT)";
+        String sqlquery = "CREATE TABLE IF NOT EXISTS ACCOUNT(NAME VARCHAR(20) UNIQUE ,BALANCE REAL,TYPE INTEGER,ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, REALAMOUNT REAL)";
         db.execSQL(sqlquery);
         sqlquery = "CREATE TABLE IF NOT EXISTS ACCOUNTTYPE( NAME VARCHAR(20) UNIQUE)";
         db.execSQL(sqlquery);

@@ -9,16 +9,19 @@ public class Account {
     private String name;
     private String type;
     private double balance;
-    public Account(String name, String type, double balance){
+    private double real_balance;
+    public Account(String name, String type, double balance, double real_balance){
         this.name = name;
         this.type = type;
         this.balance = balance;
+        this.real_balance = real_balance;
     }
-    public Account(int ID,String name, String type, double balance){
+    public Account(int ID,String name, String type, double balance, double real_balance){
         this.ID= ID;
         this.name=name;
         this.type=type;
         this.balance=balance;
+        this.real_balance = real_balance;
     }
 
     public int getID(){
@@ -32,6 +35,23 @@ public class Account {
     }
     public double getBalance(){
         return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setRealAmount(double realAmount) {
+        this.real_balance = realAmount;
+    }
+
+    public double getRealAmount(){
+        return real_balance;
+
+    }
+    public void spendMoney(double amount){
+        this.real_balance -= amount;
+        this.balance -= amount;
     }
 
 }

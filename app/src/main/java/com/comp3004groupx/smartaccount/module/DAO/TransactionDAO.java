@@ -3,6 +3,7 @@ package com.comp3004groupx.smartaccount.module.DAO;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 
@@ -17,6 +18,23 @@ public class TransactionDAO extends AbstractDAO{
         super(context);
         dbname = "TRANS";
     }
+
+    public double getTotalSpent(){
+        String sqlquery = "SELECT BALANCE FROM TRANS";
+        double total = 0.00;
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,null);
+            while (cursor.moveToNext()){
+                total += cursor.getDouble(1);
+            }
+            return total;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
     public ArrayList<Transaction> getTopTrans(int num){
         String sqlquery = "SELECT * FROM TRANS ORDER BY DATE DESC LIMIT ?";
         return acquireData(sqlquery,new String[]{Integer.toString(num)});
@@ -36,6 +54,10 @@ public class TransactionDAO extends AbstractDAO{
         String sqlquery = "INSERT INTO TRANS(DATE,BALANCE,ACCOUNT,NOTE,TYPE) VALUES(?,?,?,?,?)";
         try{
             database.execSQL(sqlquery,new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getAccount(),transaction.getNote(),transaction.getType()});
+            AccountDAO accountDAO = new AccountDAO(context);
+            Account account = accountDAO.getAccount(transaction.getAccount());
+            account.spendMoney(transaction.getAmount());
+            accountDAO.updateAccount(account);
             flag=true;
         }catch (Exception e){
             e.printStackTrace();
@@ -44,7 +66,7 @@ public class TransactionDAO extends AbstractDAO{
     }
     public boolean modifyTrans(Transaction transaction){
         Boolean flag = false;
-        String sqlquery = "UPDATE TRANS SET DATE = ?, BALANCE = ?, ACCOUNT =?, NOTE = ? TYPE = ? WHERE ID = ? ";
+        String sqlquery = "UPDATE TRANS SET DATE = ?, BALANCE = ?, ACCOUNT =?, NOTE = ? ,TYPE = ? WHERE ID = ? ";
         try{
             database.execSQL(sqlquery, new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getNote(),transaction.getType(),transaction.getId()});
             flag = true;
