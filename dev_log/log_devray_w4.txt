@@ -1,0 +1,8 @@
+Week_4
+101010914
+Runyu Jiang
+
+01
+working on layout of statistics,
+have problem on expand and collapse area with animation.
+still learning the view with animation.

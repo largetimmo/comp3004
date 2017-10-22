@@ -1,0 +1,12 @@
+Week_5
+101010914
+Runyu Jiang
+
+01
+almost finish layout of statistics,
+problem on expand and collapse area with animation,    solved.
+
+02
+working on view java file of statistics.
+learn to make table with "MPAndroidChart"
+    url: https://github.com/PhilJay/MPAndroidChart
