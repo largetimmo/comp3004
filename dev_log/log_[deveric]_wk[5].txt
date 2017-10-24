@@ -1,0 +1,6 @@
+Week 3  deveric Guanhong Wu  101014234
+
+Finished all debug in Add_Account
+
+Write a java class to help other do the error checking that only 2 number after decimal of amount.
+

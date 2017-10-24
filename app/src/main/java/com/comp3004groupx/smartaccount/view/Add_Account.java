@@ -3,6 +3,7 @@ package com.comp3004groupx.smartaccount.view;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,7 +15,6 @@ import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.AccountTypeDAO;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +39,9 @@ public class Add_Account extends AppCompatActivity{
         this.setTitle("Add a New Account");
 
         accountDAO = new AccountDAO(getApplicationContext());
+        AccountAmount = (EditText) findViewById(R.id.Amount);
+        AccountAmount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
+
         setUpAccountTypeSpinner();
         //cleanDefaultValue();
         createAccount();
@@ -63,7 +66,7 @@ public class Add_Account extends AppCompatActivity{
 
     public void cleanDefaultValue(){
         AccountName = (EditText) findViewById(R.id.Name);
-        AccountAmount = (EditText) findViewById(R.id.Amount);
+
 
         AccountName.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -92,23 +95,38 @@ public class Add_Account extends AppCompatActivity{
                 String accountName = AccountName.getText().toString();
                 double amount = Double.parseDouble(AccountAmount.getText().toString());
                 String accountType = accountTypeSpinner.getSelectedItem().toString();
-
-                //TODO CHECK all data.
-                Account newAccount = new Account(accountName, accountType, amount,amount);
-
-                isCreate = accountDAO.addAccount(newAccount);
-                //isCreate = false; //Test Code
-                if (isCreate == true){
-                    finish();
-                }
-                else{
+                if (checkSpinner(accountType) == false){
                     Context context = getApplicationContext();
-                    CharSequence text = "Fail";
+                    CharSequence text = "Please check your input (Account Type Spinner)";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
+                //TODO CHECK all data.
+                else{
+                    Account newAccount = new Account(accountName, accountType, amount,amount);
+                    isCreate = accountDAO.addAccount(newAccount);
+                    if (isCreate == true){
+                        finish();
+                    }
+                    else{
+                        Context context = getApplicationContext();
+                        CharSequence text = "Fail";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                }
             }
         });
     }
+    public boolean checkSpinner(String selectText){
+        String equalText = "----Select Expense Type------------------------------";
+        if (selectText.equals(equalText)){
+            System.out.println("False");
+            return false;
+        }
+        return true;
+    }
+
 }
