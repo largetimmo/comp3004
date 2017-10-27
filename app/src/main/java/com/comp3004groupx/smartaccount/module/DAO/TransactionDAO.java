@@ -34,7 +34,26 @@ public class TransactionDAO extends AbstractDAO{
         return -1;
     }
 
+    public int getTotalSpend(){
+        String sqlquery = "SELECT BALANCE FROM TRANS WHERE BALANCE>0";
+        int total = 0;
+        Cursor cursor = database.rawQuery(sqlquery,null);
+        while (cursor.moveToNext()){
+            total+=cursor.getInt(cursor.getColumnIndex("BALANCE"));
+        }
+        return total;
+    }
+    public int getTotalIncome(){
+        String sqlquery = "SELECT BALANCE FROM TRANS WHERE BALANCE<0";
+        int total = 0;
+        Cursor cursor = database.rawQuery(sqlquery, null);
+        while (cursor.moveToNext()){
+            total+=cursor.getInt(cursor.getColumnIndex("BALANCE"));
+        }
+        total*=-1;
+        return total;
 
+    }
     public ArrayList<Transaction> getTopTrans(int num){
         String sqlquery = "SELECT * FROM TRANS ORDER BY DATE DESC LIMIT ?";
         return acquireData(sqlquery,new String[]{Integer.toString(num)});
