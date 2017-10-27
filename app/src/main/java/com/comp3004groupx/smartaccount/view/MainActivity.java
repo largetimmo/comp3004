@@ -23,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
     TextView cost;
     TransactionDAO transactionDAO;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         transaction = (TextView)findViewById(R.id.main_trans);
         accounts = (TextView)findViewById(R.id.main_account);
         setting = (TextView)findViewById(R.id.main_setting);
@@ -40,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         cost.setText(Integer.toString(transactionDAO.getTotalSpend()));
         //balance.setText();
         //DEBUG CODE STARTS HERE
-        Button debug_button  = (Button) findViewById(R.id.DEBUG);
-        debug_button.setOnClickListener(new View.OnClickListener() {
+        TextView title = (TextView) findViewById(R.id.main_title);
+        title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),DebugDatabase.class);
