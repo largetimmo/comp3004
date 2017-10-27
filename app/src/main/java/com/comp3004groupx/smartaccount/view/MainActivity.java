@@ -9,24 +9,35 @@ import android.widget.TextView;
 import android.widget.Button;
 
 import com.comp3004groupx.smartaccount.R;
+import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
+    TextView transaction;
+    TextView accounts;
+    TextView setting;
+    TextView statistics;
+    Button newTrans;
+    TextView income;
+    TextView cost;
+    TransactionDAO transactionDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView transaction = (TextView)findViewById(R.id.textView3);
-        TextView accounts = (TextView)findViewById(R.id.textView4);
-        TextView setting = (TextView)findViewById(R.id.textView);
-        TextView statistics = (TextView)findViewById(R.id.textView2);
-        Button newTrans = (Button) findViewById(R.id.button3);
-        TextView balance = (TextView)findViewById(R.id.balance);
-        TextView income = (TextView)findViewById(R.id.income);
-        TextView cost = (TextView)findViewById(R.id.cost);
-
+        transaction = (TextView)findViewById(R.id.main_trans);
+        accounts = (TextView)findViewById(R.id.main_account);
+        setting = (TextView)findViewById(R.id.main_setting);
+        statistics = (TextView)findViewById(R.id.main_statistic);
+        newTrans = (Button) findViewById(R.id.newTrans);
+        income = (TextView)findViewById(R.id.income);
+        cost = (TextView)findViewById(R.id.cost);
+        transactionDAO = new TransactionDAO(getApplicationContext());
+        income.setText(Integer.toString(transactionDAO.getTotalIncome()));
+        cost.setText(Integer.toString(transactionDAO.getTotalSpend()));
         //balance.setText();
         //DEBUG CODE STARTS HERE
         Button debug_button  = (Button) findViewById(R.id.DEBUG);
@@ -37,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Debug Code Ends Here
+
+
+        /*
         //Add Account Button
         Button add_account = (Button)findViewById(R.id.Add);
         add_account.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        */
         transaction.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), Transaction_List_Account.class);
@@ -70,12 +86,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         newTrans.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), NewTransaction.class);
                 startActivity(intent);
             }
         });
+
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        income.setText(Integer.toString(transactionDAO.getTotalIncome()));
+        cost.setText(Integer.toString(transactionDAO.getTotalSpend()));
     }
 
 }
