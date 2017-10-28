@@ -93,7 +93,7 @@ public class TransactionDAO extends AbstractDAO{
         Boolean flag = false;
         String sqlquery = "UPDATE TRANS SET DATE = ?, BALANCE = ?, ACCOUNT =?, NOTE = ? ,TYPE = ? WHERE ID = ? ";
         try{
-            database.execSQL(sqlquery, new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getNote(),transaction.getType(),transaction.getId()});
+            database.execSQL(sqlquery, new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getAccount(),transaction.getNote(),transaction.getType(),transaction.getId()});
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
