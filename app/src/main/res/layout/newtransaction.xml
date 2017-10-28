@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--taken by devray-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,8 +9,18 @@
 
     <TabHost
         android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="567dp"
+        tools:layout_conversion_absoluteWidth="384dp"
+        tools:layout_conversion_absoluteX="0dp"
+        tools:layout_conversion_absoluteY="0dp">
 
         <!--whole tab-->
         <LinearLayout
@@ -45,9 +56,9 @@
                         android:layout_height="100dp"
                         android:layout_weight="0.02"
                         android:ems="10"
+                        android:hint="Amount"
                         android:inputType="numberDecimal"
                         android:selectAllOnFocus="false"
-                        android:hint="Amount"
                         android:textAlignment="textEnd"
                         android:textSize="50sp" />
 
@@ -56,7 +67,7 @@
                     <Spinner
                         android:id="@+id/expenseTypeSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="65dp"
                         android:layout_weight="0.02" />
 
                     <!--accountlist-->
@@ -64,7 +75,7 @@
                     <Spinner
                         android:id="@+id/expenseAccountSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="65dp"
                         android:layout_weight="0.02" />
 
                     <!-- add expense note box-->
@@ -72,20 +83,77 @@
                     <EditText
                         android:id="@+id/expenseNotes"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="150dp"
                         android:ems="10"
                         android:gravity="top"
                         android:hint="Notes"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textMultiLine"
+                        android:maxLength="200" />
+
+                    <Switch
+                        android:id="@+id/switch1"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:text="   Is a Per-Auth Payment?" />
 
                     <!--addexpense-->
+
+
+                    <View
+                        android:id="@+id/line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.02"
+                        android:background="#000000"
+                        android:visibility="invisible" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_weight="0.02"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="220dp"
+                            android:layout_height="75dp"
+                            android:layout_weight="1"
+                            android:text="First Due Day"
+                            android:textAlignment="center"
+                            android:textAllCaps="true"
+                            android:textColor="#000000"
+                            android:textSize="20sp"
+                            android:visibility="invisible" />
+
+                        <Spinner
+                            android:id="@+id/expYearSpinner"
+                            android:layout_width="180dp"
+                            android:layout_height="75dp"
+                            android:layout_weight="1"
+                            android:visibility="invisible" />
+
+                        <Spinner
+                            android:id="@+id/expMonthSpinner"
+                            android:layout_width="160dp"
+                            android:layout_height="75dp"
+                            android:layout_weight="1"
+                            android:visibility="invisible" />
+
+                        <Spinner
+                            android:id="@+id/expDaySpinner"
+                            android:layout_width="160dp"
+                            android:layout_height="75dp"
+                            android:layout_weight="1"
+                            android:visibility="invisible" />
+
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/addExpenseButton"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:background="?attr/colorControlHighlight"
+                        android:layout_height="80dp"
+                        android:background="@color/orange"
                         android:text="ADD EXPENSE"
                         android:textColor="@android:color/black" />
 
@@ -108,9 +176,9 @@
                         android:layout_height="100dp"
                         android:layout_weight="0.02"
                         android:ems="10"
+                        android:hint="Amount"
                         android:inputType="numberDecimal"
                         android:selectAllOnFocus="false"
-                        android:hint="Amount"
                         android:textAlignment="textEnd"
                         android:textSize="50sp" />
 
@@ -118,14 +186,14 @@
                     <Spinner
                         android:id="@+id/incomeTypeSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="65dp"
                         android:layout_weight="0.02" />
 
                     <!--accounttype-->
                     <Spinner
                         android:id="@+id/incomeAccountSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="65dp"
                         android:layout_weight="0.02" />
 
                     <!-- add income note box-->
@@ -133,19 +201,76 @@
                     <EditText
                         android:id="@+id/incomeNotes"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="150dp"
                         android:ems="10"
                         android:gravity="top"
                         android:hint="Notes"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textMultiLine"
+                        android:maxLength="200" />
 
                     <!--addincome-->
+                    <Switch
+                        android:id="@+id/switch2"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_weight="0.02"
+                        android:text="   Is a Per-Auth Payment?" />
+
+                    <View
+                        android:id="@+id/line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.02"
+                        android:background="#000000"
+                        android:visibility="invisible" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_weight="0.02"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="220dp"
+                            android:layout_height="75dp"
+                            android:layout_weight="1"
+                            android:text="First Due Day"
+                            android:textAlignment="center"
+                            android:textAllCaps="true"
+                            android:textColor="#000000"
+                            android:textSize="20sp"
+                            android:visibility="invisible" />
+
+                        <Spinner
+                            android:id="@+id/incYearSpinner"
+                            android:layout_width="180dp"
+                            android:layout_height="75dp"
+                            android:layout_weight="1"
+                            android:visibility="invisible" />
+
+                        <Spinner
+                            android:id="@+id/incMonthSpinner"
+                            android:layout_width="160dp"
+                            android:layout_height="75dp"
+                            android:layout_weight="1"
+                            android:visibility="invisible" />
+
+                        <Spinner
+                            android:id="@+id/incDaySpinner"
+                            android:layout_width="160dp"
+                            android:layout_height="75dp"
+                            android:layout_weight="1"
+                            android:visibility="invisible" />
+
+                    </LinearLayout>
+
                     <Button
                         android:id="@+id/addIncomeButton"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:background="?attr/colorControlHighlight"
+                        android:layout_height="80dp"
+                        android:background="@color/orange"
                         android:text="ADD INCOME"
                         android:textColor="@android:color/black" />
 
@@ -156,4 +281,4 @@
         </LinearLayout>
     </TabHost>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

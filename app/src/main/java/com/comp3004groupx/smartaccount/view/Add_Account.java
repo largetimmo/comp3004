@@ -97,7 +97,7 @@ public class Add_Account extends AppCompatActivity{
                 String accountType = accountTypeSpinner.getSelectedItem().toString();
                 if (checkSpinner(accountType) == false){
                     Context context = getApplicationContext();
-                    CharSequence text = "Please check your input (Account Type Spinner)";
+                    CharSequence text = "Please select a type of account!";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -107,6 +107,11 @@ public class Add_Account extends AppCompatActivity{
                     Account newAccount = new Account(accountName, accountType, amount,amount);
                     isCreate = accountDAO.addAccount(newAccount);
                     if (isCreate == true){
+                        Context context = getApplicationContext();
+                        CharSequence text = "Success";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
                         finish();
                     }
                     else{
@@ -123,7 +128,6 @@ public class Add_Account extends AppCompatActivity{
     public boolean checkSpinner(String selectText){
         String equalText = "----Select Expense Type------------------------------";
         if (selectText.equals(equalText)){
-            System.out.println("False");
             return false;
         }
         return true;
