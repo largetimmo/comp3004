@@ -24,6 +24,30 @@ public class Transaction {
         return amount;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     public String getAccount() {
         return account;
     }
