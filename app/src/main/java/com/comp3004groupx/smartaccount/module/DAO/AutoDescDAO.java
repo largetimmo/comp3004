@@ -19,7 +19,7 @@ public class AutoDescDAO extends AbstractDAO {
     }
     public boolean addAutoDesc(Transaction transaction){
         boolean flag = false;
-        String sqlquery = "INSERT INTO AUTODESC VALUES(AMOUNT,DATE,PUCHASETYPE,ACCOUNT,NOTE) VALUES (?,?,?,?,?)";
+        String sqlquery = "INSERT INTO AUTODESC (AMOUNT,DATE,PUCHASETYPE,ACCOUNT,NOTE) VALUES (?,?,?,?,?)";
         try{
             database.execSQL(sqlquery ,new Object[]{transaction.getAmount(),transaction.getDate(),transaction.getType(),transaction.getAccount(),transaction.getNote()});
             flag = true;
