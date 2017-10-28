@@ -8,8 +8,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 
+import com.comp3004groupx.smartaccount.Core.*;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
+
+import java.util.ArrayList;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -38,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         income = (TextView)findViewById(R.id.income);
         cost = (TextView)findViewById(R.id.cost);
         transactionDAO = new TransactionDAO(getApplicationContext());
-        income.setText(Integer.toString(transactionDAO.getTotalIncome()));
-        cost.setText(Integer.toString(transactionDAO.getTotalSpend()));
+        income.setText(Double.toString(transactionDAO.getTotalIncome()));
+        cost.setText(Double.toString(transactionDAO.getTotalSpend()));
         //balance.setText();
         //DEBUG CODE STARTS HERE
         TextView title = (TextView) findViewById(R.id.main_title);
@@ -95,7 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
+        ArrayList<com.comp3004groupx.smartaccount.Core.Transaction> trans = transactionDAO.getTopTrans(5);
+        
     }
 
     @Override
@@ -105,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        income.setText(Integer.toString(transactionDAO.getTotalIncome()));
-        cost.setText(Integer.toString(transactionDAO.getTotalSpend()));
+        income.setText(Double.toString(transactionDAO.getTotalIncome()));
+        cost.setText(Double.toString(transactionDAO.getTotalSpend()));
     }
 
 }

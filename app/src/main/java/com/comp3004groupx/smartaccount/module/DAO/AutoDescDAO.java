@@ -51,7 +51,7 @@ public class AutoDescDAO extends AbstractDAO {
     public boolean removeAutoDesc(int id){
         boolean flag = false;
         try {
-            database.execSQL("REMOVE FROM AUTODESC WHERE ID = ?",new Object[]{Integer.toString(id)});
+            database.execSQL("DELETE FROM AUTODESC WHERE ID = ?",new Object[]{Integer.toString(id)});
             flag = true;
         }catch (Exception e){
             e.printStackTrace();

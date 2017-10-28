@@ -18,37 +18,43 @@ public class TransactionDAO extends AbstractDAO{
         super(context);
         dbname = "TRANS";
     }
-
-    public double getTotalSpent(){
-        String sqlquery = "SELECT BALANCE FROM TRANS";
-        double total = 0.00;
+    public Transaction getTransByID(int id){
+        String sqlquery = "SELECT * FROM TRANS WHERE ID = ?";
+        Transaction result = null;
         try {
-            Cursor cursor = database.rawQuery(sqlquery,null);
-            while (cursor.moveToNext()){
-                total += cursor.getDouble(1);
+            Cursor cursor = database.rawQuery(sqlquery,new String[]{Integer.toString(id)});
+            if(cursor.moveToNext()){
+                result = parseTrans(cursor);
             }
-            return total;
         }catch (Exception e){
             e.printStackTrace();
         }
-        return -1;
+        return result;
     }
-
-    public int getTotalSpend(){
+    public double getTotalSpend(){
         String sqlquery = "SELECT BALANCE FROM TRANS WHERE BALANCE>0";
-        int total = 0;
-        Cursor cursor = database.rawQuery(sqlquery,null);
-        while (cursor.moveToNext()){
-            total+=cursor.getInt(cursor.getColumnIndex("BALANCE"));
+        double total = 0;
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,null);
+            while (cursor.moveToNext()){
+                total+=cursor.getDouble(cursor.getColumnIndex("BALANCE"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
         return total;
     }
-    public int getTotalIncome(){
+    public double getTotalIncome(){
         String sqlquery = "SELECT BALANCE FROM TRANS WHERE BALANCE<0";
-        int total = 0;
-        Cursor cursor = database.rawQuery(sqlquery, null);
-        while (cursor.moveToNext()){
-            total+=cursor.getInt(cursor.getColumnIndex("BALANCE"));
+        double total = 0;
+        try {
+            Cursor cursor = database.rawQuery(sqlquery, null);
+            while (cursor.moveToNext()){
+                total+=cursor.getInt(cursor.getColumnIndex("BALANCE"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         total*=-1;
         return total;
