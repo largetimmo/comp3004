@@ -74,7 +74,7 @@ public class Transaction_List_Account extends AppCompatActivity {
 
         ArrayList<Transaction> allTrans = trans.getAllTransaction();
         ArrayList<Transaction> accountTrans = new ArrayList<>();
-        //Find transactions belonging to this account
+        //Find transactions belonging to this accountinfo
         //Maybe TOOO SLOW, try to solve this in the future.
         for(int i=0; i<allTrans.size();i++){
             if(allTrans.get(i).getAccount().equals(name)) {
@@ -99,7 +99,7 @@ public class Transaction_List_Account extends AppCompatActivity {
         ArrayList<Transaction> allTrans = trans.getAllTransaction();
 
         ArrayList<Transaction> accountTrans = new ArrayList<>();
-        //Find transactions belonging to this account
+        //Find transactions belonging to this accountinfo
         //Maybe TOOO SLOW, try to solve this in the future.
         for(int i=0; i<allTrans.size();i++){
             if(allTrans.get(i).getAccount().equals(name)) {
@@ -110,37 +110,37 @@ public class Transaction_List_Account extends AppCompatActivity {
         //MergeSort(accountTrans);
         return accountTrans;
     }*/
-    /*public void MergeSort(List<Transaction> account){
-        int size = account.size();
+    /*public void MergeSort(List<Transaction> accountinfo){
+        int size = accountinfo.size();
         List<Transaction> tempSortList = new ArrayList<>(size);
-        doMerge(0,size-1,account,tempSortList);
+        doMerge(0,size-1,accountinfo,tempSortList);
     }
-    public void doMerge(int start, int end, List<Transaction> account, List<Transaction> temp){
+    public void doMerge(int start, int end, List<Transaction> accountinfo, List<Transaction> temp){
         if(start<end){
             int middle = start+(end-start)/2;
-            doMerge(start,middle,account,temp);
-            doMerge(middle+1,end,account,temp);
-            mergeParts(start, middle, end, account, temp);
+            doMerge(start,middle,accountinfo,temp);
+            doMerge(middle+1,end,accountinfo,temp);
+            mergeParts(start, middle, end, accountinfo, temp);
         }
     }
-    public void mergeParts(int start, int middle, int end,List<Transaction> account,List<Transaction> temp){
+    public void mergeParts(int start, int middle, int end,List<Transaction> accountinfo,List<Transaction> temp){
         for(int i=start; i<end; i++){
-            temp.set(i,account.get(i));
+            temp.set(i,accountinfo.get(i));
         }
         int x = start, y = middle + 1, z = start;
         while(x<=middle&&y<=end){
             if(temp.get(x).getDate().compareTo(temp.get(y).getDate())<=0){
-                account.set(z, temp.get(x));
+                accountinfo.set(z, temp.get(x));
                 x++;
             }
             else{
-                account.set(z, temp.get(y));
+                accountinfo.set(z, temp.get(y));
                 y++;
             }
             z++;
         }
         while(x<=middle){
-            account.set(z, temp.get(x));
+            accountinfo.set(z, temp.get(x));
             z++;
             x++;
         }

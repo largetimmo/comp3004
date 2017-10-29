@@ -14,7 +14,7 @@ public class AccountInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.account);
+        setContentView(R.layout.accountinfo);
         this.setTitle("AccountsInfo");
     }
 }

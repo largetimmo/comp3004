@@ -87,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
         });
         statistics.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(v.getContext(), Statistics.class);
+                Intent intent = new Intent(v.getContext(), Show_Transaction.class);
+                intent.putExtra("ID", 3);
                 startActivity(intent);
             }
         });

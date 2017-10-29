@@ -32,6 +32,7 @@ import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.AutoDescDAO;
+import com.comp3004groupx.smartaccount.module.DAO.IncomeTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
@@ -48,6 +49,7 @@ public class NewTransaction extends AppCompatActivity {
 
     AccountDAO accounts;
     PurchaseTypeDAO purchaseTypeList;
+    IncomeTypeDAO incomeTypeList;
 
     TabHost host;
 
@@ -139,7 +141,9 @@ public class NewTransaction extends AppCompatActivity {
     public void setDayspinner(Spinner MonthSpinner, Spinner DaySpinner) {
         final Spinner monthSpinner = MonthSpinner;
         final Spinner daySpinner = DaySpinner;
-        Day.add(1);
+        for (int i = 0; i<31;i++){
+            Day.add(i);
+        }
         MonthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -268,7 +272,7 @@ public class NewTransaction extends AppCompatActivity {
         typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         expTypeSpinner.setAdapter(typeDataAdapter);
 
-//        setup account spinner
+//        setup accountinfo spinner
         expAccountSpinner = (Spinner) findViewById(R.id.expenseAccountSpinner);
         accounts = new AccountDAO(getApplicationContext());
         ArrayList<Account> accountList = accounts.getAllAccount();              //list get at start
@@ -407,19 +411,19 @@ public class NewTransaction extends AppCompatActivity {
 
 //        setup type spinner
         incTypeSpinner = (Spinner) findViewById(R.id.incomeTypeSpinner);
-        //purchaseTypeList = new PurchaseTypeDAO(getApplicationContext());   TODO: income list when it ready
-        //List<String> incomeTypeList = purchaseTypeList.getalltypes();         //list get at start
+        incomeTypeList = new IncomeTypeDAO(getApplicationContext());
+        List<String> incomeTypeL = incomeTypeList.getAllTypes();         //list get at start
 
         List<String> typeSpinnerList = new ArrayList<>();                       //list add to spinner
         typeSpinnerList.add("----Select Income Type--------------------------------");
-        //for (int i = 0; i < expenseTypeList.size(); i++) {
-        //    typeSpinnerList.add(expenseTypeList.get(i));
-        //}
+        for (int i = 0; i < incomeTypeL.size(); i++) {
+            typeSpinnerList.add(incomeTypeL.get(i));
+        }
         ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, typeSpinnerList);
         typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         incTypeSpinner.setAdapter(typeDataAdapter);
 
-//        setup account spinner
+//        setup accountinfo spinner
         incAccountSpinner = (Spinner) findViewById(R.id.incomeAccountSpinner);
         accounts = new AccountDAO(getApplicationContext());
         ArrayList<Account> accountList = accounts.getAllAccount();              //list get at start
@@ -560,7 +564,7 @@ public class NewTransaction extends AppCompatActivity {
                 noErr = false;
             }
             if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
-                text = "Please select a account.";
+                text = "Please select a accountinfo.";
                 noErr = false;
             }
             if (expTypeSpinner.getSelectedItem().toString().equals("----Select Expense Type------------------------------")) {
@@ -574,7 +578,7 @@ public class NewTransaction extends AppCompatActivity {
                 noErr = false;
             }
             if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
-                text = "Please select a account.";
+                text = "Please select a accountinfo.";
                 noErr = false;
             }
             if (expTypeSpinner.getSelectedItem().toString().equals("----Select Income Type--------------------------------")) {
@@ -603,7 +607,7 @@ public class NewTransaction extends AppCompatActivity {
                 noErr=false;
             }
             if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
-                text = "Please select a account.";
+                text = "Please select a accountinfo.";
                 noErr = false;
             }
             if (expTypeSpinner.getSelectedItem().toString().equals("----Select Expense Type------------------------------")) {
@@ -613,7 +617,7 @@ public class NewTransaction extends AppCompatActivity {
         }
         if (transType.equals("income")) {
             if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
-                text = "Please select a account.";
+                text = "Please select a accountinfo.";
                 noErr = false;
             }
             if (expTypeSpinner.getSelectedItem().toString().equals("----Select Income Type--------------------------------")) {

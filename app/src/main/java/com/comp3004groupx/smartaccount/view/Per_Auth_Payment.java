@@ -150,7 +150,7 @@ public class Per_Auth_Payment extends AppCompatActivity  {
         ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, typeSpinnerList);
         typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         expTypeSpinner.setAdapter(typeDataAdapter);
-//        setup account spinner
+//        setup accountinfo spinner
         expAccountSpinner = (Spinner) findViewById(R.id.expenseAccountSpinner);
         accounts = new AccountDAO(getApplicationContext());
         ArrayList<Account> accountList = accounts.getAllAccount();              //list get at start
@@ -211,7 +211,7 @@ public class Per_Auth_Payment extends AppCompatActivity  {
         typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         incTypeSpinner.setAdapter(typeDataAdapter);
 
-//        setup account spinner
+//        setup accountinfo spinner
         incAccountSpinner = (Spinner) findViewById(R.id.incomeAccountSpinner);
         accounts = new AccountDAO(getApplicationContext());
         ArrayList<Account> accountList = accounts.getAllAccount();              //list get at start
@@ -276,7 +276,7 @@ public class Per_Auth_Payment extends AppCompatActivity  {
                 noErr = false;
             }
             if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
-                text = "Please select a account.";
+                text = "Please select a accountinfo.";
                 noErr = false;
             }
             if (expTypeSpinner.getSelectedItem().toString().equals("----Select Expense Type------------------------------")) {
@@ -291,7 +291,7 @@ public class Per_Auth_Payment extends AppCompatActivity  {
                 noErr = false;
             }
             if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
-                text = "Please select a account.";
+                text = "Please select a accountinfo.";
                 noErr = false;
             }
             if (expTypeSpinner.getSelectedItem().toString().equals("----Select Income Type--------------------------------")) {
