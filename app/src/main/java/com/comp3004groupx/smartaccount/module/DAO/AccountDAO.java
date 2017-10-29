@@ -81,7 +81,7 @@ public class AccountDAO extends AbstractDAO{
     }
     public boolean removeAccount(int id){
         boolean flag = false;
-        String sqlquery = "DELETE FROM ACCOUNT WHWRE ID = ?";
+        String sqlquery = "DELETE FROM ACCOUNT WHERE ID = ?";
         try {
             database.execSQL(sqlquery,new Object[]{id});
             flag = true;

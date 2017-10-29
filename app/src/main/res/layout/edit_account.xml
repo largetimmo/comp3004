@@ -4,16 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="410dp"
         android:layout_height="40dp"
         android:background="@color/orange"
-        android:text="Smart Account"
+        android:text="Edit Account"
         android:textAlignment="center"
         android:textSize="30dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -40,7 +38,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="215dp"
+        android:layout_marginTop="214dp"
         android:background="#000000"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -90,17 +88,30 @@
         android:layout_marginTop="8dp" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="160dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="133dp"
+        android:id="@+id/editButton"
+        android:layout_width="176dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="93dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/orange"
+        android:text="Edit Account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteX="219dp" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="175dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="162dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="15dp"
         android:background="@color/orange"
-        android:text="Create Account"
+        android:text="Delete Account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteX="236dp" />
+        tools:layout_editor_absoluteX="221dp" />
 
     <TextView
         android:id="@+id/textView5"
@@ -129,9 +140,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:visibility="visible"
         app:layout_constraintLeft_toRightOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="0dp"
-        android:layout_marginStart="2dp" />
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:layout_width="203dp"
@@ -157,5 +168,4 @@
         app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
-
 </android.support.constraint.ConstraintLayout>
