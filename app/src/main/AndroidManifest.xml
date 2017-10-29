@@ -28,7 +28,7 @@
 
         <activity android:name=".view.NewTransaction"></activity>
         <activity android:name=".view.Per_Auth_Payment"></activity>
-
+        <activity android:name=".view.Show_Transaction"></activity>
         <activity android:name=".view.Transaction_List_Account"></activity>
         <activity android:name=".view.Transaction_List_Date"></activity>
         <activity android:name=".view.Transaction_List_Type"></activity>
