@@ -1,0 +1,13 @@
+Week 5  deveric Guanhong Wu  101014234 (Reading Week)
+
+1. Finished Show, Edit, Delete functions of Account.
+
+2. Finished Show, Edit, Delete functions of Transaction.
+
+Waiting List layout file to connect.
+
+3. Edit NewTransaction file add Per-Auth Payment function in this file. Now our app can create a Per-Auth Payment(purchase or income).
+
+4. Use Spinner to get a datapicker
+
+5. Finished all bug and did error checking of all file I written in this week.
