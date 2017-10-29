@@ -4,11 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -30,16 +34,22 @@ public class Transaction_Adapter extends BaseAdapter {
         return mData.size();
     }
     @Override
-    public Object getItem(int position) {
-        return mData.get(position);
-    }
+    public String getItem(int position) { return mData.get(position).getAccount(); }
     @Override
     public long getItemId(int position) {
         return position;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        View rowView = mInflater.inflate(R.layout.transaction_adapter_view, parent, false);
+        LayoutInflater layout = LayoutInflater.from(mContext);
+        View rowView = layout.inflate(R.layout.transaction_adapter_view, parent, false);
+        String date = mData.get(position).getDate().toString();
+        String amount = Double.toString(mData.get(position).getAmount());
+        TextView Date = (TextView) rowView.findViewById(R.id.TransDate);
+        TextView Amount = (TextView) rowView.findViewById(R.id.TransAmount);
+        Date.setText(date);
+        Amount.setText(amount);
         return rowView;
+
     }
 }
