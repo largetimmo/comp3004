@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -23,13 +24,13 @@ import java.util.List;
  * Created by wuguanhong on 2017-09-20.
  */
 
-public class Transaction_List_Account extends AppCompatActivity {
+public class Transaction_List_Account extends AppCompatActivity{
     AccountDAO accounts;
     TransactionDAO trans;
     TextView balance;
     Spinner AccountSpinner;
     ListView TransList;
-    ArrayAdapter<String> AccountTransList;
+    Transaction_Adapter AccountTransList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,15 @@ public class Transaction_List_Account extends AppCompatActivity {
         setContentView(R.layout.transaction_list_account);
 
         setSpinner();
-        AccountSpinner = (Spinner)findViewById(R.id.AccountList);
         //Found online for dynamically change contents in ListView.
+        Button show = (Button)findViewById(R.id.show);
 
-        AccountSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+        show.setOnClickListener(new AdapterView.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                showAccountInfo();
+            }
+        });
 
     }
     public void setSpinner(){
@@ -57,10 +63,6 @@ public class Transaction_List_Account extends AppCompatActivity {
         AccountsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         AccountSpinner.setAdapter(AccountsAdapter);
     }
-    public void showDefault(){
-        AccountTransList.clear();
-        AccountSpinner.setAdapter(AccountTransList);
-    }
     public void showAccountInfo(){
         accounts = new AccountDAO(getApplicationContext());
         balance = (TextView) findViewById(R.id.Balance);
@@ -71,45 +73,19 @@ public class Transaction_List_Account extends AppCompatActivity {
         String name = AccountSpinner.getSelectedItem().toString();
         Account thisAccount = accounts.getAccount(name);
         balance.setText(String.format("%.2f",thisAccount.getBalance()));
-
         ArrayList<Transaction> allTrans = trans.getAllTransaction();
-        ArrayList<Transaction> accountTrans = new ArrayList<>();
-        //Find transactions belonging to this accountinfo
-        //Maybe TOOO SLOW, try to solve this in the future.
+        ArrayList<Transaction> TransStrings = new ArrayList<>();
+
+        //Find transactions belonging to this account
         for(int i=0; i<allTrans.size();i++){
             if(allTrans.get(i).getAccount().equals(name)) {
-                accountTrans.add(i,allTrans.get(i));
+                TransStrings.add(i,allTrans.get(i));
             }
         }
-        //MergeSort(accountTrans);
-        List<String> TransStrings = new ArrayList<String>(accountTrans.size());
-        //Found a way using custom adapter online but not work for now, changed to silly method for avoiding crash.
-        for(int i=0; i<TransStrings.size(); i++){
-            TransStrings.set(i,accountTrans.get(i).getDate().toString()+"  "+Double.toString(accountTrans.get(i).getAmount()));
-        }
-
-        AccountTransList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, TransStrings);
+        AccountTransList = new Transaction_Adapter(this, TransStrings);
         TransList.setAdapter(AccountTransList);
-        //AccountTransList.clear();
+        AccountTransList.notifyDataSetChanged();
     }
-    /*public ArrayList<Transaction> findTransactionByAccount(String name){
-
-        trans = new TransactionDAO(getApplicationContext());
-        //Get All Transactions
-        ArrayList<Transaction> allTrans = trans.getAllTransaction();
-
-        ArrayList<Transaction> accountTrans = new ArrayList<>();
-        //Find transactions belonging to this accountinfo
-        //Maybe TOOO SLOW, try to solve this in the future.
-        for(int i=0; i<allTrans.size();i++){
-            if(allTrans.get(i).getAccount().equals(name)) {
-                accountTrans.add(allTrans.get(i));
-                System.out.println(allTrans.get(i).getAccount()+allTrans.get(i).getDate());
-            }
-        }
-        //MergeSort(accountTrans);
-        return accountTrans;
-    }*/
     /*public void MergeSort(List<Transaction> accountinfo){
         int size = accountinfo.size();
         List<Transaction> tempSortList = new ArrayList<>(size);
