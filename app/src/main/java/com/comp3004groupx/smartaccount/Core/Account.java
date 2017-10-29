@@ -45,6 +45,23 @@ public class Account {
         this.real_balance = realAmount;
     }
 
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public double getReal_balance() {
+        return real_balance;
+    }
+
+    public void setReal_balance(double real_balance) {
+        this.real_balance = real_balance;
+    }
+
     public double getRealAmount(){
         return real_balance;
 

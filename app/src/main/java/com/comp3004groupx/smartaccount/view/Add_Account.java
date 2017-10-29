@@ -97,12 +97,11 @@ public class Add_Account extends AppCompatActivity{
                 String accountType = accountTypeSpinner.getSelectedItem().toString();
                 if (checkSpinner(accountType) == false){
                     Context context = getApplicationContext();
-                    CharSequence text = "Please select a type of accountinfo!";
+                    CharSequence text = "Please select a type of account!";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
-                //TODO CHECK all data.
                 else{
                     Account newAccount = new Account(accountName, accountType, amount,amount);
                     isCreate = accountDAO.addAccount(newAccount);

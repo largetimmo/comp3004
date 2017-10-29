@@ -19,8 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/orange"
-            android:text="  Edit Transaction"
-            android:textAlignment="viewStart"
+            android:text="Edit Transaction"
+            android:textAlignment="center"
             android:textSize="30dp"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="180dp" />
