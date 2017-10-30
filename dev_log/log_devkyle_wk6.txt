@@ -1,0 +1,11 @@
+Junhao Chen -------  101010964
+
+Finish rewrite on MainAcitivity
+Main_Activity now has a better layout and structure and shows the total income and outcome clearly
+
+
+Write a new view --- Transaction_List
+Transaction_List now supports custom search by account, type, and date range
+
+Next step is add sorted method to arrange the transactions in specific order
+
