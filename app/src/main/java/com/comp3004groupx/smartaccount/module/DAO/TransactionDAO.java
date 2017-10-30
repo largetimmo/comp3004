@@ -18,6 +18,19 @@ public class TransactionDAO extends AbstractDAO{
         super(context);
         dbname = "TRANS";
     }
+    public ArrayList<Transaction> getAllTransaction(Date date_from, Date date_to, String account_name, String type){
+        String sqlquery = "SELECT * FROM TRANS WHERE ACCOUNT = ? AND TYPE = ? AND DATE>? AND DATE<?";
+        ArrayList<Transaction> allTrans = new ArrayList<>();
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,new String[]{account_name,type,date_from.toString(),date_to.toString()});
+            while (cursor.moveToNext()){
+                allTrans.add(parseTrans(cursor));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return allTrans;
+    }
     public Transaction getTransByID(int id){
         String sqlquery = "SELECT * FROM TRANS WHERE ID = ?";
         Transaction result = null;

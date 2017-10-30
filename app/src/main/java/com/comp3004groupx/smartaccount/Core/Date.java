@@ -1,6 +1,5 @@
 package com.comp3004groupx.smartaccount.Core;
 
-import java.io.IOException;
 
 /**
  * Created by chenjunhao on 2017/10/2.
