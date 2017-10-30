@@ -30,7 +30,7 @@ public class TransactionDAO extends AbstractDAO{
             sqlquery.append(" TYPE = ? AND");
             params_list.add(type);
         }
-        sqlquery.append(" DATE>? AND DATE<?");
+        sqlquery.append(" DATE>=? AND DATE<=?");
         params_list.add(date_from.toString());
         params_list.add(date_to.toString());
         ArrayList<Transaction> allTrans = new ArrayList<>();

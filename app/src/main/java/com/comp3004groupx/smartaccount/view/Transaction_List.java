@@ -94,14 +94,19 @@ public class Transaction_List extends AppCompatActivity {
 
         //set datepicker
         calendar = Calendar.getInstance();
+        String myFormat = "yyyy-MM-dd";
+
+        final SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
+        date_from.setText(sdf.format(calendar.getTime()));
+        date_to.setText(sdf.format(calendar.getTime()));
         datePickerDialog = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar.set(calendar.YEAR,year);
                 calendar.set(calendar.MONTH,month);
                 calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
-                String myFormat = "yyyy-MM-dd";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
+
+
                 if (selection == 0){
                     date_from.setText(sdf.format(calendar.getTime()));
                 }else if (selection == 1){
