@@ -53,7 +53,7 @@ public class Add_Account extends AppCompatActivity{
         AccountType = new AccountTypeDAO(getApplicationContext());
         List<String> AccountTypeList = AccountType.getAllType();
         List<String> typeSpinnerList = new ArrayList<>();
-        typeSpinnerList.add("----Select Expense Type------------------------------");
+        typeSpinnerList.add("Select Account");
         for (int i= 0; i < AccountTypeList.size(); i++){
             typeSpinnerList.add(AccountTypeList.get(i));
         }

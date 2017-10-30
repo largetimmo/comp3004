@@ -113,11 +113,12 @@ public class Account_List extends AppCompatActivity {
         //setup content of header
         for (int i = 0; i < accountTypeList.size(); i++) {
             List<List<String>> newListofAccount = new ArrayList<>();
-            List<String> AccountDetail = new ArrayList<>();
+            List<String> AccountDetail;
             Double ban = 0.00;
             for (int j = 0; j < accountList.size(); j++) {
                 if (accountList.get(j).getType().equals(accountTypeList.get(i))) {
                     //add name
+                    AccountDetail = new ArrayList<>();
                     AccountDetail.add(accountList.get(j).getName());
                     //set and add balance
                     ban = accountList.get(j).getBalance();
