@@ -19,10 +19,28 @@ public class TransactionDAO extends AbstractDAO{
         dbname = "TRANS";
     }
     public ArrayList<Transaction> getAllTransaction(Date date_from, Date date_to, String account_name, String type){
-        String sqlquery = "SELECT * FROM TRANS WHERE ACCOUNT = ? AND TYPE = ? AND DATE>? AND DATE<?";
+        StringBuilder sqlquery = new StringBuilder();
+        ArrayList<String> params_list = new ArrayList<>();
+        sqlquery.append("SELECT * FROM TRANS WHERE ");
+        if(!account_name.equals("ALL")){
+            sqlquery.append("ACCOUNT = ? AND");
+            params_list.add(account_name);
+        }
+        if(!type.equals("ALL")){
+            sqlquery.append(" TYPE = ? AND");
+            params_list.add(type);
+        }
+        sqlquery.append(" DATE>? AND DATE<?");
+        params_list.add(date_from.toString());
+        params_list.add(date_to.toString());
         ArrayList<Transaction> allTrans = new ArrayList<>();
+        String[] params_array = new String[params_list.size()];
+        int index = 0;
+        for (String s:params_list){
+            params_array[index++] = s;
+        }
         try {
-            Cursor cursor = database.rawQuery(sqlquery,new String[]{account_name,type,date_from.toString(),date_to.toString()});
+            Cursor cursor = database.rawQuery(sqlquery.toString(),params_array );
             while (cursor.moveToNext()){
                 allTrans.add(parseTrans(cursor));
             }
