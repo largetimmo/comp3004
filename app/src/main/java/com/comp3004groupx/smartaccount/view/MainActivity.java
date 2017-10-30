@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     TextView income;
     TextView cost;
     TransactionDAO transactionDAO;
+    Button add;
+
+
     DecimalFormat decimalFormat;
 
     @Override
@@ -51,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button add = (Button) findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),Add_Account.class);
+                startActivity(intent);
+            }
+        });
+
         //Debug Code Ends Here
         decimalFormat = new DecimalFormat("0.00");
 

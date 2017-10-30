@@ -147,11 +147,13 @@ public class Transaction_List extends AppCompatActivity {
         }
 
     }
+
     @Override
     protected void onPause(){
         super.onPause();
         after_pause = true;
     }
+
     private void refreshList(){
         if (date_from.getText().toString().equals("") || date_to.getText().toString().equals("")){
             Toast.makeText(getApplicationContext(),"Date Range is invalid",Toast.LENGTH_SHORT).show();

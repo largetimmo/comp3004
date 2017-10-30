@@ -85,6 +85,12 @@
         </ListView>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add account" />
+
     <LinearLayout
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"

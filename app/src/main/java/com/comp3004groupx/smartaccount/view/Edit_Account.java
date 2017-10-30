@@ -120,13 +120,15 @@ public class Edit_Account extends AppCompatActivity {
                 String accountName = name.getText().toString();
                 double accountAmount = Double.parseDouble(amount.getText().toString());
                 String accountType = accountTypeSpinner.getSelectedItem().toString();
+                double amountDifference = accountAmount - account.getBalance();
                 if (errorChecking(accountName)){
                     account.setName(accountName);
                     account.setType(accountType);
                     account.setBalance(accountAmount);
+                    account.setReal_balance(account.getRealAmount()+amountDifference);
                     if (accountDAO.updateAccount(account)){
                         toast("Success");
-                        finish();;
+                        finish();
                     }
                 }
             }
