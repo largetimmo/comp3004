@@ -45,25 +45,6 @@ public class MainActivity extends AppCompatActivity {
         income = (TextView)findViewById(R.id.income);
         cost = (TextView)findViewById(R.id.cost);
         transactionDAO = new TransactionDAO(getApplicationContext());
-        //DEBUG CODE STARTS HERE
-        TextView title = (TextView) findViewById(R.id.main_title);
-        title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),DebugDatabase.class);
-                startActivity(intent);
-            }
-        });
-        Button add = (Button) findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),Add_Account.class);
-                startActivity(intent);
-            }
-        });
-
-        //Debug Code Ends Here
         decimalFormat = new DecimalFormat("0.00");
 
         transaction.setOnClickListener(new View.OnClickListener(){

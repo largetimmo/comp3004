@@ -9,7 +9,6 @@ import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.AccountTypeDAO;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 /**
@@ -41,7 +41,9 @@ public class Account_List extends AppCompatActivity {
     ExpandableListView expListView;
 
     List<String> accountTypeHeader;
-    HashMap<String, List<String>> accountListItems;
+    HashMap<String, List<List<String>>> accountListItems;
+
+    ImageButton addAccountButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class Account_List extends AppCompatActivity {
         //load content here
         setupOverView();
         setupExpList();
+        //add account event
+        addAccountListener();
     }
 
     @Override
@@ -65,16 +69,23 @@ public class Account_List extends AppCompatActivity {
         accountDataBase = new AccountDAO(getApplicationContext());
         accountTypeDataBase = new AccountTypeDAO(getApplicationContext());
         ArrayList<Account> accountList = accountDataBase.getAllAccount();
-        ArrayList<String> accountTypeList = accountTypeDataBase.getAllType();
 
         //calculate
         Double balance = Double.valueOf(0);
         Double debt = Double.valueOf(0);
         for (int i = 0; i < accountList.size(); i++) {
             if (accountList.get(i).getType().equals("Credit Card")) {
-                debt += accountList.get(i).getBalance();
+                if (accountList.get(i).getBalance() > 0) {
+                    debt += accountList.get(i).getBalance();
+                } else {
+                    balance += accountList.get(i).getBalance();
+                }
             } else {
-                balance += accountList.get(i).getBalance();
+                if (accountList.get(i).getBalance() > 0) {
+                    balance += accountList.get(i).getBalance();
+                } else {
+                    debt += accountList.get(i).getBalance();
+                }
             }
         }
 
@@ -87,7 +98,7 @@ public class Account_List extends AppCompatActivity {
     }
 
     private void setupExpList() {
-        //ini
+        //init
         expListView = (ExpandableListView) findViewById(R.id.accountExpList);
         accountTypeHeader = new ArrayList<>();
         accountListItems = new HashMap<>();
@@ -101,33 +112,46 @@ public class Account_List extends AppCompatActivity {
         }
         //setup content of header
         for (int i = 0; i < accountTypeList.size(); i++) {
-            List<String> newList = new ArrayList<>();
+            List<List<String>> newListofAccount = new ArrayList<>();
+            List<String> AccountDetail = new ArrayList<>();
+            Double ban = 0.00;
             for (int j = 0; j < accountList.size(); j++) {
                 if (accountList.get(j).getType().equals(accountTypeList.get(i))) {
-
-
-                    newList.add(accountList.get(j).getName());
+                    //add name
+                    AccountDetail.add(accountList.get(j).getName());
+                    //set and add balance
+                    ban = accountList.get(j).getBalance();
+                    if (accountList.get(j).getName().equals("Credit Card")) {
+                        if (ban < 0) {
+                            AccountDetail.add("(" + ban.toString() + ")");
+                        } else {
+                            AccountDetail.add(ban.toString());
+                        }
+                    } else {
+                        AccountDetail.add(ban.toString());
+                    }
+                    //add to list
+                    newListofAccount.add(AccountDetail);
                 }
             }
-            accountListItems.put(accountTypeHeader.get(i), newList);
+            //put to specific header
+            accountListItems.put(accountTypeHeader.get(i), newListofAccount);
         }
         //setup Adapter & add to view
         listAdapter = new ExpandableListAdapter(this, accountTypeHeader, accountListItems);
         expListView.setAdapter(listAdapter);
-
 
         //set expanded as default
         for (int i = 0; i < listAdapter.getGroupCount(); i++) {
             expListView.expandGroup(i);
         }
 
-
         //setup onClick event
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-                int iidd = accountDataBase.getAccount(accountListItems.get(accountTypeHeader.get(groupPosition)).get(childPosition)).getID();
+                int iidd = accountDataBase.getAccount(accountListItems.get(accountTypeHeader.get(groupPosition)).get(childPosition).get(0)).getID();
 
                 Intent intent = new Intent(v.getContext(), AccountInfo.class);
                 intent.putExtra("ID", iidd);
@@ -137,23 +161,33 @@ public class Account_List extends AppCompatActivity {
             }
         });
     }
+
+    private void addAccountListener() {
+        addAccountButton = (ImageButton) findViewById(R.id.addAccButton);
+
+        addAccountButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Add_Account.class);
+                startActivity(intent);
+            }
+        });
+    }
 }
 
 
 class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
-    private List<String> _listDataHeader; // header titles
-    // child data in format of header title, child title
-    private HashMap<String, List<String>> _listDataChild;
+    private List<String> _listDataHeader;
+    private HashMap<String, List<List<String>>> _listDataChild;
 
-    public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listChildData) {
+    public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<List<String>>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosititon) {
+    public List<String> getChild(int groupPosition, int childPosititon) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition)).get(childPosititon);
     }
 
@@ -164,17 +198,20 @@ class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String childText = (String) getChild(groupPosition, childPosition);
+        final String childText_Acc = getChild(groupPosition, childPosition).get(0);
+        final String childText_ban = getChild(groupPosition, childPosition).get(1);
+
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.account_list_item, null);
         }
 
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.accountItem);
+        TextView accItem = (TextView) convertView.findViewById(R.id.accountNameItem);
+        TextView banItem = (TextView) convertView.findViewById(R.id.accountBalanceItem);
 
-        txtListChild.setText(childText);
+        accItem.setText(childText_Acc);
+        banItem.setText(childText_ban);
         return convertView;
     }
 

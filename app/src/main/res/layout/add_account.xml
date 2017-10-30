@@ -13,7 +13,7 @@
         android:layout_width="410dp"
         android:layout_height="40dp"
         android:background="@color/orange"
-        android:text="Smart Account"
+        android:text="Add Account"
         android:textAlignment="center"
         android:textSize="30dp"
         app:layout_constraintLeft_toLeftOf="parent"
