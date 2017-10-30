@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         transactionDAO = new TransactionDAO(getApplicationContext());
         income.setText(Double.toString(transactionDAO.getTotalIncome()));
         cost.setText(Double.toString(transactionDAO.getTotalSpend()));
-        //balance.setText();
         //DEBUG CODE STARTS HERE
         TextView title = (TextView) findViewById(R.id.main_title);
         title.setOnClickListener(new View.OnClickListener() {
@@ -56,17 +55,6 @@ public class MainActivity extends AppCompatActivity {
         //Debug Code Ends Here
 
 
-        /*
-        //Add Account Button
-        Button add_account = (Button)findViewById(R.id.Add);
-        add_account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),Add_Account.class);
-                startActivity(intent);
-            }
-        });
-        */
         transaction.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), Transaction_List.class);
@@ -81,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
         });
         setting.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(v.getContext(), AccountInfo.class);
+                Intent intent = new Intent(v.getContext(), Setting.class);
                 intent.putExtra("ID",3);
                 startActivity(intent);
             }
         });
         statistics.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(v.getContext(), Show_Transaction.class);
+                Intent intent = new Intent(v.getContext(), Statistics.class);
                 intent.putExtra("ID", 3);
                 startActivity(intent);
             }
@@ -100,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        TransactionDAO transactionDAO = new TransactionDAO(getApplicationContext());
-        ArrayList<com.comp3004groupx.smartaccount.Core.Transaction> trans = transactionDAO.getTopTrans(5);
         
     }
 
