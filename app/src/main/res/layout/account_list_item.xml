@@ -10,10 +10,19 @@
         android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/accountItem"
-        android:layout_width="match_parent"
+        android:id="@+id/accountNameItem"
+        android:layout_width="198dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="TextView"
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/accountBalanceItem"
+        android:layout_width="198dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:textAlignment="textEnd"
         android:textSize="23sp" />
 </LinearLayout>
