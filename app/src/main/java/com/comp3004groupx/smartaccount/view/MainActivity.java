@@ -12,6 +12,7 @@ import com.comp3004groupx.smartaccount.Core.*;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView income;
     TextView cost;
     TransactionDAO transactionDAO;
-
+    DecimalFormat decimalFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         income = (TextView)findViewById(R.id.income);
         cost = (TextView)findViewById(R.id.cost);
         transactionDAO = new TransactionDAO(getApplicationContext());
-        income.setText(Double.toString(transactionDAO.getTotalIncome()));
-        cost.setText(Double.toString(transactionDAO.getTotalSpend()));
         //DEBUG CODE STARTS HERE
         TextView title = (TextView) findViewById(R.id.main_title);
         title.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Debug Code Ends Here
-
+        decimalFormat = new DecimalFormat("0.00");
 
         transaction.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -70,14 +69,12 @@ public class MainActivity extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), Setting.class);
-                intent.putExtra("ID",3);
                 startActivity(intent);
             }
         });
         statistics.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), Statistics.class);
-                intent.putExtra("ID", 3);
                 startActivity(intent);
             }
         });
@@ -98,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        income.setText(Double.toString(transactionDAO.getTotalIncome()));
-        cost.setText(Double.toString(transactionDAO.getTotalSpend()));
+        income.setText(decimalFormat.format(transactionDAO.getTotalIncome()));
+        cost.setText(decimalFormat.format(transactionDAO.getTotalSpend()));
     }
 
 }

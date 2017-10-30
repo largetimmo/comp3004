@@ -67,6 +67,9 @@ public class TransactionDAO extends AbstractDAO{
         double total = 0;
         try {
             Cursor cursor = database.rawQuery(sqlquery,null);
+            if (cursor.getColumnCount()==0){
+                return 0.00;
+            }
             while (cursor.moveToNext()){
                 total+=cursor.getDouble(cursor.getColumnIndex("BALANCE"));
             }
@@ -81,6 +84,9 @@ public class TransactionDAO extends AbstractDAO{
         double total = 0;
         try {
             Cursor cursor = database.rawQuery(sqlquery, null);
+            if (cursor.getColumnCount()==1){
+                return 0.00;
+            }
             while (cursor.moveToNext()){
                 total+=cursor.getInt(cursor.getColumnIndex("BALANCE"));
             }
