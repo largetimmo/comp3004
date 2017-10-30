@@ -1,4 +1,4 @@
-package com.comp3004groupx.smartaccount.view;
+package com.comp3004groupx.smartaccount.module;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
