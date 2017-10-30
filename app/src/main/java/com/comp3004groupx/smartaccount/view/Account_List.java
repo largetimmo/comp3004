@@ -43,17 +43,21 @@ public class Account_List extends AppCompatActivity {
     List<String> accountTypeHeader;
     HashMap<String, List<String>> accountListItems;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_list);
-
+        //load content here
         setupOverView();
-
         setupExpList();
+    }
 
-
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        //reload page here
+        setupOverView();
+        setupExpList();
     }
 
     private void setupOverView() {
@@ -132,14 +136,7 @@ public class Account_List extends AppCompatActivity {
                 return true;
             }
         });
-
-
     }
-
-    private void prepareListData() {
-
-    }
-
 }
 
 
