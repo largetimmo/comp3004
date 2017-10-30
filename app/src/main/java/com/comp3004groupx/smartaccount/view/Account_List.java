@@ -153,7 +153,6 @@ public class Account_List extends AppCompatActivity {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
                 int iidd = accountDataBase.getAccount(accountListItems.get(accountTypeHeader.get(groupPosition)).get(childPosition).get(0)).getID();
-
                 Intent intent = new Intent(v.getContext(), AccountInfo.class);
                 intent.putExtra("ID", iidd);
                 startActivity(intent);

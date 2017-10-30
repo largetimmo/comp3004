@@ -11,9 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +20,6 @@ import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
-import com.comp3004groupx.smartaccount.module.DAO.IncomeTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
@@ -43,7 +40,6 @@ public class Transaction_List extends AppCompatActivity {
     LinearLayout trans_list;
     AccountDAO accountDAO;
     TransactionDAO transactionDAO;
-    IncomeTypeDAO incomeTypeDAO;
     PurchaseTypeDAO purchaseTypeDAO;
     boolean after_pause = false;
 
@@ -68,7 +64,6 @@ public class Transaction_List extends AppCompatActivity {
         //initialize DAOs
         accountDAO = new AccountDAO(getApplicationContext());
         transactionDAO = new TransactionDAO(getApplicationContext());
-        incomeTypeDAO = new IncomeTypeDAO(getApplicationContext());
         purchaseTypeDAO = new PurchaseTypeDAO(getApplicationContext());
 
         //set spinner items
@@ -84,7 +79,6 @@ public class Transaction_List extends AppCompatActivity {
 
         ArrayList<String> types = new ArrayList<>();
         types.add("ALL");
-        types.addAll(incomeTypeDAO.getAllTypes());
         types.addAll(purchaseTypeDAO.getalltypes());
 
 

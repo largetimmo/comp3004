@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 
 public class TransactionDAO extends AbstractDAO{
+    private static final String BASIC_SELECT_QUERY = "SELECT TRANS.ID AS ID, DATE,ACCOUNT.NAME AS NAME1, TRANS.BALANCE, NOTE, PURCHASETYPE.NAME AS NAME2 FROM TRANS INNER JOIN ACCOUNT ON TRANS.ACCOUNT = ACCOUNT.ID INNER JOIN PURCHASETYPE ON TRANS.TYPE = PURCHASETYPE.ID";
     public TransactionDAO(Context context){
         super(context);
         dbname = "TRANS";
@@ -21,13 +22,14 @@ public class TransactionDAO extends AbstractDAO{
     public ArrayList<Transaction> getAllTransaction(Date date_from, Date date_to, String account_name, String type){
         StringBuilder sqlquery = new StringBuilder();
         ArrayList<String> params_list = new ArrayList<>();
-        sqlquery.append("SELECT * FROM TRANS WHERE ");
+        sqlquery.append(BASIC_SELECT_QUERY);
+        sqlquery.append(" WHERE");
         if(!account_name.equals("ALL")){
-            sqlquery.append("ACCOUNT = ? AND");
+            sqlquery.append(" ACCOUNT.NAME = ? AND");
             params_list.add(account_name);
         }
         if(!type.equals("ALL")){
-            sqlquery.append(" TYPE = ? AND");
+            sqlquery.append(" PURCHASETYPE.NAME = ? AND");
             params_list.add(type);
         }
         sqlquery.append(" DATE>=? AND DATE<=?");
@@ -39,18 +41,10 @@ public class TransactionDAO extends AbstractDAO{
         for (String s:params_list){
             params_array[index++] = s;
         }
-        try {
-            Cursor cursor = database.rawQuery(sqlquery.toString(),params_array );
-            while (cursor.moveToNext()){
-                allTrans.add(parseTrans(cursor));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return allTrans;
+        return acquireData(sqlquery.toString(),params_array);
     }
     public Transaction getTransByID(int id){
-        String sqlquery = "SELECT * FROM TRANS WHERE ID = ?";
+        String sqlquery = BASIC_SELECT_QUERY+" WHERE TRANS.ID = ?";
         Transaction result = null;
         try {
             Cursor cursor = database.rawQuery(sqlquery,new String[]{Integer.toString(id)});
@@ -63,11 +57,11 @@ public class TransactionDAO extends AbstractDAO{
         return result;
     }
     public double getTotalSpend(){
-        String sqlquery = "SELECT BALANCE FROM TRANS WHERE BALANCE>0";
+        String sqlquery = BASIC_SELECT_QUERY+" WHERE TRANS.BALANCE>0";
         double total = 0;
         try {
             Cursor cursor = database.rawQuery(sqlquery,null);
-            if (cursor.getColumnCount()==0){
+            if (cursor.getCount()==0){
                 return 0.00;
             }
             while (cursor.moveToNext()){
@@ -80,11 +74,11 @@ public class TransactionDAO extends AbstractDAO{
         return total;
     }
     public double getTotalIncome(){
-        String sqlquery = "SELECT BALANCE FROM TRANS WHERE BALANCE<0";
+        String sqlquery = BASIC_SELECT_QUERY +" WHERE TRANS.BALANCE<0";
         double total = 0;
         try {
             Cursor cursor = database.rawQuery(sqlquery, null);
-            if (cursor.getColumnCount()==1){
+            if (cursor.getCount()==0){
                 return 0.00;
             }
             while (cursor.moveToNext()){
@@ -98,22 +92,22 @@ public class TransactionDAO extends AbstractDAO{
 
     }
     public ArrayList<Transaction> getTopTrans(int num){
-        String sqlquery = "SELECT * FROM TRANS ORDER BY DATE DESC LIMIT ?";
+        String sqlquery = BASIC_SELECT_QUERY + " ORDER BY DATE DESC LIMIT ?";
         return acquireData(sqlquery,new String[]{Integer.toString(num)});
     }
     public ArrayList<Transaction> getAllTransThisMonth(int year, int month){
-        return acquireData("SELECT * FROM TRANS WHERE DATE LIKE ?-?% ORDER BY ID",new String[]{Integer.toString(year),Integer.toString(month)});
+        return acquireData(BASIC_SELECT_QUERY+" WHERE DATE LIKE ?-?% ORDER BY ID",new String[]{Integer.toString(year),Integer.toString(month)});
     }
     public ArrayList<Transaction> getOneDayTrans(int year, int month, int day){
-        return acquireData("SELECT * FROM TRANS WHERE DATE = ?-?-? ORDER BY ID",new String[]{Integer.toString(year),Integer.toString(month),Integer.toString(day)});
+        return acquireData(BASIC_SELECT_QUERY + " WHERE DATE = ?-?-? ORDER BY ID",new String[]{Integer.toString(year),Integer.toString(month),Integer.toString(day)});
     }
     public ArrayList<Transaction> getAllTransaction(){
-        String sqlquery = "SELECT * FROM TRANS ORDER BY ID ASC";
+        String sqlquery = BASIC_SELECT_QUERY + " ORDER BY ID ASC";
         return acquireData(sqlquery,null);
     }
     public boolean addTrans(Transaction transaction){
         Boolean flag = false;
-        String sqlquery = "INSERT INTO TRANS(DATE,BALANCE,ACCOUNT,NOTE,TYPE) VALUES(?,?,?,?,?)";
+        String sqlquery = "INSERT INTO TRANS(DATE,BALANCE,ACCOUNT,NOTE,TYPE) VALUES(?,?,(SELECT ID FROM ACCOUNT WHERE NAME = ?),?,(SELECT ID FROM PURCHASETYPE WHERE NAME = ?))";
         try{
             database.execSQL(sqlquery,new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getAccount(),transaction.getNote(),transaction.getType()});
             AccountDAO accountDAO = new AccountDAO(context);
@@ -128,7 +122,7 @@ public class TransactionDAO extends AbstractDAO{
     }
     public boolean modifyTrans(Transaction transaction){
         Boolean flag = false;
-        String sqlquery = "UPDATE TRANS SET DATE = ?, BALANCE = ?, ACCOUNT =?, NOTE = ? ,TYPE = ? WHERE ID = ? ";
+        String sqlquery = "UPDATE TRANS SET DATE = ?, BALANCE = ?, ACCOUNT = (SELECT ID FROM ACCOUNT WHERE NAME = ?) , NOTE = ? ,TYPE = (SELECT ID FROM PURCHASETYPE WHERE NAME = ?) WHERE ID = ? ";
         try{
             database.execSQL(sqlquery, new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getAccount(),transaction.getNote(),transaction.getType(),transaction.getId()});
             flag = true;
@@ -148,7 +142,6 @@ public class TransactionDAO extends AbstractDAO{
         }
         return flag;
     }
-
     private ArrayList<Transaction> acquireData(String sqlquery, String[] paras){
         ArrayList<Transaction> transactions = new ArrayList<>();
         try {
@@ -163,12 +156,12 @@ public class TransactionDAO extends AbstractDAO{
     }
     private Transaction parseTrans(Cursor cursor){
         int id = cursor.getInt(cursor.getColumnIndex("ID"));
-        String account = cursor.getString(cursor.getColumnIndex("ACCOUNT"));
+        String account = cursor.getString(cursor.getColumnIndex("NAME1"));
         String date_string = cursor.getString(cursor.getColumnIndex("DATE"));
         Date date = new Date(date_string);
         Double balance = cursor.getDouble(cursor.getColumnIndex("BALANCE"));
         String note = cursor.getString(cursor.getColumnIndex("NOTE"));
-        String type = cursor.getString(cursor.getColumnIndex("TYPE"));
+        String type = cursor.getString(cursor.getColumnIndex("NAME2"));
         return new Transaction(id,date,balance,account,note,type);
     }
 }

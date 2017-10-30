@@ -30,12 +30,9 @@ import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
-import com.comp3004groupx.smartaccount.module.DAO.AutoDescDAO;
-import com.comp3004groupx.smartaccount.module.DAO.IncomeTypeDAO;
+import com.comp3004groupx.smartaccount.module.DAO.PAPDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
-
-import static com.comp3004groupx.smartaccount.R.id.parent;
 
 /**
  * Created by devray on 2017-09-16.
@@ -48,7 +45,6 @@ public class NewTransaction extends AppCompatActivity {
 
     AccountDAO accounts;
     PurchaseTypeDAO purchaseTypeList;
-    IncomeTypeDAO incomeTypeList;
 
     TabHost host;
 
@@ -368,14 +364,14 @@ public class NewTransaction extends AppCompatActivity {
                                 String accountName = expAccountSpinner.getSelectedItem().toString();
                                 String Note = expNote.getText().toString();
                                 String Type = expTypeSpinner.getSelectedItem().toString();
-                                AutoDescDAO autoDescDAO = new AutoDescDAO(getApplicationContext());
+                                PAPDAO PAPDAO = new PAPDAO(getApplicationContext());
                                 if (expAmount.getText().toString().equals("")) {
                                     Amount = 0;
                                 }
                                 //Create Transaction obj
                                 Transaction newTrans = new Transaction(perDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj
-                                if (autoDescDAO.addAutoDesc(newTrans)) {
+                                if (PAPDAO.addAutoDesc(newTrans)) {
                                     //Finish
                                     Context context = getApplicationContext();
                                     CharSequence text = "Success";
@@ -411,8 +407,7 @@ public class NewTransaction extends AppCompatActivity {
 
 //        setup type spinner
         incTypeSpinner = (Spinner) findViewById(R.id.incomeTypeSpinner);
-        incomeTypeList = new IncomeTypeDAO(getApplicationContext());
-        List<String> incomeTypeL = incomeTypeList.getAllTypes();         //list get at start
+        List<String> incomeTypeL = purchaseTypeList.getAllIncomeType();         //list get at start
 
         List<String> typeSpinnerList = new ArrayList<>();                       //list add to spinner
         typeSpinnerList.add("----Select Income Type--------------------------------");
@@ -521,7 +516,7 @@ public class NewTransaction extends AppCompatActivity {
                                 String accountName = incAccountSpinner.getSelectedItem().toString();
                                 String Note = incNote.getText().toString();
                                 String Type = incTypeSpinner.getSelectedItem().toString();
-                                AutoDescDAO autoDescDAO = new AutoDescDAO(getApplicationContext());
+                                PAPDAO PAPDAO = new PAPDAO(getApplicationContext());
                                 if (incAmount.getText().toString().equals("")) {
                                     Amount = 0;
                                 }
@@ -530,7 +525,7 @@ public class NewTransaction extends AppCompatActivity {
                                 //Create Transaction obj
                                 Transaction newTrans = new Transaction(perDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj
-                                if (autoDescDAO.addAutoDesc(newTrans)) {
+                                if (PAPDAO.addAutoDesc(newTrans)) {
                                     //Finish
                                     Context context = getApplicationContext();
                                     CharSequence text = "Success";
