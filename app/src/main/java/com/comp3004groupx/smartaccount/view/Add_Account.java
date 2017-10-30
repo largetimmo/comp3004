@@ -125,7 +125,7 @@ public class Add_Account extends AppCompatActivity{
         });
     }
     public boolean checkSpinner(String selectText){
-        String equalText = "----Select Expense Type------------------------------";
+        String equalText = "----Select Account Type------------------------------";
         if (selectText.equals(equalText)){
             return false;
         }

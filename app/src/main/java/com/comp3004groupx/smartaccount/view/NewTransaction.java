@@ -602,7 +602,7 @@ public class NewTransaction extends AppCompatActivity {
         CharSequence text = "";
 
         if (transType.equals("expense")) {
-            if (perDate.compareTo(currDate) != 1) {
+            if (perDate.compareTo(currDate) == 1) {
                 text = "Please check your first due day.";
                 noErr = false;
             }
