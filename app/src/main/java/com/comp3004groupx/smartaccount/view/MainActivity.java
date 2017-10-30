@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
         accounts.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(v.getContext(), Add_Account.class);
+                Intent intent = new Intent(v.getContext(), Account_List.class);
                 startActivity(intent);
             }
         });

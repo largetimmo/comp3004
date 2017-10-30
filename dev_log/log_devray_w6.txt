@@ -1,0 +1,18 @@
+Week_6
+101010914
+Runyu Jiang
+
+
+01
+Debug on the animation of statistics class.
+Fix:    change pixel to dp (expend and collapse to target height)
+Fix:    gradle (MPAndroidChart)
+
+02
+will finish the statistics class in future.
+focus on the AccountList for D2 this week.
+    finish the layout
+    learn to use ExpandableListview.
+    Debug on AccountList
+    Fix:    Add items to each header not showing    solved
+    Fix:    click on each account event not working solved

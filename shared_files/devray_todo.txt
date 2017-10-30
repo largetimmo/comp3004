@@ -22,14 +22,14 @@ newTrans done                                                                   
 
 trans list pass to alex                                                                             -02 TransList Class
 
+
 -03 Statistics
-    -01     res/layout
-        -01
+    -01 res/layout
+        --- expand and collapse the view.
+        -01 setup area
+        -02 table area
 
-
-
-
-    -02     java/view
+    -02 java/view
         -01
 
 
