@@ -1,0 +1,5 @@
+Junhao Chen ----------   101010964
+
+I have found the layout of main_activity is pretty ugly. So I started rewrite the main_activity
+
+ALL DAO classes are pretty stable now. Development on database is second priority now. First priority is working on View classes and layout file
