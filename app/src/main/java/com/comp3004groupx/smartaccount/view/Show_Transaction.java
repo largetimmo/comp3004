@@ -19,11 +19,9 @@ import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
-import com.comp3004groupx.smartaccount.module.DAO.IncomeTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +34,6 @@ public class Show_Transaction extends AppCompatActivity {
     PurchaseTypeDAO purchaseTypeList;
     AccountDAO accounts;
     TransactionDAO transactionList;
-    IncomeTypeDAO incomeTypeList;
     Transaction tran;
     Spinner yearSpinner;
     Spinner monthSpinner;
@@ -75,15 +72,14 @@ public class Show_Transaction extends AppCompatActivity {
 
         //Init Type Spinner
         purchaseTypeSpinner = (Spinner) findViewById(R.id.purchaseTypeSpinner);
+        purchaseTypeList = new PurchaseTypeDAO(getApplicationContext());
         if (status == 0){
             //Init purchaseTypeSpinner
-            purchaseTypeList = new PurchaseTypeDAO(getApplicationContext());
-            List<String> purchaseTypes = purchaseTypeList.getalltypes();
+            List<String> purchaseTypes = purchaseTypeList.getALLExpenseType();
             setTypeSpinner(purchaseTypeSpinner, purchaseTypes);
         }
         else if (status == 1){
-            incomeTypeList = new IncomeTypeDAO(getApplicationContext());
-            List<String > incomeTypes = incomeTypeList.getAllTypes();
+            List<String > incomeTypes = purchaseTypeList.getAllIncomeType();
             setTypeSpinner(purchaseTypeSpinner, incomeTypes);
         }
 

@@ -2,10 +2,6 @@ package com.comp3004groupx.smartaccount.view;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,8 +14,7 @@ import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AbstractDAO;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.AccountTypeDAO;
-import com.comp3004groupx.smartaccount.module.DAO.AutoDescDAO;
-import com.comp3004groupx.smartaccount.module.DAO.IncomeTypeDAO;
+import com.comp3004groupx.smartaccount.module.DAO.PAPDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
@@ -60,15 +55,12 @@ public class DebugDatabase extends Activity implements AdapterView.OnItemSelecte
                 dao = new AccountTypeDAO(getApplicationContext());
                 break;
             case 2:
-                dao = new AutoDescDAO(getApplicationContext());
+                dao = new PAPDAO(getApplicationContext());
                 break;
             case 3:
                 dao = new PurchaseTypeDAO(getApplicationContext());
                 break;
             case 4:
-                dao = new IncomeTypeDAO(getApplicationContext());
-                break;
-            case 5:
                 dao = new TransactionDAO(getApplicationContext());
                 break;
             default:

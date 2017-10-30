@@ -15,8 +15,9 @@ public class AccountTypeDAO  extends AbstractDAO{
         dbname = "ACCOUNTTYPE";
     }
     public ArrayList<String> getAllType(){
+        //done
         ArrayList<String> alltypes = new ArrayList<>();
-        String sqlquery = "SELECT * FROM ACCOUNTTYPE";
+        String sqlquery = "SELECT NAME FROM ACCOUNTTYPE";
         try{
             Cursor cursor = database.rawQuery(sqlquery,null);
             while (cursor.moveToNext()){
