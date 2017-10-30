@@ -45,6 +45,7 @@ public class Transaction_List extends AppCompatActivity {
     TransactionDAO transactionDAO;
     IncomeTypeDAO incomeTypeDAO;
     PurchaseTypeDAO purchaseTypeDAO;
+    boolean after_pause = false;
 
     Calendar calendar;
     DatePickerDialog.OnDateSetListener datePickerDialog;
@@ -135,7 +136,16 @@ public class Transaction_List extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        refreshList();
+        if (after_pause){
+            refreshList();
+            after_pause = false;
+        }
+
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        after_pause = true;
     }
     private void refreshList(){
         if (date_from.getText().toString().equals("") || date_to.getText().toString().equals("")){
