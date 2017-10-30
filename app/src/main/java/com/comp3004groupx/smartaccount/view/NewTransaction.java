@@ -33,6 +33,7 @@ import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PAPDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
+import com.comp3004groupx.smartaccount.module.DecimalDigitsInputFilter;
 
 /**
  * Created by devray on 2017-09-16.

@@ -27,6 +27,7 @@ import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
+import com.comp3004groupx.smartaccount.module.DecimalDigitsInputFilter;
 
 /**
  * Created by wuguanhong on 2017-10-24.

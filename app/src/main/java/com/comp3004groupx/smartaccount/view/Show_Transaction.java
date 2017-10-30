@@ -21,6 +21,7 @@ import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
+import com.comp3004groupx.smartaccount.module.DecimalDigitsInputFilter;
 
 import java.util.ArrayList;
 import java.util.List;
