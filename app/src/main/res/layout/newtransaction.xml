@@ -95,7 +95,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="60dp"
                         android:layout_weight="0.02"
                         android:orientation="horizontal">
 
@@ -138,7 +138,7 @@
                         android:id="@+id/addExpenseButton"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="60dp"
                         android:background="@color/orange"
                         android:text="ADD EXPENSE"
                         android:textColor="@android:color/black" />
@@ -198,7 +198,7 @@
                     <Switch
                         android:id="@+id/switch2"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="30dp"
                         android:layout_weight="0.02"
                         android:text="   Is a Per-Auth Payment?" />
 
@@ -212,7 +212,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="75dp"
+                        android:layout_height="60dp"
                         android:layout_weight="0.02"
                         android:orientation="horizontal">
 
@@ -255,7 +255,7 @@
                         android:id="@+id/addIncomeButton"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="60dp"
                         android:background="@color/orange"
                         android:text="ADD INCOME"
                         android:textColor="@android:color/black" />

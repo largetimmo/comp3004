@@ -47,6 +47,17 @@ public class MainActivity extends AppCompatActivity {
         transactionDAO = new TransactionDAO(getApplicationContext());
         decimalFormat = new DecimalFormat("0.00");
 
+        //debug start--------------------------------------------------------------------------------------
+        TextView title = (TextView) findViewById(R.id.main_title);
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),DebugDatabase.class);
+                startActivity(intent);
+            }
+        });
+        //debug end--------------------------------------------------------------------------------------
+
         transaction.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), Transaction_List.class);
