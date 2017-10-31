@@ -9,12 +9,11 @@
 
     <Space
         android:layout_width="40dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/accountTypeHeader"
-        android:layout_width="351dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="typename"
         android:textSize="20sp" />
