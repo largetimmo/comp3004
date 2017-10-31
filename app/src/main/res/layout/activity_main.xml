@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Today income"
+                android:text="Total income"
                 android:textColor="#712f0b"
                 android:textSize="26sp" />
 
@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Today Cost"
+                android:text="Total Cost"
                 android:textColor="#712f0b"
                 android:textSize="26sp" />
 

@@ -46,6 +46,8 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlquery  = "INSERT INTO PURCHASETYPE(NAME,INCOME) VALUES('Utility',0)";
         try {
             db.execSQL(sqlquery);
+            sqlquery = "INSERT INTO PURCHASETYPE(NAME,INCOME) VALUES('Salary',1);";
+            db.execSQL(sqlquery);
         }catch (Exception e){
             e.printStackTrace();
         }
