@@ -18,6 +18,7 @@ import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.AccountTypeDAO;
 import com.comp3004groupx.smartaccount.module.DecimalDigitsInputFilter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +36,13 @@ public class Edit_Account extends AppCompatActivity {
     Account account;
     Button editButton;
     Button deleteButton;
+    DecimalFormat decimalFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_account);
-
+        decimalFormat = new DecimalFormat("0.00");
         //Set button
         editButton = (Button) findViewById(R.id.editButton);
         deleteButton = (Button) findViewById(R.id.deleteButton);
@@ -69,7 +71,7 @@ public class Edit_Account extends AppCompatActivity {
         amount = (EditText) findViewById(R.id.Amount);
         amount.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
         //accountAmount = checkAmount(account.getType().toString(), accountAmount);
-        amount.setText(Double.toString(accountAmount));
+        amount.setText(decimalFormat.format(accountAmount));
         //Delete this account
         deleteAccount();
 
