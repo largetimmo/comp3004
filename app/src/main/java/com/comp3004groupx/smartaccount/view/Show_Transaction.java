@@ -23,6 +23,7 @@ import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 import com.comp3004groupx.smartaccount.module.DecimalDigitsInputFilter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Show_Transaction extends AppCompatActivity {
     EditText notes;
     Button saveButton;
     Button deleteButton;
-
+    DecimalFormat decimalFormat;
     List<Integer> Day = new ArrayList<>();
     int status = 0;  //0 == purchase, 1 == income
 
@@ -56,7 +57,7 @@ public class Show_Transaction extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_transaction);
-
+        decimalFormat = new DecimalFormat("0.00");
         //Get button
         saveButton = (Button) findViewById(R.id.saveButton);
         deleteButton = (Button) findViewById(R.id.deleteButton);
@@ -115,15 +116,15 @@ public class Show_Transaction extends AppCompatActivity {
         amount = (EditText) findViewById(R.id.amount);
         amount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
         if (status == 0){
-            amount.setText(Double.toString(tran.getAmount()));
+            amount.setText(decimalFormat.format(tran.getAmount()));
         }
         else {
-            amount.setText(Double.toString(-1*tran.getAmount()));
+            amount.setText(decimalFormat.format(-1*tran.getAmount()));
         }
 
         //Set notes
         notes = (EditText) findViewById(R.id.notes);
-        if (tran.getNote().toString().equals("")){
+        if (tran.getNote().equals("")){
             notes.setHint("Notes");
         }
         else {
@@ -325,7 +326,6 @@ public class Show_Transaction extends AppCompatActivity {
         if (upAmount == 0){
             noError = false;
             toast("New Amount can't be 0");
-            return noError;
         }
         return noError;
     }
@@ -334,8 +334,7 @@ public class Show_Transaction extends AppCompatActivity {
         year = Integer.parseInt(yearSpinner.getSelectedItem().toString());
         month = Integer.parseInt(monthSpinner.getSelectedItem().toString());
         day = Integer.parseInt(daySpinner.getSelectedItem().toString());
-        Date Date = new Date(year, month, day);
-        return Date;
+        return new Date(year, month, day);
     }
     public void toast(String text){
         Context context = getApplicationContext();

@@ -36,7 +36,6 @@ public class DebugDatabase extends Activity implements AdapterView.OnItemSelecte
         database_name_list.add("ACCOUNTTYPE");
         database_name_list.add("AUTODESC");
         database_name_list.add("PURCHASETYPE");
-        database_name_list.add("INCOMETYPE");
         database_name_list.add("TRANS");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,database_name_list);
         spinner.setAdapter(adapter);

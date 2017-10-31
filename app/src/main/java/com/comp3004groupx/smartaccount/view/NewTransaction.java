@@ -189,56 +189,8 @@ public class NewTransaction extends AppCompatActivity {
     public Date getDate() {
 
         Calendar newCalendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
-        String[] date = dateFormat.format(newCalendar.getTime()).split(" ");
-
-        int year, month, day;
-
-        year = Integer.parseInt(date[2]);
-
-        switch (date[1]) {
-            case "Jan":
-                month = 1;
-                break;
-            case "Feb":
-                month = 2;
-                break;
-            case "Mar":
-                month = 3;
-                break;
-            case "Apr":
-                month = 4;
-                break;
-            case "May":
-                month = 5;
-                break;
-            case "Jun":
-                month = 6;
-                break;
-            case "Jul":
-                month = 7;
-                break;
-            case "Aug":
-                month = 8;
-                break;
-            case "Sep":
-                month = 9;
-                break;
-            case "Oct":
-                month = 10;
-                break;
-            case "Nov":
-                month = 11;
-                break;
-            case "Dec":
-                month = 12;
-                break;
-            default:
-                month = 0;
-                break;
-        }
-        day = Integer.parseInt(date[0]);
-        Date currDate = new Date(year, month, day);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currDate = new Date(dateFormat.format(newCalendar.getTime()));
         return currDate;
     }
 
@@ -258,7 +210,7 @@ public class NewTransaction extends AppCompatActivity {
 //        setup type spinner
         expTypeSpinner = (Spinner) findViewById(R.id.expenseTypeSpinner);
         purchaseTypeList = new PurchaseTypeDAO(getApplicationContext());
-        List<String> expenseTypeList = purchaseTypeList.getalltypes();         //list get at start
+        List<String> expenseTypeList = purchaseTypeList.getALLExpenseType();         //list get at start
 
         List<String> typeSpinnerList = new ArrayList<>();                       //list add to spinner
         typeSpinnerList.add("----Select Expense Type------------------------------");

@@ -13,6 +13,8 @@ import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.AccountTypeDAO;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by devray on 2017-09-16.
  */
@@ -27,6 +29,7 @@ public class AccountInfo extends AppCompatActivity {
     TextView accountType;
     TextView accountPerBalance;
     Button editButton;
+    DecimalFormat decimalFormat;
     int accountId;
     boolean after_pause = false;
 
@@ -34,6 +37,7 @@ public class AccountInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accountinfo);
+        decimalFormat = new DecimalFormat("0.00");
 
         //Get account from last activity
         Intent intent = getIntent();
@@ -109,13 +113,14 @@ public class AccountInfo extends AppCompatActivity {
             double accountBalance = account.getBalance();
             amount = (TextView) findViewById(R.id.amount);
             checkAmount(type, accountBalance);
-            amount.setText(Double.toString(accountBalance));
+
+            amount.setText(decimalFormat.format(accountBalance));
 
 
             //Show per balance
             double perBalance = accountBalance - account.getReal_balance();
             accountPerBalance = (TextView) findViewById(R.id.perBalance);
-            accountPerBalance.setText(Double.toString(perBalance));
+            accountPerBalance.setText(decimalFormat.format(perBalance));
         }
     }
 }
