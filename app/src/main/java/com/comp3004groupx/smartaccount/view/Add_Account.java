@@ -104,6 +104,9 @@ public class Add_Account extends AppCompatActivity{
                     toast.show();
                 }
                 else{
+                    if (accountType.equals("Credit Card")){
+                        amount *= -1;
+                    }
                     Account newAccount = new Account(accountName, accountType, amount,amount);
                     isCreate = accountDAO.addAccount(newAccount);
                     if (isCreate == true){

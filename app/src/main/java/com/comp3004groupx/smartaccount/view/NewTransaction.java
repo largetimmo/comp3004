@@ -569,16 +569,17 @@ public class NewTransaction extends AppCompatActivity {
             }
         }
         if (transType.equals("income")) {
-            if (expAmount.getText().toString().equals("")) {
+            if (incAmount.getText().toString().equals("")) {
                 text = "Please enter amount.";
                 noErr = false;
             }
-            if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
-                text = "Please select a accountinfo.";
+
+            if (incTypeSpinner.getSelectedItem().toString().equals("----Select Income Type--------------------------------")) {
+                text = "Please select a type.";
                 noErr = false;
             }
-            if (expTypeSpinner.getSelectedItem().toString().equals("----Select Income Type--------------------------------")) {
-                text = "Please select a type.";
+            if (incAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
+                text = "Please select a accountinfo.";
                 noErr = false;
             }
 
