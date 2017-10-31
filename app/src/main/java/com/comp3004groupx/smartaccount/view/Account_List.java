@@ -9,6 +9,7 @@ import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.AccountTypeDAO;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,10 +46,13 @@ public class Account_List extends AppCompatActivity {
 
     ImageButton addAccountButton;
 
+    DecimalFormat decimalFormat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_list);
+        decimalFormat = new DecimalFormat("0.00");
         //load content here
         setupOverView();
         setupExpList();
@@ -71,8 +75,8 @@ public class Account_List extends AppCompatActivity {
         ArrayList<Account> accountList = accountDataBase.getAllAccount();
 
         //calculate
-        Double balance = Double.valueOf(0);
-        Double debt = Double.valueOf(0);
+        Double balance = 0.00;
+        Double debt = 0.00;
         for (int i = 0; i < accountList.size(); i++) {
             if (accountList.get(i).getType().equals("Credit Card")) {
                 if (accountList.get(i).getBalance() > 0) {
@@ -92,8 +96,8 @@ public class Account_List extends AppCompatActivity {
         //setup
         balanceNumber = (TextView) findViewById(R.id.balanceNumber);
         debtNumber = (TextView) findViewById(R.id.debtNumber);
-        balanceNumber.setText(balance.toString());
-        debtNumber.setText(debt.toString());
+        balanceNumber.setText(decimalFormat.format(balance));
+        debtNumber.setText(decimalFormat.format(debt));
 
     }
 
@@ -102,8 +106,6 @@ public class Account_List extends AppCompatActivity {
         expListView = (ExpandableListView) findViewById(R.id.accountExpList);
         accountTypeHeader = new ArrayList<>();
         accountListItems = new HashMap<>();
-        accountDataBase = new AccountDAO(getApplicationContext());
-        accountTypeDataBase = new AccountTypeDAO(getApplicationContext());
         final ArrayList<Account> accountList = accountDataBase.getAllAccount();
         ArrayList<String> accountTypeList = accountTypeDataBase.getAllType();
         //setup header

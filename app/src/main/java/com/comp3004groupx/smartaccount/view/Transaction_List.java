@@ -2,6 +2,7 @@ package com.comp3004groupx.smartaccount.view;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +44,7 @@ public class Transaction_List extends AppCompatActivity {
     TransactionDAO transactionDAO;
     PurchaseTypeDAO purchaseTypeDAO;
     boolean after_pause = false;
+    DecimalFormat decimalFormat;
 
     Calendar calendar;
     DatePickerDialog.OnDateSetListener datePickerDialog;
@@ -53,6 +56,9 @@ public class Transaction_List extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction_list);
+
+        decimalFormat = new DecimalFormat("0.00");
+
         //link to widgets
         Button search_button = (Button)findViewById(R.id.trans_list_search);
         account_spinner = (Spinner) findViewById(R.id.trans_list_account_list);
@@ -162,7 +168,7 @@ public class Transaction_List extends AppCompatActivity {
                 trans_list.removeAllViews();
                 for (Transaction t: alltrans){
                     final LinearLayout parent = new LinearLayout(getApplicationContext());
-                    parent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,120));
+                    parent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     parent.setOrientation(LinearLayout.VERTICAL);
                     LinearLayout top = new LinearLayout(getApplicationContext());
                     LinearLayout bottom = new LinearLayout(getApplicationContext());
@@ -175,8 +181,15 @@ public class Transaction_List extends AppCompatActivity {
                     TextView account_name = new TextView(getApplicationContext());
                     TextView date = new TextView(getApplicationContext());
                     type.setText(t.getType());
-                    //TODO: identify income or outcome
-                    amount.setText(Double.toString(t.getAmount()));
+
+                    if (t.getAmount() >0){
+                        amount.setText(decimalFormat.format(t.getAmount()));
+                        amount.setTextColor(getResources().getColor(R.color.red));
+                    }else{
+                        amount.setText(decimalFormat.format(-1*t.getAmount()));
+                        amount.setTextColor(getResources().getColor(R.color.green));
+                    }
+
                     account_name.setText(t.getAccount());
                     date.setText(t.getDate().toString());
 

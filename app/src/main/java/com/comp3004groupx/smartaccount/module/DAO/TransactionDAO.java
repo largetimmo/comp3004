@@ -7,6 +7,7 @@ import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class TransactionDAO extends AbstractDAO{
-    private static final String BASIC_SELECT_QUERY = "SELECT TRANS.ID AS ID, DATE,ACCOUNT.NAME AS NAME1, TRANS.BALANCE, NOTE, PURCHASETYPE.NAME AS NAME2 FROM TRANS INNER JOIN ACCOUNT ON TRANS.ACCOUNT = ACCOUNT.ID INNER JOIN PURCHASETYPE ON TRANS.TYPE = PURCHASETYPE.ID";
+    private static final String BASIC_SELECT_QUERY = "SELECT TRANS.ID AS ID, DATE,ACCOUNT.NAME AS NAME1, TRANS.AMOUNT, NOTE, PURCHASETYPE.NAME AS NAME2 FROM TRANS INNER JOIN ACCOUNT ON TRANS.ACCOUNT = ACCOUNT.ID INNER JOIN PURCHASETYPE ON TRANS.TYPE = PURCHASETYPE.ID";
     public TransactionDAO(Context context){
         super(context);
         dbname = "TRANS";
@@ -57,7 +58,7 @@ public class TransactionDAO extends AbstractDAO{
         return result;
     }
     public double getTotalSpend(){
-        String sqlquery = BASIC_SELECT_QUERY+" WHERE TRANS.BALANCE>0";
+        String sqlquery = BASIC_SELECT_QUERY+" WHERE TRANS.AMOUNT>0";
         double total = 0;
         try {
             Cursor cursor = database.rawQuery(sqlquery,null);
@@ -65,7 +66,7 @@ public class TransactionDAO extends AbstractDAO{
                 return 0.00;
             }
             while (cursor.moveToNext()){
-                total+=cursor.getDouble(cursor.getColumnIndex("BALANCE"));
+                total+=cursor.getDouble(cursor.getColumnIndex("AMOUNT"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -74,7 +75,7 @@ public class TransactionDAO extends AbstractDAO{
         return total;
     }
     public double getTotalIncome(){
-        String sqlquery = BASIC_SELECT_QUERY +" WHERE TRANS.BALANCE<0";
+        String sqlquery = BASIC_SELECT_QUERY +" WHERE TRANS.AMOUNT<0";
         double total = 0;
         try {
             Cursor cursor = database.rawQuery(sqlquery, null);
@@ -82,7 +83,7 @@ public class TransactionDAO extends AbstractDAO{
                 return 0.00;
             }
             while (cursor.moveToNext()){
-                total+=cursor.getInt(cursor.getColumnIndex("BALANCE"));
+                total+=cursor.getInt(cursor.getColumnIndex("AMOUNT"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -107,7 +108,7 @@ public class TransactionDAO extends AbstractDAO{
     }
     public boolean addTrans(Transaction transaction){
         Boolean flag = false;
-        String sqlquery = "INSERT INTO TRANS(DATE,BALANCE,ACCOUNT,NOTE,TYPE) VALUES(?,?,(SELECT ID FROM ACCOUNT WHERE NAME = ?),?,(SELECT ID FROM PURCHASETYPE WHERE NAME = ?))";
+        String sqlquery = "INSERT INTO TRANS(DATE,AMOUNT,ACCOUNT,NOTE,TYPE) VALUES(?,?,(SELECT ID FROM ACCOUNT WHERE NAME = ?),?,(SELECT ID FROM PURCHASETYPE WHERE NAME = ?))";
         try{
             database.execSQL(sqlquery,new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getAccount(),transaction.getNote(),transaction.getType()});
             AccountDAO accountDAO = new AccountDAO(context);
@@ -122,8 +123,14 @@ public class TransactionDAO extends AbstractDAO{
     }
     public boolean modifyTrans(Transaction transaction){
         Boolean flag = false;
-        String sqlquery = "UPDATE TRANS SET DATE = ?, BALANCE = ?, ACCOUNT = (SELECT ID FROM ACCOUNT WHERE NAME = ?) , NOTE = ? ,TYPE = (SELECT ID FROM PURCHASETYPE WHERE NAME = ?) WHERE ID = ? ";
+        String sqlquery = "UPDATE TRANS SET DATE = ?, AMOUNT = ?, ACCOUNT = (SELECT ID FROM ACCOUNT WHERE NAME = ?) , NOTE = ? ,TYPE = (SELECT ID FROM PURCHASETYPE WHERE NAME = ?) WHERE ID = ? ";
         try{
+            Transaction trans = this.getTransByID(transaction.getId());
+            double amount_diff = Double.parseDouble(new DecimalFormat("0.00").format(transaction.getAmount()-trans.getAmount()));
+            AccountDAO accountDAO = new AccountDAO(context);
+            Account account = accountDAO.getAccount(transaction.getAccount());
+            account.setBalance(account.getBalance()+amount_diff);
+            accountDAO.updateAccount(account);
             database.execSQL(sqlquery, new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getAccount(),transaction.getNote(),transaction.getType(),transaction.getId()});
             flag = true;
         }catch (Exception e){
@@ -159,7 +166,7 @@ public class TransactionDAO extends AbstractDAO{
         String account = cursor.getString(cursor.getColumnIndex("NAME1"));
         String date_string = cursor.getString(cursor.getColumnIndex("DATE"));
         Date date = new Date(date_string);
-        Double balance = cursor.getDouble(cursor.getColumnIndex("BALANCE"));
+        Double balance = cursor.getDouble(cursor.getColumnIndex("AMOUNT"));
         String note = cursor.getString(cursor.getColumnIndex("NOTE"));
         String type = cursor.getString(cursor.getColumnIndex("NAME2"));
         return new Transaction(id,date,balance,account,note,type);
