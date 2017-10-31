@@ -35,6 +35,7 @@ public class Edit_Account extends AppCompatActivity {
     Account account;
     Button editButton;
     Button deleteButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class Edit_Account extends AppCompatActivity {
 
         //Get account from last activity
         Intent intent = getIntent();
-        int accountId = intent.getIntExtra("ID",0);
+        int accountId = intent.getIntExtra("ID", 0);
         accountDAO = new AccountDAO(getApplicationContext());
         account = accountDAO.getAccount(accountId);
 
@@ -66,9 +67,9 @@ public class Edit_Account extends AppCompatActivity {
         //Set Account Amount
         double accountAmount = account.getBalance();
         amount = (EditText) findViewById(R.id.Amount);
-        amount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
+        amount.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
+        //accountAmount = checkAmount(account.getType().toString(), accountAmount);
         amount.setText(Double.toString(accountAmount));
-
         //Delete this account
         deleteAccount();
 
@@ -76,45 +77,50 @@ public class Edit_Account extends AppCompatActivity {
         editAccount();
 
     }
-    public void toast(String text){
+
+    public void toast(String text) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
+
     public void setUpAccountTypeSpinner(Spinner accountTypeSpinner) {
         AccountType = new AccountTypeDAO(getApplicationContext());
         List<String> AccountTypeList = AccountType.getAllType();
         List<String> typeSpinnerList = new ArrayList<>();
-        for (int i= 0; i < AccountTypeList.size(); i++){
+        for (int i = 0; i < AccountTypeList.size(); i++) {
             typeSpinnerList.add(AccountTypeList.get(i));
         }
         ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, typeSpinnerList);
         typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountTypeSpinner.setAdapter(typeDataAdapter);
     }
-    public int getTypePosition (Spinner TypeSpinner, String toComp){
-        for (int i = 0; i<TypeSpinner.getAdapter().getCount(); i++){
-            String checkS=TypeSpinner.getAdapter().getItem(i).toString();
-            if(toComp.equals(TypeSpinner.getAdapter().getItem(i).toString())){
-                int check =i;
+
+    public int getTypePosition(Spinner TypeSpinner, String toComp) {
+        for (int i = 0; i < TypeSpinner.getAdapter().getCount(); i++) {
+            String checkS = TypeSpinner.getAdapter().getItem(i).toString();
+            if (toComp.equals(TypeSpinner.getAdapter().getItem(i).toString())) {
+                int check = i;
                 return i;
             }
         }
         return 0;
     }
-    public void deleteAccount(){
+
+    public void deleteAccount() {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (accountDAO.removeAccount(account.getID())){
+                if (accountDAO.removeAccount(account.getID())) {
                     toast("Success");
                     finish();
                 }
             }
         });
     }
-    public void editAccount(){
+
+    public void editAccount() {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,12 +128,13 @@ public class Edit_Account extends AppCompatActivity {
                 double accountAmount = Double.parseDouble(amount.getText().toString());
                 String accountType = accountTypeSpinner.getSelectedItem().toString();
                 double amountDifference = accountAmount - account.getBalance();
-                if (errorChecking(accountName)){
+                accountAmount = checkAmount(accountType, accountAmount);
+                if (errorChecking(accountName)) {
                     account.setName(accountName);
                     account.setType(accountType);
                     account.setBalance(accountAmount);
-                    account.setReal_balance(account.getRealAmount()+amountDifference);
-                    if (accountDAO.updateAccount(account)){
+                    account.setReal_balance(account.getRealAmount() + amountDifference);
+                    if (accountDAO.updateAccount(account)) {
                         toast("Success");
                         finish();
                     }
@@ -135,12 +142,24 @@ public class Edit_Account extends AppCompatActivity {
             }
         });
     }
-    public boolean errorChecking (String accountName){
+
+    public boolean errorChecking(String accountName) {
         boolean noError = true;
-        if (accountName.equals("")){
+        if (accountName.equals("")) {
             noError = false;
             toast("Account Name can not empty");
         }
         return noError;
     }
+
+    public double checkAmount(String accountType, double accountAmount) {
+        if (accountType.equals("Credit Card")) {
+            if (accountAmount < 0) {
+                accountAmount *= -1;
+                return accountAmount;
+            }
+        }
+        return accountAmount;
+    }
+
 }

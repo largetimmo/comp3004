@@ -74,6 +74,16 @@ public class AccountInfo extends AppCompatActivity {
         after_pause = true;
     }
 
+    public double checkAmount(String accountType, double accountAmount) {
+        if (accountType.equals("Credit Card")) {
+            if (accountAmount < 0) {
+                accountAmount *= -1;
+                return accountAmount;
+            }
+        }
+        return accountAmount;
+    }
+
     public void freshInfo(int accountId) {
         accountDAO = new AccountDAO(getApplicationContext());
         account = accountDAO.getAccount(accountId);
@@ -87,15 +97,20 @@ public class AccountInfo extends AppCompatActivity {
             accountTitle = (TextView) findViewById(R.id.accountTitle);
             accountTitle.setText(accountName + " Information");
 
-            //Show Account Balance
-            double accountBalance = account.getBalance();
-            amount = (TextView) findViewById(R.id.amount);
-            amount.setText(Double.toString(accountBalance));
+
+
 
             //Show Account Type
             String type = account.getType();
             accountType = (TextView) findViewById(R.id.accountType);
             accountType.setText(type);
+
+            //Show Account Balance
+            double accountBalance = account.getBalance();
+            amount = (TextView) findViewById(R.id.amount);
+            checkAmount(type, accountBalance);
+            amount.setText(Double.toString(accountBalance));
+
 
             //Show per balance
             double perBalance = accountBalance - account.getReal_balance();
