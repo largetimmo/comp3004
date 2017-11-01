@@ -1,165 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"><![CDATA[
     android:orientation="vertical">
 
-    <TabHost
-        android:id="@+id/tabs"
+    ]]>
+
+    <TextView
+        android:id="@+id/main_title5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="40dp"
+        android:background="@color/orange"
+        android:text="Pre-Auth Payment List"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!--whole tab-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <!--tab text-->
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!--tab content-->
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <!--expense-->
-                <LinearLayout
-                    android:id="@+id/expense"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-
-                    <!--enternumber-->
-
-                    <EditText
-                        android:id="@+id/expenseAmount"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_weight="0.02"
-                        android:ems="10"
-                        android:inputType="numberDecimal"
-                        android:selectAllOnFocus="false"
-                        android:hint="Amount"
-                        android:textAlignment="textEnd"
-                        android:textSize="50sp" />
-
-                    <!--translist-->
-
-                    <Spinner
-                        android:id="@+id/expenseTypeSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="0.02" />
-
-                    <!--accountlist-->
-                    <View
-                        android:layout_width="368dp"
-                        android:layout_height="1dp"
-                        android:background="#000000" />
-
-                    <Spinner
-                        android:id="@+id/expenseAccountSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="0.02" />
-
-                    <!-- add expense note box-->
-
-                    <!--addexpense-->
-                    <View
-                        android:layout_width="368dp"
-                        android:layout_height="1dp"
-                        android:background="#000000" />
-                    <EditText
-                        android:id="@+id/expenseNotes"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:ems="10"
-                        android:gravity="top"
-                        android:hint="Notes"
-                        android:inputType="textMultiLine"
-                        android:maxLength="200" />
-
-                    <Button
-                        android:id="@+id/addExpenseButton"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:background="?attr/colorControlHighlight"
-                        android:text="ADD EXPENSE"
-                        android:textColor="@android:color/black" />
-
-                </LinearLayout>
-
-
-                <!--income-->
-                <LinearLayout
-                    android:id="@+id/income"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-
-
-                    <!--enternumber-->
-                    <EditText
-                        android:id="@+id/incomeAmount"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_weight="0.02"
-                        android:ems="10"
-                        android:inputType="numberDecimal"
-                        android:selectAllOnFocus="false"
-                        android:hint="Amount"
-                        android:textAlignment="textEnd"
-                        android:textSize="50sp" />
-
-                    <!--transtype-->
-                    <Spinner
-                        android:id="@+id/incomeTypeSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="0.02" />
-
-                    <!--accounttype-->
-                    <Spinner
-                        android:id="@+id/incomeAccountSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="0.02" />
-
-                    <!-- add income note box-->
-
-                    <EditText
-                        android:id="@+id/incomeNotes"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:ems="10"
-                        android:gravity="top"
-                        android:hint="Notes"
-                        android:maxLength="200"
-                        android:inputType="textMultiLine" />
-
-                    <!--addincome-->
-                    <Button
-                        android:id="@+id/addIncomeButton"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:background="?attr/colorControlHighlight"
-                        android:text="ADD INCOME"
-                        android:textColor="@android:color/black" />
-
-                </LinearLayout>
-
-
-            </FrameLayout>
-        </LinearLayout>
-    </TabHost>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

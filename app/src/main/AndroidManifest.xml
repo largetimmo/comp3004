@@ -35,6 +35,7 @@
         <activity android:name=".view.View_Transaction"></activity>
         <activity android:name=".view.Transaction_List"></activity>
         <activity android:name=".view.DebugDatabase"/>
+        <activity android:name=".view.User_Manager"></activity>
     </application>
 
 </manifest>
