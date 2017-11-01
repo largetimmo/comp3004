@@ -88,6 +88,12 @@ public class Edit_Purchase_Type extends AppCompatActivity {
         //Default is Expense Spinner
         setExpenseSpinner();
 
+        if (status == 0) {
+            setExpenseSpinner();
+        } else {
+            setIncomeSpinner();
+        }
+
         swith.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -104,22 +110,20 @@ public class Edit_Purchase_Type extends AppCompatActivity {
     }
 
 
-
     public void createPurchaseType() {
         createButton = (Button) findViewById(R.id.createButton);
         newTypeName = (EditText) findViewById(R.id.newTypeName);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (status == 0){
+                if (status == 0) {
                     purchaseTypeDAO.addPurchaseType(newTypeName.getText().toString());
                     toast("Sucess");
                     Intent intent = new Intent(view.getContext(), Edit_Purchase_Type.class);
                     intent.putExtra("key", status);
                     startActivity(intent);
                     finish();
-                }
-                else{
+                } else {
                     purchaseTypeDAO.addIncomeType(newTypeName.getText().toString());
                     toast("Sucess");
                     Intent intent = new Intent(view.getContext(), Edit_Purchase_Type.class);
@@ -137,6 +141,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (deleteErrorChecking()) {
                     if (status == 0) {
                         purchaseTypeDAO.removeType(purchaseSpinner.getSelectedItem().toString());
                         toast("Success");
@@ -144,8 +149,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
                         intent.putExtra("key", status);
                         startActivity(intent);
                         finish();
-                    }
-                    else {
+                    } else {
                         purchaseTypeDAO.removeType(purchaseSpinner.getSelectedItem().toString());
                         toast("Success");
                         Intent intent = new Intent(view.getContext(), Edit_Purchase_Type.class);
@@ -154,9 +158,19 @@ public class Edit_Purchase_Type extends AppCompatActivity {
                         finish();
                     }
                 }
-
+            }
         });
 
+    }
+
+    public boolean deleteErrorChecking() {
+        boolean noError = true;
+        purchaseSpinner = (Spinner) findViewById(R.id.purchaseSpinner);
+        if (purchaseSpinner.getSelectedItem().toString().equals("Create a new expense type") || purchaseSpinner.getSelectedItem().toString().equals("Create a new income type")) {
+            noError = false;
+            toast("Please choose one type which you want to delete");
+        }
+        return noError;
     }
 
     public void toast(String text) {
