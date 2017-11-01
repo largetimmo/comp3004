@@ -41,7 +41,7 @@ public class Setting extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), Edit_Purchase_Type.class);
-                intent.putExtra("key", 0);
+               // intent.putExtra("key", 0);
                 startActivity(intent);
             }
         });

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -39,12 +40,15 @@ public class Edit_Purchase_Type extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_purchase_type);
 
-        //This code is for refresh
-        Intent intent = getIntent();
-        status = intent.getIntExtra("key", 0);
+//        //This code is for refresh
+//        Intent intent = getIntent();
+//        status = intent.getIntExtra("key", 0);
 
         //Set switch status
         setSwitchStatus();
+
+        //Spinner UI design
+        spinnerUI();
 
         //Delete or Create
         deletePurchaseType();
@@ -53,6 +57,26 @@ public class Edit_Purchase_Type extends AppCompatActivity {
 
     }
 
+    public void spinnerUI(){
+        purchaseSpinner = (Spinner) findViewById(R.id.purchaseSpinner);
+        newTypeName = (EditText) findViewById(R.id.newTypeName);
+        purchaseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (purchaseSpinner.getSelectedItem().toString().equals("Create a new expense type") || purchaseSpinner.getSelectedItem().toString().equals("Create a new income type")){
+                    newTypeName.setVisibility(View.VISIBLE);
+                }
+                else {
+                    newTypeName.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
 
     public void setExpenseSpinner() {
         purchaseSpinner = (Spinner) findViewById(R.id.purchaseSpinner);
@@ -119,17 +143,13 @@ public class Edit_Purchase_Type extends AppCompatActivity {
                 if (status == 0) {
                     purchaseTypeDAO.addPurchaseType(newTypeName.getText().toString());
                     toast("Sucess");
-                    Intent intent = new Intent(view.getContext(), Edit_Purchase_Type.class);
-                    intent.putExtra("key", status);
-                    startActivity(intent);
-                    finish();
+                    setExpenseSpinner();
+                    newTypeName.setText("");
                 } else {
                     purchaseTypeDAO.addIncomeType(newTypeName.getText().toString());
                     toast("Sucess");
-                    Intent intent = new Intent(view.getContext(), Edit_Purchase_Type.class);
-                    intent.putExtra("key", status);
-                    startActivity(intent);
-                    finish();
+                    setIncomeSpinner();
+                    newTypeName.setText("");
                 }
             }
         });
@@ -145,17 +165,11 @@ public class Edit_Purchase_Type extends AppCompatActivity {
                     if (status == 0) {
                         purchaseTypeDAO.removeType(purchaseSpinner.getSelectedItem().toString());
                         toast("Success");
-                        Intent intent = new Intent(view.getContext(), Edit_Purchase_Type.class);
-                        intent.putExtra("key", status);
-                        startActivity(intent);
-                        finish();
+                        setExpenseSpinner();
                     } else {
                         purchaseTypeDAO.removeType(purchaseSpinner.getSelectedItem().toString());
                         toast("Success");
-                        Intent intent = new Intent(view.getContext(), Edit_Purchase_Type.class);
-                        intent.putExtra("key", status);
-                        startActivity(intent);
-                        finish();
+                        setIncomeSpinner();
                     }
                 }
             }
