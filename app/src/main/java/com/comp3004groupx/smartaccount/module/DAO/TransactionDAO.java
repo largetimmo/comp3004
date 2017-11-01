@@ -90,8 +90,8 @@ public class TransactionDAO extends AbstractDAO{
         }
         total*=-1;
         return total;
-
     }
+
     public ArrayList<Transaction> getTopTrans(int num){
         String sqlquery = BASIC_SELECT_QUERY + " ORDER BY DATE DESC LIMIT ?";
         return acquireData(sqlquery,new String[]{Integer.toString(num)});
@@ -125,12 +125,10 @@ public class TransactionDAO extends AbstractDAO{
         Boolean flag = false;
         String sqlquery = "UPDATE TRANS SET DATE = ?, AMOUNT = ?, ACCOUNT = (SELECT ID FROM ACCOUNT WHERE NAME = ?) , NOTE = ? ,TYPE = (SELECT ID FROM PURCHASETYPE WHERE NAME = ?) WHERE ID = ? ";
         try{
-            Transaction trans = this.getTransByID(transaction.getId());
-            double amount_diff = Double.parseDouble(new DecimalFormat("0.00").format(transaction.getAmount()-trans.getAmount()));
             AccountDAO accountDAO = new AccountDAO(context);
-            Account account = accountDAO.getAccount(transaction.getAccount());
-            account.setBalance(account.getBalance()+amount_diff);
-            accountDAO.updateAccount(account);
+            String old_value = getData("AMOUNT",transaction.getId());
+            double diff = Double.parseDouble(old_value)-transaction.getAmount();
+            flag |= accountDAO.updateBalance(transaction.getAccount(),diff);
             database.execSQL(sqlquery, new Object[]{transaction.getDate(),transaction.getAmount(),transaction.getAccount(),transaction.getNote(),transaction.getType(),transaction.getId()});
             flag = true;
         }catch (Exception e){
@@ -142,6 +140,9 @@ public class TransactionDAO extends AbstractDAO{
         Boolean flag = false;
         String sqlquery = "DELETE FROM TRANS WHERE ID = ?";
         try {
+            AccountDAO accountDAO = new AccountDAO(context);
+            double old_value = Double.parseDouble(getData("AMOUNT",id));
+            accountDAO.updateBalance(Integer.parseInt(getData("ACCOUNT",id)),old_value);
             database.execSQL(sqlquery,new Object[]{id});
             flag = true;
         }catch (Exception e){
@@ -171,4 +172,18 @@ public class TransactionDAO extends AbstractDAO{
         String type = cursor.getString(cursor.getColumnIndex("NAME2"));
         return new Transaction(id,date,balance,account,note,type);
     }
+    private String getData(String colname, int id){
+        String result = "";
+        String sqlquery = "SELECT " + colname + " FROM TRANS WHERE ID = ?";
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,new String[]{Integer.toString(id)});
+            if (cursor.moveToNext()){
+                result = cursor.getString(cursor.getColumnIndex(colname));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }
