@@ -25,7 +25,7 @@
         <activity android:name=".view.Account_List"></activity>
         <activity android:name=".view.Add_Account"></activity>
         <activity android:name=".view.Edit_Account"></activity>
-
+        <activity android:name=".view.Edit_Purchase_Type"></activity>
         <activity android:name=".view.NewTransaction"></activity>
         <activity android:name=".view.Per_Auth_Payment"></activity>
         <activity android:name=".view.Show_Transaction"></activity>
