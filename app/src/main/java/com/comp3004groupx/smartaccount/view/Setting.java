@@ -37,6 +37,21 @@ public class Setting extends AppCompatActivity {
             }
         });
 
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),User_Manager.class);
+                startActivity(intent);
+            }
+        });
+        accountM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),Account_List.class);
+                startActivity(intent);
+            }
+        });
+
         purchaseM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
