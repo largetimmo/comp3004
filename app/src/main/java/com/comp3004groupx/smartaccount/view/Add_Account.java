@@ -54,7 +54,7 @@ public class Add_Account extends AppCompatActivity{
         AccountType = new AccountTypeDAO(getApplicationContext());
         List<String> AccountTypeList = AccountType.getAllType();
         List<String> typeSpinnerList = new ArrayList<>();
-        typeSpinnerList.add("Select Account");
+        typeSpinnerList.add("----Select Account Type------------------------------");
         for (int i= 0; i < AccountTypeList.size(); i++){
             typeSpinnerList.add(AccountTypeList.get(i));
         }
@@ -65,23 +65,6 @@ public class Add_Account extends AppCompatActivity{
 
     }
 
-    public void cleanDefaultValue(){
-        AccountName = (EditText) findViewById(R.id.Name);
-
-
-        AccountName.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                AccountName.setText("");
-            }
-        });
-        AccountAmount.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                AccountAmount.setText("");
-            }
-        });
-    }
 
     public void createAccount(){
         CreateButton = (Button) findViewById(R.id.button);
