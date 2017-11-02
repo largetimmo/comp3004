@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_width="370dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:weightSum="1">
 
-    <TextView
-        android:id="@+id/TransDate"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:text="TextView"
-        android:textAppearance="@android:style/TextAppearance.Small" />
+    <LinearLayout
+        android:layout_width="179dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/TransAmount"
-        android:layout_width="237dp"
-        android:layout_height="50dp"
-        android:text="TextView"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
+        <TextView
+            android:id="@+id/TransAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/TransDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/TransType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/TransAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Amount"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 
 </LinearLayout>
