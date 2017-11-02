@@ -78,14 +78,17 @@ public class AccountInfo extends AppCompatActivity {
         after_pause = true;
     }
 
-    public double checkAmount(String accountType, double accountAmount) {
+    public String checkAmount(String accountType, double accountAmount) {
         if (accountType.equals("Credit Card")) {
-            if (accountAmount < 0) {
-                accountAmount *= -1;
-                return accountAmount;
+            if (accountAmount > 0) {
+
+                return "(" + decimalFormat.format(accountAmount) + ")";
+            }
+            else {
+                return decimalFormat.format(accountAmount*-1);
             }
         }
-        return accountAmount;
+        return decimalFormat.format(accountAmount);
     }
 
     public void freshInfo(int accountId) {
@@ -112,9 +115,10 @@ public class AccountInfo extends AppCompatActivity {
             //Show Account Balance
             double accountBalance = account.getBalance();
             amount = (TextView) findViewById(R.id.amount);
-            checkAmount(type, accountBalance);
+            String balance;
+            balance = checkAmount(type,accountBalance);
 
-            amount.setText(decimalFormat.format(accountBalance));
+            amount.setText(balance);
 
 
             //Show per balance
@@ -123,5 +127,9 @@ public class AccountInfo extends AppCompatActivity {
             accountPerBalance.setText(decimalFormat.format(perBalance));
         }
     }
+
+//    public double checkIsCreditCard(Account account,double account){
+//
+//    }
 }
 

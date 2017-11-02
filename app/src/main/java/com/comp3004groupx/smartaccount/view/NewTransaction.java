@@ -1,5 +1,6 @@
 package com.comp3004groupx.smartaccount.view;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.EditText;
 import android.widget.ArrayAdapter;
@@ -23,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 import com.comp3004groupx.smartaccount.Core.Transaction;
@@ -49,12 +52,10 @@ public class NewTransaction extends AppCompatActivity {
 
     TabHost host;
 
-    Spinner expYearSpinner;
-    Spinner expMonthSpinner;
-    Spinner expDaySpinner;
-    Spinner incDaySpinner;
-    Spinner incYearSpinner;
-    Spinner incMonthSpinner;
+    TextView expDate;
+    TextView incDate;
+    Calendar calendar;
+    DatePickerDialog.OnDateSetListener datePickerDialog;
 
     Button expButton;
     EditText expAmount;
@@ -75,7 +76,7 @@ public class NewTransaction extends AppCompatActivity {
     View line2;
 
     Date currDate;
-    Date perDate;
+    Date preDate;
 
     List<Integer> Day = new ArrayList<>();
 
@@ -89,11 +90,11 @@ public class NewTransaction extends AppCompatActivity {
 //        clearDefaultValue();
 
 
-        setExpDate();
+
         setUpExpenseSpinner();
         addExpense();
 
-        setIncDate();
+
         setUpIncomeSpinner();
         addIncome();
     }
@@ -116,75 +117,64 @@ public class NewTransaction extends AppCompatActivity {
         host.addTab(spec);
     }
 
-    public void setYearSpinner(Spinner YearSpinner) {
-        List<Integer> Year = new ArrayList<>();
-        for (int i = 2017; i < 2049; i++) {
-            Year.add(i);
-        }
-        ArrayAdapter<Integer> YearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Year);
-        YearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        YearSpinner.setAdapter(YearAdapter);
-    }
 
-    public void setMonthSpinner(Spinner MonthSpinner) {
-        List<Integer> Month = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            Month.add(i);
-        }
-        ArrayAdapter<Integer> MonthAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Month);
-        MonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        MonthSpinner.setAdapter(MonthAdapter);
-    }
+    public void setIncPreDate(){
+        incDate = (TextView) findViewById(R.id.incDate);
+        calendar = Calendar.getInstance();
+        String myFormat = "yyyy-MM-dd";
 
-    public void setDayspinner(Spinner MonthSpinner, Spinner DaySpinner) {
-        final Spinner monthSpinner = MonthSpinner;
-        final Spinner daySpinner = DaySpinner;
-        for (int i = 0; i < 31; i++) {
-            Day.add(i);
-        }
-        MonthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
+        incDate.setText(sdf.format(calendar.getTime()));
+        datePickerDialog = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Day.clear();
-                Day.add(1);
-                daySpinner.setSelection(0);
-                String selectedItem = monthSpinner.getSelectedItem().toString();
-                int Month = Integer.parseInt(selectedItem);
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                calendar.set(calendar.YEAR, year);
+                calendar.set(calendar.MONTH,month);
+                calendar.set(calendar.DAY_OF_MONTH, day);
 
-                if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || Month == 8 || Month == 10 || Month == 12) {
-                    for (int i = 2; i <= 31; i++) {
-                        Day.add(i);
-                    }
-                } else if (Month == 2) {
-                    for (int i = 2; i <= 28; i++) {
-                        Day.add(i);
-                    }
-                } else {
-                    for (int i = 2; i <= 30; i++) {
-                        Day.add(i);
-                    }
-                }
+                incDate.setText(sdf.format(calendar.getTime()));
+
             }
-
+        };
+        incDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onClick(View view) {
+                new DatePickerDialog(NewTransaction.this, datePickerDialog,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+
             }
         });
 
-        ArrayAdapter<Integer> DayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Day);
-        DayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        DaySpinner.setAdapter(DayAdapter);
 
     }
 
-    public Date getPerDate(Spinner YearSpinner, Spinner MonthSpinner, Spinner DaySpinner) {
-        int year, month, day;
-        year = Integer.parseInt(YearSpinner.getSelectedItem().toString());
-        month = Integer.parseInt(MonthSpinner.getSelectedItem().toString());
-        day = Integer.parseInt(DaySpinner.getSelectedItem().toString());
-        Date perDate = new Date(year, month, day);
-        return perDate;
+    public void setExpPreDate(){
+        expDate = (TextView) findViewById(R.id.expDate);
+        calendar = Calendar.getInstance();
+        String myFormat = "yyyy-MM-dd";
+
+        final SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
+        expDate.setText(sdf.format(calendar.getTime()));
+
+        datePickerDialog = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                calendar.set(calendar.YEAR, year);
+                calendar.set(calendar.MONTH,month);
+                calendar.set(calendar.DAY_OF_MONTH, day);
+
+                expDate.setText(sdf.format(calendar.getTime()));
+
+            }
+        };
+        expDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(NewTransaction.this, datePickerDialog,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+                //preDate = new Date(sdf.format(calendar.getTime()));
+            }
+        });
     }
+
 
     public Date getDate() {
 
@@ -196,14 +186,7 @@ public class NewTransaction extends AppCompatActivity {
 
 //    expense----------------------------------------------------------------------------------------------------------------------------------
 
-    public void setExpDate() {
-        expYearSpinner = (Spinner) findViewById(R.id.expYearSpinner);
-        expMonthSpinner = (Spinner) findViewById(R.id.expMonthSpinner);
-        expDaySpinner = (Spinner) findViewById(R.id.expDaySpinner);
-        setYearSpinner(expYearSpinner);
-        setMonthSpinner(expMonthSpinner);
-        setDayspinner(expMonthSpinner, expDaySpinner);
-    }
+
 
     public void setUpExpenseSpinner() {
 
@@ -240,9 +223,7 @@ public class NewTransaction extends AppCompatActivity {
     }
 
     public void addExpense() {
-        expYearSpinner = (Spinner) findViewById(R.id.expYearSpinner);
-        expMonthSpinner = (Spinner) findViewById(R.id.expMonthSpinner);
-        expDaySpinner = (Spinner) findViewById(R.id.expDaySpinner);
+        expDate = (TextView) findViewById(R.id.expDate);
 
         expButton = (Button) findViewById(R.id.addExpenseButton);
         expAmount = (EditText) findViewById(R.id.expenseAmount);
@@ -254,7 +235,9 @@ public class NewTransaction extends AppCompatActivity {
         PS1 = (TextView) findViewById(R.id.textView1);
         line1 = (View) findViewById(R.id.line1);
         currDate = getDate();
-        perDate = getPerDate(expYearSpinner, expMonthSpinner, expDaySpinner);
+
+
+
 
         expButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,6 +247,7 @@ public class NewTransaction extends AppCompatActivity {
                     String accountName = expAccountSpinner.getSelectedItem().toString();
                     String Note = expNote.getText().toString();
                     String Type = expTypeSpinner.getSelectedItem().toString();
+                    //Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
                     TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
                     //new obj
                     Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
@@ -283,7 +267,7 @@ public class NewTransaction extends AppCompatActivity {
         expSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
-                    setVisibilityOFF(expYearSpinner, expMonthSpinner, expDaySpinner, PS1, line1);
+                    setVisibilityOFF(expDate, PS1, line1);
                     expButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -292,6 +276,7 @@ public class NewTransaction extends AppCompatActivity {
                                 String accountName = expAccountSpinner.getSelectedItem().toString();
                                 String Note = expNote.getText().toString();
                                 String Type = expTypeSpinner.getSelectedItem().toString();
+                                //Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
                                 TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
                                 //new obj
                                 Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
@@ -308,21 +293,25 @@ public class NewTransaction extends AppCompatActivity {
                         }
                     });
                 } else {
-                    setVisibilityON(expYearSpinner, expMonthSpinner, expDaySpinner, PS1, line1);
+                    setVisibilityON(expDate, PS1, line1);
+                    setExpPreDate();
                     expButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            preDate = new Date(expDate.getText().toString());
                             if (errCheckPer("expense")) {
                                 double Amount = Double.parseDouble(expAmount.getText().toString());
                                 String accountName = expAccountSpinner.getSelectedItem().toString();
                                 String Note = expNote.getText().toString();
                                 String Type = expTypeSpinner.getSelectedItem().toString();
                                 PAPDAO PAPDAO = new PAPDAO(getApplicationContext());
+
+                                //Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
                                 if (expAmount.getText().toString().equals("")) {
                                     Amount = 0;
                                 }
                                 //Create Transaction obj
-                                Transaction newTrans = new Transaction(perDate, Amount, accountName, Note, Type);
+                                Transaction newTrans = new Transaction(preDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj
                                 if (PAPDAO.addAutoDesc(newTrans)) {
                                     //Finish
@@ -347,14 +336,7 @@ public class NewTransaction extends AppCompatActivity {
 
 
     //    income----------------------------------------------------------------------------------------------------------------------------------
-    public void setIncDate() {
-        incYearSpinner = (Spinner) findViewById(R.id.incYearSpinner);
-        incMonthSpinner = (Spinner) findViewById(R.id.incDaySpinner);
-        incDaySpinner = (Spinner) findViewById(R.id.incMonthSpinner);
-        setYearSpinner(incYearSpinner);
-        setMonthSpinner(incMonthSpinner);
-        setDayspinner(incMonthSpinner, incDaySpinner);
-    }
+
 
     public void setUpIncomeSpinner() {
 
@@ -390,9 +372,7 @@ public class NewTransaction extends AppCompatActivity {
     }
 
     public void addIncome() {
-        incYearSpinner = (Spinner) findViewById(R.id.incYearSpinner);
-        incMonthSpinner = (Spinner) findViewById(R.id.incDaySpinner);
-        incDaySpinner = (Spinner) findViewById(R.id.incMonthSpinner);
+        incDate = (TextView) findViewById(R.id.incDate);
 
         incButton = (Button) findViewById(R.id.addIncomeButton);
         incAmount = (EditText) findViewById(R.id.incomeAmount);
@@ -404,7 +384,6 @@ public class NewTransaction extends AppCompatActivity {
         PS2 = (TextView) findViewById(R.id.textView2);
         line2 = (View) findViewById(R.id.line2);
         currDate = getDate();
-        perDate = getPerDate(incYearSpinner, incMonthSpinner, incDaySpinner);
 
         incButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -416,6 +395,7 @@ public class NewTransaction extends AppCompatActivity {
                     String Type = incTypeSpinner.getSelectedItem().toString();
                     //In database, negative means income
                     Amount *= -1;
+                    //Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
                     TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
                     //new obj
                     Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
@@ -434,7 +414,7 @@ public class NewTransaction extends AppCompatActivity {
         incSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
-                    setVisibilityOFF(incYearSpinner, incMonthSpinner, incDaySpinner, PS2, line2);
+                    setVisibilityOFF(incDate, PS2, line2);
                     incButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -445,6 +425,7 @@ public class NewTransaction extends AppCompatActivity {
                                 String Type = incTypeSpinner.getSelectedItem().toString();
                                 //In database, negative means income
                                 Amount *= -1;
+                                //Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
                                 TransactionDAO TransDAO = new TransactionDAO(getApplicationContext());
                                 //new obj
                                 Transaction newTrans = new Transaction(currDate, Amount, accountName, Note, Type);
@@ -460,23 +441,27 @@ public class NewTransaction extends AppCompatActivity {
                         }
                     });
                 } else {
-                    setVisibilityON(incYearSpinner, incMonthSpinner, incDaySpinner, PS2, line2);
+                    setVisibilityON(incDate, PS2, line2);
+                    setIncPreDate();
                     incButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            preDate = new Date(incDate.getText().toString());
                             if (errCheckPer("income")) {
                                 double Amount = Double.parseDouble(incAmount.getText().toString());
                                 String accountName = incAccountSpinner.getSelectedItem().toString();
                                 String Note = incNote.getText().toString();
                                 String Type = incTypeSpinner.getSelectedItem().toString();
                                 PAPDAO PAPDAO = new PAPDAO(getApplicationContext());
+                                //Amount = checkIsCredit(Type, Amount);
+                                //In database, negative means income
+                                Amount *= -1;
+                                Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
                                 if (incAmount.getText().toString().equals("")) {
                                     Amount = 0;
                                 }
-                                //In database, negative means income
-                                Amount *= -1;
                                 //Create Transaction obj
-                                Transaction newTrans = new Transaction(perDate, Amount, accountName, Note, Type);
+                                Transaction newTrans = new Transaction(preDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj
                                 if (PAPDAO.addAutoDesc(newTrans)) {
                                     //Finish
@@ -551,7 +536,7 @@ public class NewTransaction extends AppCompatActivity {
         CharSequence text = "";
 
         if (transType.equals("expense")) {
-            if (perDate.compareTo(currDate) == 1) {
+            if (preDate.compareTo(currDate) != 1) {
                 text = "Please check your first due day.";
                 noErr = false;
             }
@@ -565,11 +550,15 @@ public class NewTransaction extends AppCompatActivity {
             }
         }
         if (transType.equals("income")) {
-            if (expAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
+            if (preDate.compareTo(currDate) != 1) {
+                text = "Please check your first due day.";
+                noErr = false;
+            }
+            if (incAccountSpinner.getSelectedItem().toString().equals("----Select Account---------------------------------------")) {
                 text = "Please select a accountinfo.";
                 noErr = false;
             }
-            if (expTypeSpinner.getSelectedItem().toString().equals("----Select Income Type--------------------------------")) {
+            if (incTypeSpinner.getSelectedItem().toString().equals("----Select Income Type--------------------------------")) {
                 text = "Please select a type.";
                 noErr = false;
             }
@@ -583,21 +572,23 @@ public class NewTransaction extends AppCompatActivity {
         return noErr;
     }
 
-    public void setVisibilityON(Spinner YearSpinner, Spinner MonthSpinner, Spinner DaySpinner, TextView PS, View line) {
-        YearSpinner.setVisibility(View.VISIBLE);
-        DaySpinner.setVisibility(View.VISIBLE);
-        MonthSpinner.setVisibility(View.VISIBLE);
+    public void setVisibilityON(TextView date, TextView PS, View line) {
+        date.setVisibility(View.VISIBLE);
         PS.setVisibility(View.VISIBLE);
         line.setVisibility(View.VISIBLE);
     }
 
-    public void setVisibilityOFF(Spinner YearSpinner, Spinner MonthSpinner, Spinner DaySpinner, TextView PS, View line) {
-        DaySpinner.setVisibility(View.INVISIBLE);
-        YearSpinner.setVisibility(View.INVISIBLE);
-        MonthSpinner.setVisibility(View.INVISIBLE);
+    public void setVisibilityOFF(TextView date, TextView PS, View line) {
+        date.setVisibility(View.INVISIBLE);
         PS.setVisibility(View.INVISIBLE);
         line.setVisibility(View.INVISIBLE);
     }
 
+    public double checkIsCredit(String accountType,double amount){
+        if (accountType.equals("Credit Card")){
+            amount *= -1;
+        }
+        return amount;
+    }
 
 }

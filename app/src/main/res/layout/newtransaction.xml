@@ -101,35 +101,22 @@
 
                         <TextView
                             android:id="@+id/textView1"
-                            android:layout_width="220dp"
+                            android:layout_width="410dp"
                             android:layout_height="75dp"
                             android:layout_weight="1"
                             android:text="First Due Day"
                             android:textAlignment="center"
                             android:textAllCaps="true"
                             android:textColor="#000000"
-                            android:textSize="20sp"
+                            android:textSize="25sp"
                             android:visibility="invisible" />
 
-                        <Spinner
-                            android:id="@+id/expYearSpinner"
-                            android:layout_width="180dp"
-                            android:layout_height="75dp"
+                        <TextView
+                            android:id="@+id/expDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:visibility="invisible" />
-
-                        <Spinner
-                            android:id="@+id/expMonthSpinner"
-                            android:layout_width="160dp"
-                            android:layout_height="75dp"
-                            android:layout_weight="1"
-                            android:visibility="invisible" />
-
-                        <Spinner
-                            android:id="@+id/expDaySpinner"
-                            android:layout_width="160dp"
-                            android:layout_height="75dp"
-                            android:layout_weight="1"
+                            android:textSize="25sp"
                             android:visibility="invisible" />
 
                     </LinearLayout>
@@ -218,35 +205,22 @@
 
                         <TextView
                             android:id="@+id/textView2"
-                            android:layout_width="220dp"
+                            android:layout_width="410dp"
                             android:layout_height="75dp"
                             android:layout_weight="1"
                             android:text="First Due Day"
                             android:textAlignment="center"
                             android:textAllCaps="true"
                             android:textColor="#000000"
-                            android:textSize="20sp"
+                            android:textSize="25sp"
                             android:visibility="invisible" />
 
-                        <Spinner
-                            android:id="@+id/incYearSpinner"
-                            android:layout_width="180dp"
-                            android:layout_height="75dp"
+                        <TextView
+                            android:id="@+id/incDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:visibility="invisible" />
-
-                        <Spinner
-                            android:id="@+id/incMonthSpinner"
-                            android:layout_width="160dp"
-                            android:layout_height="75dp"
-                            android:layout_weight="1"
-                            android:visibility="invisible" />
-
-                        <Spinner
-                            android:id="@+id/incDaySpinner"
-                            android:layout_width="160dp"
-                            android:layout_height="75dp"
-                            android:layout_weight="1"
+                            android:textSize="25sp"
                             android:visibility="invisible" />
 
                     </LinearLayout>
