@@ -105,7 +105,7 @@
             android:layout_height="46dp"
             android:ems="10"
             android:inputType="text"
-            android:text="Per-Auth Payment                 "
+            android:text="Pre-Auth Payment                 "
             android:textColor="#000000"
             android:textSize="32sp"
             app:layout_constraintHorizontal_bias="0.0"

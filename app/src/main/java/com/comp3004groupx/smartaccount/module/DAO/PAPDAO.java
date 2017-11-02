@@ -20,7 +20,7 @@ public class PAPDAO extends AbstractDAO {
     }
     public boolean addAutoDesc(Transaction transaction){
         boolean flag = false;
-        String sqlquery = "INSERT INTO PAP(AMOUNT,DATE,PURCHASETYPE,ACCOUNT,NOTE) VALUES (?,?,(SELECT ID FROM PURCHASETYPE WHERE NAME = ?),(SELECT ID FROM ACCOUNT WHERE NAME = ?),?)";
+        String sqlquery = "INSERT INTO PAP(AMOUNT,DATE,TYPE,ACCOUNT,NOTE) VALUES (?,?,(SELECT ID FROM PURCHASETYPE WHERE NAME = ?),(SELECT ID FROM ACCOUNT WHERE NAME = ?),?)";
         try{
             database.execSQL(sqlquery ,new Object[]{transaction.getAmount(),transaction.getDate(),transaction.getType(),transaction.getAccount(),transaction.getNote()});
             flag = true;
