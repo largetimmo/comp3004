@@ -13,6 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
 import com.comp3004groupx.smartaccount.R;
+import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by devray on 2017-09-16.
@@ -26,6 +37,10 @@ public class Statistics extends AppCompatActivity {
     LinearLayout settingArea;
     LinearLayout tableArea;
 
+    PieChart piechart;
+
+    TransactionDAO transDataBase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +50,60 @@ public class Statistics extends AppCompatActivity {
         setButton = (ToggleButton) findViewById(R.id.setupTableButton);
         settingArea = (LinearLayout) findViewById(R.id.tableSettingArea);
         tableArea = (LinearLayout) findViewById(R.id.tableArea);
+        piechart = (PieChart) findViewById(R.id.piechart);
 
+        transDataBase = new TransactionDAO(getApplicationContext());
 
         setup(settingArea, setButton);
 
+        maketable(piechart, transDataBase);
+    }
+
+    private void maketable(PieChart pieChart, TransactionDAO transDataBase) {
+
+        ArrayList<PieEntry> pieChartEntries = new ArrayList<>();
+
+
+        pieChartEntries.add(new PieEntry(5.0f, "Saving"));
+        pieChartEntries.add(new PieEntry(26.7f, "Credit Card"));
+        pieChartEntries.add(new PieEntry(17.0f, "Cash"));
+        pieChartEntries.add(new PieEntry(30.8f, "Chequing"));
+
+        PieDataSet dataSet = new PieDataSet(pieChartEntries, "Transaction");
+
+        dataSet.setSliceSpace(2f);
+        dataSet.setSelectionShift(5f);
+
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+
+        dataSet.setColors(colors);
+
+
+        PieData data = new PieData(dataSet);
+        pieChart.setData(data);
+        pieChart.invalidate(); // refresh
+
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void setup(final LinearLayout settingArea, ToggleButton setButton) {
 
@@ -49,7 +112,6 @@ public class Statistics extends AppCompatActivity {
         settingAreaControl(settingArea, setButton);
 
     }
-
 
     private void settingAreaControl(final LinearLayout settingArea, ToggleButton setButton) {
 
@@ -95,7 +157,6 @@ public class Statistics extends AppCompatActivity {
         valueAnimator.setDuration(duration);
         valueAnimator.start();
     }
-
 
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
