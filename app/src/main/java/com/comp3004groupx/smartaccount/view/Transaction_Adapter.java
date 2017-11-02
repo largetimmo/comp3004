@@ -1,16 +1,20 @@
 package com.comp3004groupx.smartaccount.view;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
+import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -41,15 +45,47 @@ public class Transaction_Adapter extends BaseAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        LayoutInflater layout = LayoutInflater.from(mContext);
+        LayoutInflater layout = mInflater.from(mContext);
         View rowView = layout.inflate(R.layout.transaction_adapter_view, parent, false);
-        String date = mData.get(position).getDate().toString();
-        String amount = Double.toString(mData.get(position).getAmount());
-        TextView Date = (TextView) rowView.findViewById(R.id.TransDate);
-        TextView Amount = (TextView) rowView.findViewById(R.id.TransAmount);
-        Date.setText(date);
-        Amount.setText(amount);
-        return rowView;
+        AccountDAO accounts = new AccountDAO(mContext.getApplicationContext());
 
+        //Initializing viewHolder
+        viewHolder holder = new viewHolder();
+        holder.TransType = (TextView)rowView.findViewById(R.id.TransType);
+        holder.TransAmount = (TextView) rowView.findViewById(R.id.TransAmount);
+        holder.TransAccount =(TextView) rowView.findViewById(R.id.TransAccount);
+        holder.TransDate = (TextView)rowView.findViewById(R.id.TransDate);
+        rowView.setTag(holder);
+
+        //get data from list
+        String type = mData.get(position).getType();
+        double amountNum = mData.get(position).getAmount();
+        String accountName = mData.get(position).getAccount();
+        String date = mData.get(position).getDate().toString();
+        Account account = accounts.getAccount(accountName);
+        String accountType = account.getType();
+        //set data in viewHolder
+
+        holder.TransDate.setText(date);
+        holder.TransAccount.setText(accountName+"  "+accountType);
+        holder.TransType.setText(type);
+
+        if (amountNum >0){
+            String amount = Double.toString(amountNum);
+            holder.TransAmount.setText(amount);
+            holder.TransAmount.setTextColor(Color.RED);
+        }else{
+            String amount = Double.toString(-1*amountNum);
+            holder.TransAmount.setText(amount);
+            holder.TransAmount.setTextColor(Color.GREEN);
+        }
+        return rowView;
+    }
+
+    public class viewHolder{
+        TextView TransAccount;
+        TextView TransDate;
+        TextView TransType;
+        TextView TransAmount;
     }
 }
