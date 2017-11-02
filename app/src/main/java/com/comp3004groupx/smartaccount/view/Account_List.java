@@ -125,10 +125,11 @@ public class Account_List extends AppCompatActivity {
                     //set and add balance
                     ban = accountList.get(j).getBalance();
                     if (accountList.get(j).getType().equals("Credit Card")) {
-                        if (ban < 0) {
-                            ban *= -1;
+                        if (ban > 0) {
+                            //ban *= -1;
                             AccountDetail.add("(" + ban.toString() + ")");
                         } else {
+                            ban *= -1;
                             AccountDetail.add(ban.toString());
                         }
                     } else {
