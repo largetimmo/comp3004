@@ -36,7 +36,6 @@ public class TransactionDAO extends AbstractDAO{
         sqlquery.append(" DATE>=? AND DATE<=?");
         params_list.add(date_from.toString());
         params_list.add(date_to.toString());
-        ArrayList<Transaction> allTrans = new ArrayList<>();
         String[] params_array = new String[params_list.size()];
         int index = 0;
         for (String s:params_list){
@@ -71,7 +70,6 @@ public class TransactionDAO extends AbstractDAO{
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return total;
     }
     public double getTotalIncome(){
