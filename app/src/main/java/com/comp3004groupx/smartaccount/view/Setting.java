@@ -1,13 +1,12 @@
 package com.comp3004groupx.smartaccount.view;
 
 import android.content.Intent;
-import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.comp3004groupx.smartaccount.R;
-
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
+import com.comp3004groupx.smartaccount.R;
 
 /**
  * Created by devray on 2017-09-16.

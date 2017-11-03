@@ -1,9 +1,10 @@
 package com.comp3004groupx.smartaccount.module;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import android.text.InputFilter;
 import android.text.Spanned;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by wuguanhong on 2017-10-24.

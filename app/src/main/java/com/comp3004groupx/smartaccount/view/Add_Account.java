@@ -1,8 +1,8 @@
 package com.comp3004groupx.smartaccount.view;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -110,10 +110,7 @@ public class Add_Account extends AppCompatActivity{
     }
     public boolean checkSpinner(String selectText){
         String equalText = "----Select Account Type------------------------------";
-        if (selectText.equals(equalText)){
-            return false;
-        }
-        return true;
+        return !selectText.equals(equalText);
     }
 
 }

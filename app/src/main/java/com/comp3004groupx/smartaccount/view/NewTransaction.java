@@ -4,39 +4,34 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import android.text.InputFilter;
 import android.view.View;
-
-
-import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.Spinner;
 import android.widget.EditText;
-import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Locale;
-
-
-import com.comp3004groupx.smartaccount.Core.Transaction;
-import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Account;
+import com.comp3004groupx.smartaccount.Core.Date;
+import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PAPDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 import com.comp3004groupx.smartaccount.module.DecimalDigitsInputFilter;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by devray on 2017-09-16.
@@ -128,9 +123,9 @@ public class NewTransaction extends AppCompatActivity {
         datePickerDialog = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendar.set(calendar.YEAR, year);
-                calendar.set(calendar.MONTH,month);
-                calendar.set(calendar.DAY_OF_MONTH, day);
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH, day);
 
                 incDate.setText(sdf.format(calendar.getTime()));
 
@@ -139,7 +134,7 @@ public class NewTransaction extends AppCompatActivity {
         incDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(NewTransaction.this, datePickerDialog,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(NewTransaction.this, datePickerDialog,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
 
             }
         });
@@ -158,9 +153,9 @@ public class NewTransaction extends AppCompatActivity {
         datePickerDialog = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendar.set(calendar.YEAR, year);
-                calendar.set(calendar.MONTH,month);
-                calendar.set(calendar.DAY_OF_MONTH, day);
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH, day);
 
                 expDate.setText(sdf.format(calendar.getTime()));
 
@@ -169,7 +164,7 @@ public class NewTransaction extends AppCompatActivity {
         expDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(NewTransaction.this, datePickerDialog,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(NewTransaction.this, datePickerDialog,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
                 //preDate = new Date(sdf.format(calendar.getTime()));
             }
         });
@@ -233,7 +228,7 @@ public class NewTransaction extends AppCompatActivity {
         expNote = (EditText) findViewById(R.id.expenseNotes);
         expSwitch = (Switch) findViewById(R.id.switch1);
         PS1 = (TextView) findViewById(R.id.textView1);
-        line1 = (View) findViewById(R.id.line1);
+        line1 = findViewById(R.id.line1);
         currDate = getDate();
 
 
@@ -382,7 +377,7 @@ public class NewTransaction extends AppCompatActivity {
         incNote = (EditText) findViewById(R.id.incomeNotes);
         incSwitch = (Switch) findViewById(R.id.switch2);
         PS2 = (TextView) findViewById(R.id.textView2);
-        line2 = (View) findViewById(R.id.line2);
+        line2 = findViewById(R.id.line2);
         currDate = getDate();
 
         incButton.setOnClickListener(new View.OnClickListener() {
