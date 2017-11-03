@@ -1,21 +1,16 @@
 package com.comp3004groupx.smartaccount.view;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.comp3004groupx.smartaccount.Core.*;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
     TextView transaction;

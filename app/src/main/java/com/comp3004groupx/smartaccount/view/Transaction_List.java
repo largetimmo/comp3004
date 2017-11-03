@@ -2,7 +2,6 @@ package com.comp3004groupx.smartaccount.view;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -102,9 +101,9 @@ public class Transaction_List extends AppCompatActivity {
         datePickerDialog = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar.set(calendar.YEAR,year);
-                calendar.set(calendar.MONTH,month);
-                calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
+                calendar.set(Calendar.YEAR,year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 
                 if (selection == 0){
@@ -118,7 +117,7 @@ public class Transaction_List extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selection = 0;
-                new DatePickerDialog(Transaction_List.this,datePickerDialog,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(Transaction_List.this,datePickerDialog,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -126,7 +125,7 @@ public class Transaction_List extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selection = 1;
-                new DatePickerDialog(Transaction_List.this,datePickerDialog,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(Transaction_List.this,datePickerDialog,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
         //set search feature

@@ -1,7 +1,6 @@
 package com.comp3004groupx.smartaccount.module.DAO;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 
 import com.comp3004groupx.smartaccount.Core.Account;
@@ -81,7 +80,6 @@ public class AccountDAO extends AbstractDAO {
         String sqlquery_update_account = "UPDATE ACCOUNT SET NAME = ? ,TYPE = (SELECT ID FROM ACCOUNTTYPE WHERE NAME = ?) ,BALANCE = ? ,REALBALANCE = ? WHERE ID = ?";
         try {
             database.execSQL(sqlquery_update_account, new Object[]{account.getName(), account.getType(), account.getBalance(), account.getRealAmount(), account.getID()});
-            ;
             flag = true;
 
         } catch (Exception e) {

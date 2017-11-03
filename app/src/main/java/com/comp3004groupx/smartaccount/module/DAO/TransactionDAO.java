@@ -7,7 +7,6 @@ import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**

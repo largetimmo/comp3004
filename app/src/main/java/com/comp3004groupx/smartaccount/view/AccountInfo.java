@@ -1,17 +1,15 @@
 package com.comp3004groupx.smartaccount.view;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
-import com.comp3004groupx.smartaccount.module.DAO.AccountTypeDAO;
 
 import java.text.DecimalFormat;
 
