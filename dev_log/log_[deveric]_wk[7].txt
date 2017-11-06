@@ -1,0 +1,9 @@
+Week   deveric Guanhong Wu  101014234
+
+1. Finished add and delete purchase type function.
+
+2. Fix some bugs in the app
+
+3. Fix credit balance in account_list, accountinfo, and edit_account
+
+4. Improve the error Checking
