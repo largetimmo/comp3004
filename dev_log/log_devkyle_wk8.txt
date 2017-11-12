@@ -1,2 +1,8 @@
 Junhao Chen ---- 101010964
 
+ADD login page
+
+Add more method in PAPDAO in order to support Pre-Authorized Payment feature
+
+Add UserDAO in order to support login feature
+
