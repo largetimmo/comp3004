@@ -88,7 +88,7 @@ public class PAPDAO extends AbstractDAO {
     }
     public ArrayList<Transaction> getUncheckedPAPBefore(Date date){
         ArrayList<Transaction> trans = new ArrayList<>();
-        String sqlquery = BASIC_SELECT_QUERY + "WHERE CHECKED = 0 AND DATE <= ? ORDER BY DATE DESC";
+        String sqlquery = BASIC_SELECT_QUERY + " WHERE CHECKED = 0 AND DATE <= ? ORDER BY DATE DESC";
         try {
             Cursor cursor = database.rawQuery(sqlquery,new String[]{date.toString()});
             while (cursor.moveToNext()){
