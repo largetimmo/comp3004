@@ -1,0 +1,9 @@
+Junhao Chen ------- 101010964
+
+Prepare to D2 Presentation
+
+Fix typo in UI
+
+Fix bugs in DAOs
+
+Optimize Code and imports

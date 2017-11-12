@@ -159,7 +159,7 @@ public class TransactionDAO extends AbstractDAO{
         }
         return transactions;
     }
-    private Transaction parseTrans(Cursor cursor){
+    protected static Transaction parseTrans(Cursor cursor){
         int id = cursor.getInt(cursor.getColumnIndex("ID"));
         String account = cursor.getString(cursor.getColumnIndex("NAME1"));
         String date_string = cursor.getString(cursor.getColumnIndex("DATE"));
