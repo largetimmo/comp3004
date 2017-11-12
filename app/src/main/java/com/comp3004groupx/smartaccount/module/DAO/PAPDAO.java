@@ -86,6 +86,20 @@ public class PAPDAO extends AbstractDAO {
     public ArrayList<Transaction> getPAPBefore(Date date){
         return  getPAPBefore(date.toString());
     }
+    public ArrayList<Transaction> getUncheckedPAPBefore(Date date){
+        ArrayList<Transaction> trans = new ArrayList<>();
+        String sqlquery = BASIC_SELECT_QUERY + "WHERE CHECKED = 0 AND DATE <= ? ORDER BY DATE DESC";
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,new String[]{date.toString()});
+            while (cursor.moveToNext()){
+                Transaction t = parseCursor(cursor);
+                trans.add(t);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trans;
+    }
     public ArrayList<Transaction> getUncheckedPAP(){
         ArrayList<Transaction> trans = new ArrayList<>();
         String sqlquery = BASIC_SELECT_QUERY + " WHERE CHECKED = 0 ORDER BY DATE DESC";
@@ -120,6 +134,7 @@ public class PAPDAO extends AbstractDAO {
         }
         return flag;
     }
+
 
 
 
