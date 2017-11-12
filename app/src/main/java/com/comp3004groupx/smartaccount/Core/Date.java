@@ -85,4 +85,12 @@ public class Date {
             }
         }
     }
+    public void plusDate(int n){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,day);
+        calendar.add(calendar.get(Calendar.DATE),n);
+        day = calendar.get(Calendar.DATE);
+        month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
+    }
 }
