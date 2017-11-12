@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class PAPDAO extends AbstractDAO {
     //CHECKED =0 = Not Check yet
     //CHECKED = 1 = already checked
-    private static final String BASIC_SELECT_QUERY ="SELECT CHECKED,TRANS.ID AS ID, ACCOUNT.NAME AS NAME1, TRANS.BALANCE, NOTE, PURCHASETYPE.NAME AS NAME2 FROM PAP INNER JOIN ACCOUNT ON PAP.ACCOUNT = ACCOUNT.ID INNER JOIN PURCHASETYPE ON PAP.TYPE = PURCHASETYPE.ID";
+    private static final String BASIC_SELECT_QUERY ="SELECT CHECKED, PAP.ID AS ID, ACCOUNT.NAME AS NAME1, PAP.AMOUNT, NOTE, PURCHASETYPE.NAME AS NAME2 FROM PAP INNER JOIN ACCOUNT ON PAP.ACCOUNT = ACCOUNT.ID INNER JOIN PURCHASETYPE ON PAP.TYPE = PURCHASETYPE.ID";
     public PAPDAO(Context context){
         super(context);
         dbname = "PAP";
@@ -116,7 +116,7 @@ public class PAPDAO extends AbstractDAO {
     }
     private Transaction parseCursor (Cursor cursor){
         int id = cursor.getInt(cursor.getColumnIndex("ID"));
-        double amount = cursor.getDouble(cursor.getColumnIndex("BALANCE"));
+        double amount = cursor.getDouble(cursor.getColumnIndex("AMOUNT"));
         Date date = new Date(cursor.getString(cursor.getColumnIndex("DATE")));
         String purchase_type = cursor.getString(cursor.getColumnIndex("NAMEW"));
         String account = cursor.getString(cursor.getColumnIndex("NAMEQ"));
