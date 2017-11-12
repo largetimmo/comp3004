@@ -118,8 +118,8 @@ public class PAPDAO extends AbstractDAO {
         int id = cursor.getInt(cursor.getColumnIndex("ID"));
         double amount = cursor.getDouble(cursor.getColumnIndex("AMOUNT"));
         Date date = new Date(cursor.getString(cursor.getColumnIndex("DATE")));
-        String purchase_type = cursor.getString(cursor.getColumnIndex("NAMEW"));
-        String account = cursor.getString(cursor.getColumnIndex("NAMEQ"));
+        String purchase_type = cursor.getString(cursor.getColumnIndex("NAME2"));
+        String account = cursor.getString(cursor.getColumnIndex("NAME1"));
         String note = cursor.getString(cursor.getColumnIndex("NOTE"));
         return new Transaction(id,date,amount,account,note,purchase_type);
     }
