@@ -71,6 +71,23 @@ public class PAPDAO extends AbstractDAO {
         }
         return flag;
     }
+    public ArrayList<Transaction> getPAPAfterDate(String date_str){
+        ArrayList<Transaction> trans = new ArrayList<>();
+        String sqlquery = "SELECT * FROM PAP WHERE DATE >= ?";
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,new String[]{date_str});
+            while (cursor.moveToNext()){
+                Transaction t = TransactionDAO.parseTrans(cursor);
+                trans.add(t);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trans;
+    }
+    public ArrayList<Transaction> getPAPAfterDate(Date date){
+        return  getPAPAfterDate(date.toString());
+    }
 
 
 }
