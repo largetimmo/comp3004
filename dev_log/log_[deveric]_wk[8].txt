@@ -1,0 +1,9 @@
+Week 8  deveric Guanhong Wu  101014234
+
+1. Add PAP Checking in the mainacitvity. However it still have some bugs. I did not commit those file because it may affect other members using MainActivity.
+
+PAP Checking include: 1. Let the users enter the amount of PAP transaction.
+                        2. Creating the transaction by the app when the due day is today.
+
+
+Bug: The dialog has some problems.
