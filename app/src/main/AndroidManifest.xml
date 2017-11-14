@@ -34,6 +34,7 @@
         <activity android:name=".view.Transaction_List"></activity>
         <activity android:name=".view.DebugDatabase"/>
         <activity android:name=".view.User_Manager"></activity>
+        <activity android:name=".view.Per_Auth_Payment"></activity>
     </application>
 
 </manifest>
