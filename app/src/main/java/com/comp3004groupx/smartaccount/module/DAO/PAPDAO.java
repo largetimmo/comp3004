@@ -134,8 +134,18 @@ public class PAPDAO extends AbstractDAO {
         }
         return flag;
     }
-
-
-
+    public ArrayList<Transaction> getCheckedPAP(){
+        ArrayList<Transaction> trans = new ArrayList<>();
+        String sqlquery = BASIC_SELECT_QUERY + " WHERE CHECKED = 1";
+        try {
+            Cursor cursor = database.rawQuery(sqlquery,null);
+            while (cursor.moveToNext()){
+                trans.add(parseCursor(cursor));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trans;
+    }
 
 }
