@@ -87,10 +87,12 @@ public class Date {
     }
     public void plusDate(int n){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year,month,day);
+        calendar.set(year,month-1,day);
         calendar.add(Calendar.DATE,n);
         day = calendar.get(Calendar.DATE);
-        month = calendar.get(Calendar.MONTH);
+        month = (calendar.get(Calendar.MONTH)+1)%12;
+        if(month==0)
+            month = 12;
         year = calendar.get(Calendar.YEAR);
     }
 }
