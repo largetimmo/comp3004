@@ -295,16 +295,20 @@ public class NewTransaction extends AppCompatActivity {
                         public void onClick(View view) {
                             preDate = new Date(expDate.getText().toString());
                             if (errCheckPer("expense")) {
-                                double Amount = Double.parseDouble(expAmount.getText().toString());
+                                double Amount;
+                                if (expAmount.getText().toString().equals("")) {
+                                    Amount = 0;
+                                }
+                                else{
+                                Amount = Double.parseDouble(expAmount.getText().toString());}
+
                                 String accountName = expAccountSpinner.getSelectedItem().toString();
                                 String Note = expNote.getText().toString();
                                 String Type = expTypeSpinner.getSelectedItem().toString();
                                 PAPDAO PAPDAO = new PAPDAO(getApplicationContext());
 
                                 //Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
-                                if (expAmount.getText().toString().equals("")) {
-                                    Amount = 0;
-                                }
+
                                 //Create Transaction obj
                                 Transaction newTrans = new Transaction(preDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj
@@ -443,7 +447,12 @@ public class NewTransaction extends AppCompatActivity {
                         public void onClick(View view) {
                             preDate = new Date(incDate.getText().toString());
                             if (errCheckPer("income")) {
-                                double Amount = Double.parseDouble(incAmount.getText().toString());
+                                double Amount;
+                                if (incAmount.getText().toString().equals("")) {
+                                    Amount = 0;
+                                }
+                                else {
+                                Amount = Double.parseDouble(incAmount.getText().toString());}
                                 String accountName = incAccountSpinner.getSelectedItem().toString();
                                 String Note = incNote.getText().toString();
                                 String Type = incTypeSpinner.getSelectedItem().toString();
@@ -452,9 +461,7 @@ public class NewTransaction extends AppCompatActivity {
                                 //In database, negative means income
                                 Amount *= -1;
                                 Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
-                                if (incAmount.getText().toString().equals("")) {
-                                    Amount = 0;
-                                }
+
                                 //Create Transaction obj
                                 Transaction newTrans = new Transaction(preDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj

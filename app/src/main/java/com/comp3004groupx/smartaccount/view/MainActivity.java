@@ -1,16 +1,26 @@
 package com.comp3004groupx.smartaccount.view;
 
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.comp3004groupx.smartaccount.Core.Date;
+import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
+import com.comp3004groupx.smartaccount.module.DAO.PAPDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
+import com.comp3004groupx.smartaccount.view.Pap_Dialog;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     TextView transaction;
@@ -21,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
     TextView income;
     TextView cost;
     TransactionDAO transactionDAO;
-    Button add;
-
+    PAPDAO papDAO;
+    Pap_Dialog pap_dialog;
+    int number = 0;
+    ArrayList<Transaction> papTransaction;
 
     DecimalFormat decimalFormat;
 
@@ -32,70 +44,162 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        transaction = (TextView)findViewById(R.id.main_trans);
-        accounts = (TextView)findViewById(R.id.main_account);
-        setting = (TextView)findViewById(R.id.main_setting);
-        statistics = (TextView)findViewById(R.id.main_statistic);
+        transaction = (TextView) findViewById(R.id.main_trans);
+        accounts = (TextView) findViewById(R.id.main_account);
+        setting = (TextView) findViewById(R.id.main_setting);
+        statistics = (TextView) findViewById(R.id.main_statistic);
         newTrans = (Button) findViewById(R.id.newTrans);
-        income = (TextView)findViewById(R.id.income);
-        cost = (TextView)findViewById(R.id.cost);
+        income = (TextView) findViewById(R.id.income);
+        cost = (TextView) findViewById(R.id.cost);
         transactionDAO = new TransactionDAO(getApplicationContext());
         decimalFormat = new DecimalFormat("0.00");
+
+        checkPAP();
+        createPAPTrans();
 
         //debug start--------------------------------------------------------------------------------------
         TextView title = (TextView) findViewById(R.id.main_title);
         title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),DebugDatabase.class);
+                Intent intent = new Intent(v.getContext(), DebugDatabase.class);
                 startActivity(intent);
             }
         });
         //debug end--------------------------------------------------------------------------------------
 
-        transaction.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        transaction.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Transaction_List.class);
                 startActivity(intent);
             }
         });
-        accounts.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        accounts.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Account_List.class);
                 startActivity(intent);
             }
         });
-        setting.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        setting.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Setting.class);
                 startActivity(intent);
             }
         });
-        statistics.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        statistics.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Statistics.class);
                 startActivity(intent);
             }
         });
 
-        newTrans.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        newTrans.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), NewTransaction.class);
                 startActivity(intent);
             }
         });
-        
+
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
     }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         income.setText(decimalFormat.format(transactionDAO.getTotalIncome()));
         cost.setText(decimalFormat.format(transactionDAO.getTotalSpend()));
     }
 
+    public void checkPAP() {
+        Date checkDate;
+        checkDate = getCheckDate();
+        papDAO = new PAPDAO(getApplicationContext());
+        papTransaction = papDAO.getUncheckedPAPBefore(checkDate);
+        if (papTransaction.size() != 0) {
+            setDialog( );
+        }
+    }
+
+    public void createPAPTrans(){
+
+        papDAO = new PAPDAO(getApplicationContext());
+        papTransaction = papDAO.getCheckedPAP();
+        if (papTransaction.size()!=0){
+            Date currDate = getDate();
+            for (int i = 0;i<papTransaction.size();i++){
+                if (currDate.compareTo(papTransaction.get(i).getDate()) == 0){
+                    transactionDAO.addTrans(papTransaction.get(i));
+                    papTransaction.get(i).getDate().plusDate(30);
+                    papDAO.addAutoDesc(papTransaction.get(i));
+                    toast("Created a transaction for you.");
+                }
+            }
+        }
+    }
+
+    public Pap_Dialog setDialog() {
+        pap_dialog = new Pap_Dialog(MainActivity.this);
+        pap_dialog.setAmount(papTransaction.get(number).getAmount());
+        pap_dialog.setDate(papTransaction.get(number).getDate().toString());
+        pap_dialog.setType(papTransaction.get(number).getType());
+        pap_dialog.setYesOnclickListener("Save", new Pap_Dialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                papDAO.checkPAP(papTransaction.get(number).getId());
+                papTransaction.get(number).setAmount(pap_dialog.getAmountDouble());
+                papDAO.modifyAutoDesc(papTransaction.get(number));
+                toast("Save successfully!");
+                number++;
+                if (papTransaction.size() > number) {
+                    pap_dialog.dismiss();
+                    setDialog();
+                } else {
+                    pap_dialog.dismiss();
+                }
+
+            }
+        });
+        pap_dialog.setNoOnclickListener("Later", new Pap_Dialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                toast("Let's check next time.");
+                number++;
+                if (papTransaction.size() > number) {
+                    pap_dialog.dismiss();
+                    setDialog();
+                } else {
+                    pap_dialog.dismiss();
+                }
+            }
+        });
+        pap_dialog.show();
+        return  pap_dialog;
+    }
+
+    public Date getCheckDate() {
+
+        Calendar newCalendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currDate = new Date(dateFormat.format(newCalendar.getTime()));
+        currDate.plusDate(5);
+        return currDate;
+    }
+
+    public void toast(String text) {
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    public Date getDate() {
+        Calendar newCalendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currDate = new Date(dateFormat.format(newCalendar.getTime()));
+        return currDate;
+    }
 }
