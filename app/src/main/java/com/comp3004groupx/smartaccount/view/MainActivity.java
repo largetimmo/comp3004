@@ -54,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
         transactionDAO = new TransactionDAO(getApplicationContext());
         decimalFormat = new DecimalFormat("0.00");
 
-        checkPAP();
         createPAPTrans();
+        checkPAP();
+
 
         //debug start--------------------------------------------------------------------------------------
         TextView title = (TextView) findViewById(R.id.main_title);
