@@ -7,13 +7,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.comp3004groupx.smartaccount.R;
+import com.comp3004groupx.smartaccount.module.DAO.UserDAO;
 
 /**
  * Created by devray on 2017-09-16.
  */
 
 public class Setting extends AppCompatActivity {
-
+    UserDAO user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,9 @@ public class Setting extends AppCompatActivity {
 //        perpayment.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 //        purchaseM.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 //        accountM.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        user = new UserDAO((getApplicationContext()));
+        welcome.setText("Hi, " + user.getUP().first);
+
         perpayment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Per_Auth_Payment.class);
