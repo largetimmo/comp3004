@@ -35,7 +35,7 @@ public class Setting extends AppCompatActivity {
 
         perpayment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Per_Auth_Payment.class);
+                Intent intent = new Intent(v.getContext(), PAP_List.class);
                 startActivity(intent);
             }
         });
