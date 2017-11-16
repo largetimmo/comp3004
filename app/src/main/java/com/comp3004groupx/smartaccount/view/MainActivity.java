@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Pap_Dialog pap_dialog;
     int number = 0;
     ArrayList<Transaction> papTransaction;
-
+    ArrayList<Transaction> papTransaction2;
     DecimalFormat decimalFormat;
 
     @Override
@@ -128,14 +128,15 @@ public class MainActivity extends AppCompatActivity {
     public void createPAPTrans(){
 
         papDAO = new PAPDAO(getApplicationContext());
-        papTransaction = papDAO.getCheckedPAP();
-        if (papTransaction.size()!=0){
+        papTransaction2 = papDAO.getCheckedPAP();
+        if (papTransaction2.size()!=0){
             Date currDate = getDate();
-            for (int i = 0;i<papTransaction.size();i++){
-                if (currDate.compareTo(papTransaction.get(i).getDate()) == 0){
-                    transactionDAO.addTrans(papTransaction.get(i));
-                    papTransaction.get(i).getDate().plusDate(30);
-                    papDAO.addAutoDesc(papTransaction.get(i));
+            for (int i = 0;i<papTransaction2.size();i++){
+                if (currDate.compareTo(papTransaction2.get(i).getDate()) != -1){
+                    transactionDAO.addTrans(papTransaction2.get(i));
+                    papTransaction2.get(i).getDate().plusDate(30);
+                    papDAO.removeAutoDesc(papTransaction2.get(i).getId());
+                    papDAO.addAutoDesc(papTransaction2.get(i));
                     toast("Created a transaction for you.");
                 }
             }
