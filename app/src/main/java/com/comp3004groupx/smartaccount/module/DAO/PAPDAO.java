@@ -61,7 +61,7 @@ public class PAPDAO extends AbstractDAO {
     public boolean modifyAutoDesc(Transaction transaction){
         boolean flag = false;
         try{
-            String sqlquery = "UPDATE PAP SET AMOUNT = ? ,DATE = ? ,TYPE = (SELECT ID FROM PURCHASETYPE WHERE NAME = ?) ,ACCOUNT = (SELECT ID FROM ACCOUNT WHERE NAME = ?) ,NOTE = ?, CHECKED = 0 WHERE ID = ?";
+            String sqlquery = "UPDATE PAP SET AMOUNT = ? ,DATE = ? ,TYPE = (SELECT ID FROM PURCHASETYPE WHERE NAME = ?) ,ACCOUNT = (SELECT ID FROM ACCOUNT WHERE NAME = ?) ,NOTE = ? WHERE ID = ?";
             database.execSQL(sqlquery, new Object[]{transaction.getAmount(),transaction.getDate(),transaction.getType(),transaction.getAccount(),transaction.getNote(),transaction.getId()});
             flag = true;
         }catch (Exception e){
