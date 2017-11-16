@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -28,60 +26,89 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/orange"
-            android:text="Setup Table"
-            android:textOff="Setup Table"
-            android:textOn="Setup Table" />
-
-        <RadioButton
-            android:id="@+id/radioButton9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TimeLine" />
+            android:textOff="Chart Setting"
+            android:textOn="Confirm" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radioButton7"
+            <RadioGroup
+                android:id="@+id/chartInfoGroup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Transaction" />
+                android:layout_height="wrap_content">
 
-            <RadioButton
-                android:id="@+id/radioButton5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Expense" />
+                <RadioButton
+                    android:id="@+id/selectTransaction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Transaction" />
 
-            <RadioButton
-                android:id="@+id/radioButton8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Income" />
+                <RadioButton
+                    android:id="@+id/selectBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Balance" />
 
-        </LinearLayout>
+            </RadioGroup>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioButton4"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Property" />
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/checkTransLayout"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/checkExp"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Expense" />
+
+                    <CheckBox
+                        android:id="@+id/checkInc"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Income" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/checkBalanceLayout"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/checkProperty"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Property" />
+
+                    <CheckBox
+                        android:id="@+id/checkLiability"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Liability" />
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/chartTypeGroup"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
@@ -92,18 +119,64 @@
                 android:text="Bar Chart" />
 
             <RadioButton
+                android:id="@+id/selectLineChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Line Chart" />
+
+            <RadioButton
                 android:id="@+id/selectPieChart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Pie Chart" />
+        </RadioGroup>
 
-            <RadioButton
-                android:id="@+id/selectLineChart"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkTimeLine"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Time Line"
+                android:textAlignment="textStart" />
+
+            <TextView
+                android:id="@+id/startDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
                 android:layout_weight="1"
-                android:text="RadioButton" />
+                android:focusable="false"
+                android:gravity="center_vertical|center_horizontal"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="to"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/endDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:gravity="center_vertical|center_horizontal"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -117,7 +190,7 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/piechart"
             android:layout_width="match_parent"
-            android:layout_height="400dp" />
+            android:layout_height="450dp" />
 
 
     </LinearLayout>
