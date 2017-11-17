@@ -6,22 +6,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
+import com.comp3004groupx.smartaccount.module.DAO.PAPDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
-import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -36,11 +33,10 @@ import java.util.Locale;
 public class PAP_List extends AppCompatActivity{
     Spinner account_spinner;
     Spinner type_spinner;
-    EditText date_from;
     EditText date_to;
-    LinearLayout trans_list;
+    LinearLayout pap_list;
     AccountDAO accountDAO;
-    TransactionDAO transactionDAO;
+    PAPDAO papDAO;
     PurchaseTypeDAO purchaseTypeDAO;
     boolean after_pause = false;
     DecimalFormat decimalFormat;
@@ -48,7 +44,6 @@ public class PAP_List extends AppCompatActivity{
     Calendar calendar;
     DatePickerDialog.OnDateSetListener datePickerDialog;
     //selection is for identify which edittext should be put value in
-    //0 for date_from
     //1 for date_to
     int selection = -1;
     @Override
@@ -60,43 +55,19 @@ public class PAP_List extends AppCompatActivity{
 
         //link to widgets
         Button search_button = (Button)findViewById(R.id.pap_list_search);
-        account_spinner = (Spinner) findViewById(R.id.pap_list_account_list);
-        type_spinner = (Spinner) findViewById(R.id.pap_list_type_list);
-        date_from = (EditText) findViewById(R.id.pap_list_date_from);
         date_to = (EditText) findViewById(R.id.pap_list_date_to);
-        trans_list = (LinearLayout) findViewById(R.id.pap_list_detail);
+        pap_list = (LinearLayout) findViewById(R.id.pap_list_detail);
 
         //initialize DAOs
         accountDAO = new AccountDAO(getApplicationContext());
-        transactionDAO = new TransactionDAO(getApplicationContext());
+        papDAO = new PAPDAO(getApplicationContext());
         purchaseTypeDAO = new PurchaseTypeDAO(getApplicationContext());
-
-        //set spinner items
-        ArrayList<Account> accounts = accountDAO.getAllAccount();
-        ArrayList<String> account_names = new ArrayList<>();
-        account_names.add("ALL");
-        for (Account a : accounts){
-            account_names.add(a.getName());
-        }
-        ArrayAdapter<String> account_list_adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,account_names);
-        account_list_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        account_spinner.setAdapter(account_list_adapter);
-
-        ArrayList<String> types = new ArrayList<>();
-        types.add("ALL");
-        types.addAll(purchaseTypeDAO.getalltypes());
-
-
-        ArrayAdapter<String> type_adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,types);
-        type_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        type_spinner.setAdapter(type_adapter);
 
         //set datepicker
         calendar = Calendar.getInstance();
         String myFormat = "yyyy-MM-dd";
 
         final SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
-        date_from.setText(sdf.format(calendar.getTime()));
         date_to.setText(sdf.format(calendar.getTime()));
         datePickerDialog = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -106,20 +77,11 @@ public class PAP_List extends AppCompatActivity{
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 
-                if (selection == 0){
-                    date_from.setText(sdf.format(calendar.getTime()));
-                }else if (selection == 1){
+                if (selection == 1){
                     date_to.setText(sdf.format(calendar.getTime()));
                 }
             }
         };
-        date_from.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selection = 0;
-                new DatePickerDialog(PAP_List.this,datePickerDialog,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
 
         date_to.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,18 +116,11 @@ public class PAP_List extends AppCompatActivity{
     }
 
     private void refreshList(){
-        if (date_from.getText().toString().equals("") || date_to.getText().toString().equals("")){
-            Toast.makeText(getApplicationContext(),"Date Range is invalid",Toast.LENGTH_SHORT).show();
-        }else{
-            Date from = new Date(date_from.getText().toString());
             Date to = new Date(date_to.getText().toString());
-            if (to.compareTo(from)<0){
-                Toast toast = Toast.makeText(getApplicationContext(),"Date range is invalid",Toast.LENGTH_SHORT);
-                toast.show();
-            }else{
-                ArrayList<Transaction> alltrans = transactionDAO.getAllTransaction(from,to,account_spinner.getSelectedItem().toString(),type_spinner.getSelectedItem().toString());
-                trans_list.removeAllViews();
-                for (Transaction t: alltrans){
+
+                ArrayList<Transaction> allpap = papDAO.getPAPBefore(to);
+                pap_list.removeAllViews();
+                for (Transaction t: allpap){
                     final LinearLayout parent = new LinearLayout(getApplicationContext());
                     parent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     parent.setOrientation(LinearLayout.VERTICAL);
@@ -206,18 +161,16 @@ public class PAP_List extends AppCompatActivity{
                     parent.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(v.getContext(),Show_Transaction.class);
+                            Intent intent = new Intent(v.getContext(),Edit_PAP.class);
                             intent.putExtra("ID",parent.getLabelFor());
                             startActivity(intent);
                         }
                     });
-                    trans_list.addView(parent);
+                    pap_list.addView(parent);
                     View line = new View(getApplicationContext());
                     line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1));
                     line.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    trans_list.addView(line);
+                    pap_list.addView(line);
                 }
-            }
-        }
     }
 }
