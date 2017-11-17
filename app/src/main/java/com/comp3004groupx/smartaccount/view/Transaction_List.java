@@ -203,14 +203,14 @@ public class Transaction_List extends AppCompatActivity {
                     parent.addView(top);
                     parent.addView(bottom);
                     parent.setLabelFor(t.getId());
-                    parent.setOnClickListener(new View.OnClickListener() {
+                    /*parent.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(v.getContext(),Show_Transaction.class);
+                            Intent intent = new Intent(v.getContext(),Edit_PAP.class);
                             intent.putExtra("ID",parent.getLabelFor());
                             startActivity(intent);
                         }
-                    });
+                    });*/
                     trans_list.addView(parent);
                     View line = new View(getApplicationContext());
                     line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1));
