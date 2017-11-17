@@ -31,8 +31,6 @@ import java.util.Locale;
  */
 
 public class PAP_List extends AppCompatActivity{
-    Spinner account_spinner;
-    Spinner type_spinner;
     EditText date_to;
     LinearLayout pap_list;
     AccountDAO accountDAO;
