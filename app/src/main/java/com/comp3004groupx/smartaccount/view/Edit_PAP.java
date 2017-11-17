@@ -25,7 +25,9 @@ import com.comp3004groupx.smartaccount.module.DecimalDigitsInputFilter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Alex Meng on 2017/11/16.
@@ -73,29 +75,18 @@ public class Edit_PAP extends AppCompatActivity {
                 tran = t;
         }
 
-        //Check this tran is purchase or income
-        status = checkTransactionStatus(tran.getAmount());
-
         //Init Type Spinner
         purchaseTypeSpinner = (Spinner) findViewById(R.id.purchaseTypeSpinner);
         purchaseTypeList = new PurchaseTypeDAO(getApplicationContext());
-        if (status == 0){
             //Init purchaseTypeSpinner
             List<String> purchaseTypes = purchaseTypeList.getALLExpenseType();
             setTypeSpinner(purchaseTypeSpinner, purchaseTypes);
-        }
-        else if (status == 1){
-            List<String > incomeTypes = purchaseTypeList.getAllIncomeType();
-            setTypeSpinner(purchaseTypeSpinner, incomeTypes);
-        }
 
         //Init DateSpinner
         yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
         monthSpinner = (Spinner) findViewById(R.id.monthSpinner);
         daySpinner = (Spinner) findViewById(R.id.daySpinner);
         setDateSpinner(yearSpinner, monthSpinner, daySpinner);
-
-
 
         //Init accountSpinner
         accountSpinner = (Spinner) findViewById(R.id.accountSpinner);
@@ -106,15 +97,6 @@ public class Edit_PAP extends AppCompatActivity {
             accountsNames.add(accountTypes.get(i).getName());
         }
         setTypeSpinner(accountSpinner,accountsNames);
-
-        //Set Title
-        title = (TextView) findViewById(R.id.title);
-        if (status == 0){
-            title.setText("Edit Expense PAP");
-        }
-        else if (status == 1){
-            title.setText("Edit Income PAP");
-        }
 
         //Set amount
         amount = (EditText) findViewById(R.id.amount);
@@ -169,15 +151,6 @@ public class Edit_PAP extends AppCompatActivity {
 
     }
 
-
-    public int checkTransactionStatus(double amount){
-        if (amount > 0) {
-            return 0;
-        }
-        else {
-            return 1;
-        }
-    }
     public void setYearSpinner(Spinner YearSpinner){
         List<Integer> Year = new ArrayList<>();
         for (int i=2017;i<2049;i++){
@@ -220,15 +193,12 @@ public class Edit_PAP extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 Day.clear();
-                //daySpinner.setSelection(0);
                 String selectedItem = monthSpinner.getSelectedItem().toString();
                 int Month = Integer.parseInt(selectedItem);
                 if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || Month == 8 || Month == 10 || Month == 12) {
                     for (int i = 1; i <= 31; i++) {
                         Day.add(i);
                     }
-                    //DayAdapter.add(31);
-
                 }
                 else if (Month == 2){
                     for (int i=1;i<=28;i++){
@@ -237,25 +207,18 @@ public class Edit_PAP extends AppCompatActivity {
                     DayAdapter.remove(31);
                     DayAdapter.remove(30);
                     DayAdapter.remove(29);
-//                    DayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    DaySpinner.setAdapter(DayAdapter);
-
                 }
                 else{
                     for (int i=1;i<=30;i++){
                         Day.add(i);
                     }
                     DayAdapter.remove(31);
-//                    DayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    DaySpinner.setAdapter(DayAdapter);
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-
-
     }
     public void setDateSpinner(Spinner yearSpinner, Spinner monthSpinner, Spinner daySpinner){
         setYearSpinner(yearSpinner);
@@ -294,13 +257,10 @@ public class Edit_PAP extends AppCompatActivity {
             public void onClick(View view){
                 Date upDate = getDate(yearSpinner,monthSpinner,daySpinner);
                 double upAmount = Double.parseDouble(amount.getText().toString());
-                if (status == 1){
-                    upAmount *= -1;
-                }
                 String upPurchaseType = purchaseTypeSpinner.getSelectedItem().toString();
                 String upAccountName = accountSpinner.getSelectedItem().toString();
                 String upNotes = notes.getText().toString();
-                if (errorChecking(upAmount)){
+                if (errorChecking(upAmount) && checkingDate(upDate)){
                     tran.setAccount(upAccountName);
                     tran.setAmount(upAmount);
                     tran.setDate(upDate);
@@ -324,6 +284,16 @@ public class Edit_PAP extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public boolean checkingDate(Date date){
+        Calendar calendar = Calendar.getInstance(Locale.CANADA);
+        Date now = new Date(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DATE));
+        if(date.compareTo(now)!=1) {
+            toast("Please check date");
+            return false;
+        }
+        return true;
     }
     public boolean errorChecking (double upAmount){
         boolean noError = true;
