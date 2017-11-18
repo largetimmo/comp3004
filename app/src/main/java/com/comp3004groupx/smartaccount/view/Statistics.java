@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -19,10 +20,14 @@ import android.widget.ToggleButton;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.AccountTypeDAO;
+import com.comp3004groupx.smartaccount.module.DAO.PurchaseTypeDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -74,14 +79,24 @@ public class Statistics extends AppCompatActivity {
     RadioButton selectBar;
     RadioButton selectPie;
     RadioButton selectLine;
+    String chaType;
 
 
-    //table Area element
-    LinearLayout tableArea;
+    //chart Area element
+    LinearLayout pieChartArea;
+    LinearLayout barChartArea;
+    LinearLayout lineChartArea;
+    ViewGroup.LayoutParams pieAreaparams;
+    ViewGroup.LayoutParams barAreaparams;
+    ViewGroup.LayoutParams lineAreaparams;
 
     PieChart piechart;
+    BarChart barchart;
+    LineChart linechart;
 
+    //DataBase
     TransactionDAO transDataBase;
+    PurchaseTypeDAO purchaseTypeDataBase;
     AccountDAO accountDataBase;
     AccountTypeDAO accountTypeDataBase;
 
@@ -90,8 +105,52 @@ public class Statistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics);
         this.setTitle("Statistics");
+        //init database
+        transDataBase = new TransactionDAO(getApplicationContext());
+        purchaseTypeDataBase = new PurchaseTypeDAO(getApplicationContext());
+        accountDataBase = new AccountDAO(getApplicationContext());
+        accountTypeDataBase = new AccountTypeDAO((getApplicationContext()));
 
-        settingAreaEvent();
+        //link element
+        settingArea = (LinearLayout) findViewById(R.id.tableSettingArea);
+        setButton = (ToggleButton) findViewById(R.id.setupTableButton);
+
+        chartInfoGroup = (RadioGroup) findViewById(R.id.chartInfoGroup);
+        selectTrans = (RadioButton) findViewById(R.id.selectTransaction);
+        selectBalance = (RadioButton) findViewById(R.id.selectBalance);
+
+        transArea = (LinearLayout) findViewById(R.id.checkTransLayout);
+        checkExp = (CheckBox) findViewById(R.id.checkExp);
+        checkInc = (CheckBox) findViewById(R.id.checkInc);
+
+        balArea = (LinearLayout) findViewById(R.id.checkBalanceLayout);
+        checkProp = (CheckBox) findViewById(R.id.checkProperty);
+        checkLiab = (CheckBox) findViewById(R.id.checkLiability);
+
+        chartTypeGroup = (RadioGroup) findViewById(R.id.chartTypeGroup);
+        selectBar = (RadioButton) findViewById(R.id.selectBarChart);
+        selectPie = (RadioButton) findViewById(R.id.selectPieChart);
+        selectLine = (RadioButton) findViewById(R.id.selectLineChart);
+
+        checkTimeLine = (CheckBox) findViewById(R.id.checkTimeLine);
+        startDateText = (TextView) findViewById(R.id.startDateText);
+        endDateText = (TextView) findViewById(R.id.endDateText);
+
+        pieChartArea = (LinearLayout) findViewById(R.id.pieChartArea);
+        pieAreaparams = pieChartArea.getLayoutParams();
+        barChartArea = (LinearLayout) findViewById(R.id.barChartArea);
+        barAreaparams = barChartArea.getLayoutParams();
+        lineChartArea = (LinearLayout) findViewById(R.id.lineChartArea);
+        lineAreaparams = lineChartArea.getLayoutParams();
+
+        piechart = (PieChart) findViewById(R.id.pieChart);
+        barchart = (BarChart) findViewById(R.id.barChart);
+        linechart = (LineChart) findViewById(R.id.lineChart);
+
+        //setup option event
+        ChartOptionEvent();
+
+        //default environment init
         setup();
     }
 
@@ -100,15 +159,12 @@ public class Statistics extends AppCompatActivity {
     //----------------------------------------------------------------------------------------------
     private void setup() {
         //setting area expend as default
-        setButton = (ToggleButton) findViewById(R.id.setupTableButton);
         setButton.setChecked(true);
 
         //select transaction as default
-        selectTrans = (RadioButton) findViewById(R.id.selectTransaction);
         selectTrans.setChecked(true);
 
         //select bar chart as default
-        selectBar = (RadioButton) findViewById(R.id.selectBarChart);
         selectBar.setChecked(true);
 
         //default date for timeline option
@@ -125,88 +181,99 @@ public class Statistics extends AppCompatActivity {
 
     // setting area event listener
     //----------------------------------------------------------------------------------------------
-    private void settingAreaEvent() {
-        settingAreaControl();
-        ChartOptionEvent();
-    }
-
-    //expand and collapse setting area and update table after collapse
-    private void settingAreaControl() {
-        setButton = (ToggleButton) findViewById(R.id.setupTableButton);
-        settingArea = (LinearLayout) findViewById(R.id.tableSettingArea);
-
-        selectTrans = (RadioButton) findViewById(R.id.selectTransaction);
-        selectBalance = (RadioButton) findViewById(R.id.selectBalance);
-        checkExp = (CheckBox) findViewById(R.id.checkExp);
-        checkInc = (CheckBox) findViewById(R.id.checkInc);
-        checkProp = (CheckBox) findViewById(R.id.checkProperty);
-        checkLiab = (CheckBox) findViewById(R.id.checkLiability);
-        selectBar = (RadioButton) findViewById(R.id.selectBarChart);
-        selectPie = (RadioButton) findViewById(R.id.selectPieChart);
-        selectLine = (RadioButton) findViewById(R.id.selectLineChart);
-        checkTimeLine = (CheckBox) findViewById(R.id.checkTimeLine);
-
-        String chaType;
-        if (selectBar.isChecked()) {
-            chaType = "Bar";
-        } else if (selectLine.isChecked()) {
-            chaType = "Line";
-        } else if (selectPie.isChecked()) {
-            chaType = "Pie";
-        } else {
-            chaType = "";
-        }
-
-        setButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                //expand
-                expandOrCollapse(settingArea, "height", 300, dpToPx(600));
-            } else {
-                //update chart
-                updateChart(selectTrans.isChecked(), checkExp.isChecked(), checkInc.isChecked(),
-                        checkProp.isChecked(), checkLiab.isChecked(), chaType, checkTimeLine.isChecked());
-                //collapse
-                expandOrCollapse(settingArea, "height", 300, dpToPx(40));
-
-            }
-        });
-    }
 
     //chart option onchange event
     private void ChartOptionEvent() {
-        chartInfoGroup = (RadioGroup) findViewById(R.id.chartInfoGroup);
-        transArea = (LinearLayout) findViewById(R.id.checkTransLayout);
-        balArea = (LinearLayout) findViewById(R.id.checkBalanceLayout);
+        // AREA CONTROL expand and collapse setting area and update table after collapse
+        setButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                //expand
+                expandOrCollapse(settingArea, "height", 300, 600);
+            } else {
+                //update chart
+                updateChart();
+                //collapse
+                expandOrCollapse(settingArea, "height", 300, 40);
+            }
+        });
 
-        checkTimeLine = (CheckBox) findViewById(R.id.checkTimeLine);
-        startDateText = (TextView) findViewById(R.id.startDateText);
-        endDateText = (TextView) findViewById(R.id.endDateText);
-
-        chartTypeGroup = (RadioGroup) findViewById(R.id.chartTypeGroup);
-        selectBar = (RadioButton) findViewById(R.id.selectBarChart);
-        selectPie = (RadioButton) findViewById(R.id.selectPieChart);
-        selectLine = (RadioButton) findViewById(R.id.selectLineChart);
-
-        //area control of two chart
+        //AREA CONTROL two chart info check option
         chartInfoGroup.setOnCheckedChangeListener((group, checkedId) -> {
             // expend and collapse area
             if (checkedId == R.id.selectTransaction) {
-                expandOrCollapse(balArea, "width", 300, dpToPx(0));
-                expandOrCollapse(transArea, "width", 300, dpToPx(250));
+                expandOrCollapse(balArea, "width", 300, 0);
+                expandOrCollapse(transArea, "width", 300, 250);
             } else if (checkedId == R.id.selectBalance) {
-                expandOrCollapse(transArea, "width", 300, dpToPx(0));
-                expandOrCollapse(balArea, "width", 300, dpToPx(250));
+                expandOrCollapse(transArea, "width", 300, 0);
+                expandOrCollapse(balArea, "width", 300, 250);
             }
 
         });
 
-        //pie chart disabled for timeline
+        //both check not available for pie chart
+        checkExp.setOnCheckedChangeListener((ButtonView, isChecked) -> {
+            if (isChecked) {
+                if (selectPie.isChecked()) {
+                    checkInc.setChecked(false);
+                }
+            }
+        });
+        checkInc.setOnCheckedChangeListener((ButtonView, isChecked) -> {
+            if (isChecked) {
+                if (selectPie.isChecked()) {
+                    checkExp.setChecked(false);
+                }
+            }
+        });
+        checkLiab.setOnCheckedChangeListener((ButtonView, isChecked) -> {
+            if (isChecked) {
+                if (selectPie.isChecked()) {
+                    checkProp.setChecked(false);
+                }
+            }
+        });
+        checkProp.setOnCheckedChangeListener((ButtonView, isChecked) -> {
+            if (isChecked) {
+                if (selectPie.isChecked()) {
+                    checkLiab.setChecked(false);
+                }
+            }
+        });
+
+        //change CHART TYPE select chart
+        chartTypeGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.selectPieChart) {
+                //both check double check
+                if (checkExp.isChecked() && checkInc.isChecked()) {
+                    checkInc.setChecked(false);
+                }
+                if (checkLiab.isChecked() && checkProp.isChecked()) {
+                    checkLiab.setChecked(false);
+                }
+                chaType = "Pie";
+            }
+            if (checkedId == R.id.selectBarChart) {
+                chaType = "Bar";
+            }
+            if (checkedId == R.id.selectLineChart) {
+                chaType = "Line";
+            }
+        });
+
+        //only line chart & transaction work for timeline
         checkTimeLine.setOnCheckedChangeListener((ButtonView, isChecked) -> {
             if (isChecked) {
                 selectLine.setChecked(true);
                 selectPie.setClickable(false);
+                selectBar.setClickable(false);
+
+                selectTrans.setChecked(true);
+                selectBalance.setClickable(false);
             } else {
                 selectPie.setClickable(true);
+                selectBar.setClickable(true);
+
+                selectBalance.setClickable(true);
             }
 
         });
@@ -222,7 +289,6 @@ public class Statistics extends AppCompatActivity {
             DialogFragment datepickerDialog = new DatePickerFragment();
             datepickerDialog.show(getFragmentManager(), "datePicker");
         });
-
     }
 
 
@@ -230,47 +296,24 @@ public class Statistics extends AppCompatActivity {
     //----------------------------------------------------------------------------------------------
 
     //update chart
-    private void updateChart(boolean isTrans,
-                             boolean checkExp, boolean checkInc, boolean checkProp, boolean checkLiab,
-                             String chartType, boolean checkTime) {
-        tableArea = (LinearLayout) findViewById(R.id.tableArea);
-
-
-        transDataBase = new TransactionDAO(getApplicationContext());
-        accountDataBase = new AccountDAO(getApplicationContext());
-        accountTypeDataBase = new AccountTypeDAO((getApplicationContext()));
-
-
-        if (chartType.equals("Bar") && checkExp && checkInc) {
-
-        } else if (chartType.equals("Bar") && checkExp && !checkInc) {
-
-        } else if (chartType.equals("Bar") && !checkExp && checkInc) {
-
-        } else if (chartType.equals("Bar") && !checkExp && !checkInc) {
-
-        } else {
-
+    private void updateChart() {
+        if (chaType.equals("Bar")) {
+            makeBarChart();
+        } else if (chaType.equals("Pie")) {
+            makePieChart();
+        } else if (chaType.equals("Line")) {
+            makeLineChart();
         }
-
-
-        if (tableArea.getChildCount() > 0) {
-            tableArea.removeAllViews();
-        }
-        //TODO: add chart
-
     }
 
-    //make a new chart
-    private void makeChart() {
+    private void makePieChart() {
+
+        //hide& show
+        chartAreaControl("pie", 490, 200);
 
 
-        tableArea = (LinearLayout) findViewById(R.id.tableArea);
-        piechart = (PieChart) findViewById(R.id.piechart);
-
-
+        //make chart
         ArrayList<PieEntry> pieChartEntries = new ArrayList<>();
-
 
         pieChartEntries.add(new PieEntry(5.0f, "Saving"));
         pieChartEntries.add(new PieEntry(26.7f, "Credit Card"));
@@ -297,11 +340,57 @@ public class Statistics extends AppCompatActivity {
 
     }
 
+    private void makeBarChart() {
+        chartAreaControl("bar", 490, 385);
+
+        //hide& show
+
+
+    }
+
+    private void makeLineChart() {
+        chartAreaControl("line", 490, 385);
+
+        //hide& show
+
+
+    }
+
+
+    private void chartAreaControl(String type, int height, int width) {
+        height = dpToPx(height);
+        width = dpToPx(width);
+        //TODO: change back to default 0,0      set 10,10 for test
+        pieAreaparams.height = 0;
+        pieAreaparams.width = 0;
+        lineAreaparams.height = 0;
+        lineAreaparams.width = 0;
+        barAreaparams.height = 0;
+        barAreaparams.width = 0;
+        if (type.equals("bar")) {
+            barAreaparams.height = height;
+            barAreaparams.width = width;
+        }
+        if (type.equals("pie")) {
+            pieAreaparams.height = height;
+            pieAreaparams.width = width;
+        }
+        if (type.equals("line")) {
+            lineAreaparams.height = height;
+            lineAreaparams.width = width;
+        }
+        pieChartArea.setLayoutParams(pieAreaparams);
+        lineChartArea.setLayoutParams(lineAreaparams);
+        barChartArea.setLayoutParams(barAreaparams);
+
+    }
+
 
     // tools for help
     //----------------------------------------------------------------------------------------------
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+
     }
 
     public static int pxToDp(int px) {
@@ -320,6 +409,9 @@ public class Statistics extends AppCompatActivity {
         } else {
             prevLength = 0;
         }
+
+        //dp to px
+        targetLength = dpToPx(targetLength);
 
         v.setVisibility(View.VISIBLE);
         ValueAnimator valueAnimator = ValueAnimator.ofInt(prevLength, targetLength);
