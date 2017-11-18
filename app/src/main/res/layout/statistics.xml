@@ -119,18 +119,18 @@
                 android:text="Bar Chart" />
 
             <RadioButton
-                android:id="@+id/selectLineChart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Line Chart" />
-
-            <RadioButton
                 android:id="@+id/selectPieChart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Pie Chart" />
+
+            <RadioButton
+                android:id="@+id/selectLineChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Line Chart" />
         </RadioGroup>
 
         <LinearLayout
@@ -182,17 +182,41 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/tableArea"
+        android:id="@+id/pieChartArea"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical">
 
         <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/piechart"
+            android:id="@+id/pieChart"
             android:layout_width="match_parent"
-            android:layout_height="450dp" />
+            android:layout_height="490dp">
 
+        </com.github.mikephil.charting.charts.PieChart>
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/lineChartArea"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="490dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/barChartArea"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="490dp" />
     </LinearLayout>
 
 </LinearLayout>
