@@ -24,7 +24,7 @@ public class User_Manager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_manager);
-
+        password = (EditText) findViewById(R.id.password);
         userName = (EditText) findViewById(R.id.userName);
         userName.setText("Smart Account");
         password = (EditText) findViewById(R.id.password);
