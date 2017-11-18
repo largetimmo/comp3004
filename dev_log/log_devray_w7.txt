@@ -1,0 +1,20 @@
+Week_7
+101010914
+Runyu Jiang
+
+
+01
+chart type setup event,
+    onchange event on type of chart, the selection will changed, in 3 case
+    --select trans, hide balance,
+    --select balance, hide trans,
+    --select pie chart, info check box will only select one,
+    --check timeline, only trans can be selected, only line can be selected.
+
+setting changed to full page.
+
+
+02
+bug fix
+    -- animation on selection switch between trans and balance not working.
+        -- put dp to px in side of expand and collapse function.

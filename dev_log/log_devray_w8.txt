@@ -1,0 +1,12 @@
+Week_8
+101010914
+Runyu Jiang
+
+
+01
+changed the layout of chart area,
+setup new area controller
+    hide and show event on three charts.
+
+02
+    finished pie chart
