@@ -80,14 +80,14 @@ public class Edit_Account extends AppCompatActivity {
 
     }
 
-    public void toast(String text) {
+    private void toast(String text) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
-    public void setUpAccountTypeSpinner(Spinner accountTypeSpinner) {
+    private void setUpAccountTypeSpinner(Spinner accountTypeSpinner) {
         AccountType = new AccountTypeDAO(getApplicationContext());
         List<String> AccountTypeList = AccountType.getAllType();
         List<String> typeSpinnerList = new ArrayList<>();
@@ -99,7 +99,7 @@ public class Edit_Account extends AppCompatActivity {
         accountTypeSpinner.setAdapter(typeDataAdapter);
     }
 
-    public int getTypePosition(Spinner TypeSpinner, String toComp) {
+    private int getTypePosition(Spinner TypeSpinner, String toComp) {
         for (int i = 0; i < TypeSpinner.getAdapter().getCount(); i++) {
             String checkS = TypeSpinner.getAdapter().getItem(i).toString();
             if (toComp.equals(TypeSpinner.getAdapter().getItem(i).toString())) {
@@ -110,7 +110,7 @@ public class Edit_Account extends AppCompatActivity {
         return 0;
     }
 
-    public void deleteAccount() {
+    private void deleteAccount() {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,7 +122,7 @@ public class Edit_Account extends AppCompatActivity {
         });
     }
 
-    public void editAccount() {
+    private void editAccount() {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,7 +145,7 @@ public class Edit_Account extends AppCompatActivity {
         });
     }
 
-    public boolean errorChecking(String accountName) {
+    private boolean errorChecking(String accountName) {
         boolean noError = true;
         if (accountName.equals("")) {
             noError = false;
@@ -154,7 +154,7 @@ public class Edit_Account extends AppCompatActivity {
         return noError;
     }
 
-    public double checkAmount(String accountType, double accountAmount) {
+    private double checkAmount(String accountType, double accountAmount) {
         if (accountType.equals("Credit Card")) {
             if (accountAmount < 0) {
                 accountAmount *= -1;

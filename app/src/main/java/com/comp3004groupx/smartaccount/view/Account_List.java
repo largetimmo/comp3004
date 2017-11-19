@@ -60,7 +60,7 @@ public class Account_List extends AppCompatActivity {
     }
 
     @Override
-    public void onRestart() {
+    protected void onRestart() {
         super.onRestart();
         //reload page here
         setupOverView();

@@ -75,7 +75,7 @@ public class Pap_Dialog extends Dialog {
         initEvent();
     }
 
-    public void initView(){
+    private void initView(){
         save = (Button) findViewById(R.id.save);
         later = (Button) findViewById(R.id.later);
         amount = (EditText) findViewById(R.id.amount);
@@ -84,7 +84,7 @@ public class Pap_Dialog extends Dialog {
         amount.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
     }
 
-    public void initData(){
+    private void initData(){
         if (typeStr != null){
             type.setText(typeStr);
         }
@@ -135,7 +135,6 @@ public class Pap_Dialog extends Dialog {
         System.out.print("Test");
         return amountDouble;
     }
-
 
     public interface onYesOnclickListener {
         public void onYesClick();

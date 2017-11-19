@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         cost.setText(decimalFormat.format(transactionDAO.getTotalSpend()));
     }
 
-    public void checkPAP() {
+    private void checkPAP() {
         Date checkDate;
         checkDate = getCheckDate();
         papDAO = new PAPDAO(getApplicationContext());
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void createPAPTrans(){
+    private void createPAPTrans(){
 
         papDAO = new PAPDAO(getApplicationContext());
         papTransaction2 = papDAO.getCheckedPAP();
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Pap_Dialog setDialog() {
+    private Pap_Dialog setDialog() {
         pap_dialog = new Pap_Dialog(MainActivity.this);
         pap_dialog.setAmount(papTransaction.get(number).getAmount());
         pap_dialog.setDate(papTransaction.get(number).getDate().toString());
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         return  pap_dialog;
     }
 
-    public Date getCheckDate() {
+    private Date getCheckDate() {
 
         Calendar newCalendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -191,14 +191,14 @@ public class MainActivity extends AppCompatActivity {
         return currDate;
     }
 
-    public void toast(String text) {
+    private void toast(String text) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
-    public Date getDate() {
+    private Date getDate() {
         Calendar newCalendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date currDate = new Date(dateFormat.format(newCalendar.getTime()));

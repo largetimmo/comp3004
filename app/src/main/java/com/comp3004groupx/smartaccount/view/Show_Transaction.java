@@ -166,7 +166,7 @@ public class Show_Transaction extends AppCompatActivity {
     }
 
 
-    public int checkTransactionStatus(double amount){
+    private int checkTransactionStatus(double amount){
           if (amount > 0) {
               return 0;
           }
@@ -174,7 +174,7 @@ public class Show_Transaction extends AppCompatActivity {
               return 1;
           }
     }
-    public void setYearSpinner(Spinner YearSpinner){
+    private void setYearSpinner(Spinner YearSpinner){
         List<Integer> Year = new ArrayList<>();
         for (int i=2017;i<2049;i++){
             Year.add(i);
@@ -183,7 +183,7 @@ public class Show_Transaction extends AppCompatActivity {
         YearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         YearSpinner.setAdapter(YearAdapter);
     }
-    public void setMonthSpinner(Spinner MonthSpinner){
+    private void setMonthSpinner(Spinner MonthSpinner){
         List<Integer> Month = new ArrayList<>();
         for (int i=1;i<=12;i++){
             Month.add(i);
@@ -192,7 +192,7 @@ public class Show_Transaction extends AppCompatActivity {
         MonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         MonthSpinner.setAdapter(MonthAdapter);
     }
-    public void setDayspinner(Spinner MonthSpinner, final Spinner DaySpinner) {
+    private void setDayspinner(Spinner MonthSpinner, final Spinner DaySpinner) {
         int Month = Integer.parseInt(MonthSpinner.getSelectedItem().toString());
         if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || Month == 8 || Month == 10 || Month == 12) {
             for (int i = 1; i <= 31; i++) {
@@ -253,12 +253,12 @@ public class Show_Transaction extends AppCompatActivity {
 
 
     }
-    public void setDateSpinner(Spinner yearSpinner, Spinner monthSpinner, Spinner daySpinner){
+    private void setDateSpinner(Spinner yearSpinner, Spinner monthSpinner, Spinner daySpinner){
         setYearSpinner(yearSpinner);
         setMonthSpinner(monthSpinner);
         setDayspinner(monthSpinner,daySpinner);
     }
-    public void setTypeSpinner(Spinner TypeSpinner, List<String> Types){
+    private void setTypeSpinner(Spinner TypeSpinner, List<String> Types){
         List<String> TypeSpinnerList = new ArrayList<>();
         for (int i = 0;i<Types.size(); i++){
             TypeSpinnerList.add(Types.get(i));
@@ -267,7 +267,7 @@ public class Show_Transaction extends AppCompatActivity {
         typeDateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         TypeSpinner.setAdapter(typeDateAdapter);
     }
-    public int getTypePosition (Spinner TypeSpinner, String toComp){
+    private int getTypePosition (Spinner TypeSpinner, String toComp){
         for (int i = 0; i<TypeSpinner.getAdapter().getCount(); i++){
             String checkS=TypeSpinner.getAdapter().getItem(i).toString();
             if(toComp.equals(TypeSpinner.getAdapter().getItem(i).toString())){
@@ -278,7 +278,7 @@ public class Show_Transaction extends AppCompatActivity {
         return 0;
     }
 
-    public void updateTransaction(){
+    private void updateTransaction(){
         yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
         amount = (EditText) findViewById(R.id.amount);
         purchaseTypeSpinner = (Spinner) findViewById(R.id.purchaseTypeSpinner);
@@ -311,7 +311,7 @@ public class Show_Transaction extends AppCompatActivity {
             }
         });
     }
-    public void deleteTransaction(){
+    private void deleteTransaction(){
         deleteButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 if(transactionList.removeTrans(tran.getId())){
@@ -321,7 +321,7 @@ public class Show_Transaction extends AppCompatActivity {
             }
         });
     }
-    public boolean errorChecking (double upAmount){
+    private boolean errorChecking (double upAmount){
         boolean noError = true;
         if (upAmount == 0){
             noError = false;
@@ -329,14 +329,14 @@ public class Show_Transaction extends AppCompatActivity {
         }
         return noError;
     }
-    public Date getDate(Spinner yearSpinner, Spinner monthSpinner, Spinner daySpinner){
+    private Date getDate(Spinner yearSpinner, Spinner monthSpinner, Spinner daySpinner){
         int year, month, day;
         year = Integer.parseInt(yearSpinner.getSelectedItem().toString());
         month = Integer.parseInt(monthSpinner.getSelectedItem().toString());
         day = Integer.parseInt(daySpinner.getSelectedItem().toString());
         return new Date(year, month, day);
     }
-    public void toast(String text){
+    private void toast(String text){
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
