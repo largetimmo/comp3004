@@ -115,7 +115,6 @@ public class PAP_List extends AppCompatActivity{
 
     private void refreshList(){
             Date to = new Date(date_to.getText().toString());
-
                 ArrayList<Transaction> allpap = papDAO.getPAPBefore(to);
                 pap_list.removeAllViews();
                 for (Transaction t: allpap){
