@@ -388,17 +388,17 @@ public class Statistics extends AppCompatActivity {
 
     // tools for help
     //----------------------------------------------------------------------------------------------
-    public static int dpToPx(int dp) {
+    private static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
 
     }
 
-    public static int pxToDp(int px) {
+    private static int pxToDp(int px) {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
     }
 
     // type must be "height" or "width"
-    public static void expandOrCollapse(final View v, final String type, int duration, int targetLength) {
+    private static void expandOrCollapse(final View v, final String type, int duration, int targetLength) {
         int prevLength;
 
         if (type.equals("height")) {

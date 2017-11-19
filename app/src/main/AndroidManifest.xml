@@ -29,7 +29,6 @@
         <activity android:name=".view.Edit_Purchase_Type"></activity>
         <activity android:name=".view.NewTransaction"></activity>
         <activity android:name=".view.Show_Transaction"></activity>
-        <activity android:name=".view.View_Transaction"></activity>
         <activity android:name=".view.Transaction_List"></activity>
         <activity android:name=".view.DebugDatabase"/>
         <activity android:name=".view.User_Manager"></activity>

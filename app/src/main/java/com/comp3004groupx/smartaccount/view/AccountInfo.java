@@ -76,7 +76,7 @@ public class AccountInfo extends AppCompatActivity {
         after_pause = true;
     }
 
-    public String checkAmount(String accountType, double accountAmount) {
+    private String checkAmount(String accountType, double accountAmount) {
         if (accountType.equals("Credit Card")) {
             if (accountAmount > 0) {
 
@@ -89,7 +89,7 @@ public class AccountInfo extends AppCompatActivity {
         return decimalFormat.format(accountAmount);
     }
 
-    public void freshInfo(int accountId) {
+    protected void freshInfo(int accountId) {
         accountDAO = new AccountDAO(getApplicationContext());
         account = accountDAO.getAccount(accountId);
 

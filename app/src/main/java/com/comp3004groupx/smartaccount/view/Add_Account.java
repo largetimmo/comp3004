@@ -48,7 +48,7 @@ public class Add_Account extends AppCompatActivity{
         createAccount();
     }
 
-    public void setUpAccountTypeSpinner() {
+    private void setUpAccountTypeSpinner() {
         accountTypeSpinner = (Spinner) findViewById(R.id.AccountTypeSpinner);
 
         AccountType = new AccountTypeDAO(getApplicationContext());
@@ -66,7 +66,7 @@ public class Add_Account extends AppCompatActivity{
     }
 
 
-    public void createAccount(){
+    private void createAccount(){
         CreateButton = (Button) findViewById(R.id.button);
         AccountName = (EditText) findViewById(R.id.Name);
         AccountAmount = (EditText) findViewById(R.id.Amount);
@@ -108,7 +108,7 @@ public class Add_Account extends AppCompatActivity{
             }
         });
     }
-    public boolean checkSpinner(String selectText){
+    private boolean checkSpinner(String selectText){
         String equalText = "----Select Account Type------------------------------";
         return !selectText.equals(equalText);
     }

@@ -22,7 +22,7 @@ public class LoginPage extends AppCompatActivity {
     Button submit;
     UserDAO userDAO;
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         username = (EditText) findViewById(R.id.login_username);

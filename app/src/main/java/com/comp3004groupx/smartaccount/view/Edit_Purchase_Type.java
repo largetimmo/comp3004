@@ -55,7 +55,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
 
     }
 
-    public void spinnerUI(){
+    private void spinnerUI(){
         purchaseSpinner = (Spinner) findViewById(R.id.purchaseSpinner);
         newTypeName = (EditText) findViewById(R.id.newTypeName);
         purchaseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -76,7 +76,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
         });
     }
 
-    public void setExpenseSpinner() {
+    private void setExpenseSpinner() {
         purchaseSpinner = (Spinner) findViewById(R.id.purchaseSpinner);
         purchaseTypeDAO = new PurchaseTypeDAO(getApplicationContext());
         List<String> typeList = purchaseTypeDAO.getALLExpenseType();
@@ -90,7 +90,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
         purchaseSpinner.setAdapter(typeDataAdapter);
     }
 
-    public void setIncomeSpinner() {
+    private void setIncomeSpinner() {
         purchaseSpinner = (Spinner) findViewById(R.id.purchaseSpinner);
         purchaseTypeDAO = new PurchaseTypeDAO(getApplicationContext());
         List<String> typeList = purchaseTypeDAO.getAllIncomeType();
@@ -104,7 +104,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
         purchaseSpinner.setAdapter(typeDataAdapter);
     }
 
-    public void setSwitchStatus() {
+    private void setSwitchStatus() {
         swith = (Switch) findViewById(R.id.switch1);
 
         //Default is Expense Spinner
@@ -132,7 +132,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
     }
 
 
-    public void createPurchaseType() {
+    private void createPurchaseType() {
         createButton = (Button) findViewById(R.id.createButton);
         newTypeName = (EditText) findViewById(R.id.newTypeName);
         createButton.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +153,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
         });
     }
 
-    public void deletePurchaseType() {
+    private void deletePurchaseType() {
         deleteButton = (Button) findViewById(R.id.editButton);
         purchaseSpinner = (Spinner) findViewById(R.id.purchaseSpinner);
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -175,7 +175,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
 
     }
 
-    public boolean deleteErrorChecking() {
+    private boolean deleteErrorChecking() {
         boolean noError = true;
         purchaseSpinner = (Spinner) findViewById(R.id.purchaseSpinner);
         if (purchaseSpinner.getSelectedItem().toString().equals("Create a new expense type") || purchaseSpinner.getSelectedItem().toString().equals("Create a new income type")) {
@@ -185,7 +185,7 @@ public class Edit_Purchase_Type extends AppCompatActivity {
         return noError;
     }
 
-    public void toast(String text) {
+    private void toast(String text) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);

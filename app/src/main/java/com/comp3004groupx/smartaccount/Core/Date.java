@@ -68,23 +68,23 @@ public class Date {
         else
             return -1;
     }
-    public void plusDateFive(){
-        Calendar calendar = Calendar.getInstance();
-        int daysInThisMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        if(getDay()+5<=daysInThisMonth){
-            day = getDay()+5;
-        }
-        else{
-            day = (getDay()+5)%daysInThisMonth;
-            if(getMonth()+1<=12){
-                month = getMonth()+1;
-            }
-            else{
-                year = getYear()+1;
-                month = 1;
-            }
-        }
-    }
+//    public void plusDateFive(){
+//        Calendar calendar = Calendar.getInstance();
+//        int daysInThisMonth = calendar.get(Calendar.DAY_OF_MONTH);
+//        if(getDay()+5<=daysInThisMonth){
+//            day = getDay()+5;
+//        }
+//        else{
+//            day = (getDay()+5)%daysInThisMonth;
+//            if(getMonth()+1<=12){
+//                month = getMonth()+1;
+//            }
+//            else{
+//                year = getYear()+1;
+//                month = 1;
+//            }
+//        }
+//    }
     public void plusDate(int n){
         Calendar calendar = Calendar.getInstance();
         calendar.set(year,month-1,day);
