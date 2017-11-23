@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         transactionDAO = new TransactionDAO(getApplicationContext());
         decimalFormat = new DecimalFormat("0.00");
 
-        createPAPTrans();
+
         checkPAP();
 
 
@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkPAP() {
         Date checkDate;
+        createPAPTrans();
         checkDate = getCheckDate();
         papDAO = new PAPDAO(getApplicationContext());
         papTransaction = papDAO.getUncheckedPAPBefore(checkDate);
