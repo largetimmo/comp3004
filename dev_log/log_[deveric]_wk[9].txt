@@ -1,0 +1,7 @@
+Week 9  deveric Guanhong Wu  101014234
+
+Improve the function of PAP_dialog. Make all processes into one interface.
+
+Fix the bug of PAP_dialog.
+
+Check all Java file. Make sure all function have a right encapsulation.
