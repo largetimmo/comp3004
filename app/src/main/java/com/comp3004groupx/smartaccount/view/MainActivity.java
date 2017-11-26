@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
+import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PAPDAO;
 import com.comp3004groupx.smartaccount.module.DAO.TransactionDAO;
 import com.comp3004groupx.smartaccount.view.Pap_Dialog;
@@ -33,10 +35,13 @@ public class MainActivity extends AppCompatActivity {
     TransactionDAO transactionDAO;
     PAPDAO papDAO;
     Pap_Dialog pap_dialog;
+    Low_Balance_Dialog low_balance_dialog;
     int number = 0;
     ArrayList<Transaction> papTransaction;
     ArrayList<Transaction> papTransaction2;
     DecimalFormat decimalFormat;
+    AccountDAO accountDataBase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         transactionDAO = new TransactionDAO(getApplicationContext());
         decimalFormat = new DecimalFormat("0.00");
 
-
+        checkLowBalance();
         checkPAP();
 
 
@@ -113,6 +118,30 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         income.setText(decimalFormat.format(transactionDAO.getTotalIncome()));
         cost.setText(decimalFormat.format(transactionDAO.getTotalSpend()));
+    }
+
+    private void checkLowBalance(){
+        accountDataBase = new AccountDAO(getApplicationContext());
+        ArrayList<Account> accountList = accountDataBase.getAllAccount();
+        Double balance = 0.00;
+        for (int i = 0;i<accountList.size();i++){
+
+                if (accountList.get(i).getBalance() > 0) {
+                    balance += accountList.get(i).getBalance();
+                }
+            }
+
+        if (balance <= 300){
+            low_balance_dialog = new Low_Balance_Dialog(MainActivity.this);
+            low_balance_dialog.setBalance(balance);
+            low_balance_dialog.setYesOnclickListener("OK", new Low_Balance_Dialog.onYesOnclickListener(){
+                @Override
+                public void onYesClick(){
+                    low_balance_dialog.dismiss();
+                }
+            });
+            low_balance_dialog.show();
+        }
     }
 
     private void checkPAP() {

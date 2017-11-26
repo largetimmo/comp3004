@@ -77,19 +77,13 @@ public class Account_List extends AppCompatActivity {
         Double balance = 0.00;
         Double debt = 0.00;
         for (int i = 0; i < accountList.size(); i++) {
-            if (accountList.get(i).getType().equals("Credit Card")) {
-                if (accountList.get(i).getBalance() > 0) {
-                    debt += accountList.get(i).getBalance();
-                } else {
-                    balance += accountList.get(i).getBalance();
-                }
-            } else {
+
                 if (accountList.get(i).getBalance() > 0) {
                     balance += accountList.get(i).getBalance();
                 } else {
                     debt += accountList.get(i).getBalance();
                 }
-            }
+
         }
 
         //setup
