@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-        if (balance <= 300){
+        if (balance <= 300 && accountList.size() != 0){
             low_balance_dialog = new Low_Balance_Dialog(MainActivity.this);
             low_balance_dialog.setBalance(balance);
             low_balance_dialog.setYesOnclickListener("OK", new Low_Balance_Dialog.onYesOnclickListener(){
