@@ -20,6 +20,7 @@ public abstract class AbstractDAO {
         dbHelper = new DBHelper(context);
         database = dbHelper.getWritableDatabase();
     }
+
     public ArrayList<ArrayList<String>> GETRAWDATA(){
         ArrayList<ArrayList<String>> RAWDATA = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM "+dbname,null);
