@@ -1,0 +1,7 @@
+Week 10  deveric Guanhong Wu  101014234
+
+Implemented the low_balance notification of our app.
+
+Include: A new Custom Dialog.
+
+Fix some bugs in our app.
