@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="250dp"
+            android:layout_width="260dp"
             android:layout_height="39dp"
             android:background="@color/orange"
             android:text="Low Balance"
