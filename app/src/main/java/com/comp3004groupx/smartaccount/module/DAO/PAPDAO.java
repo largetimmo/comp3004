@@ -6,9 +6,15 @@ import android.database.Cursor;
 import android.database.SQLException;
 
 import com.comp3004groupx.smartaccount.Core.Date;
+import com.comp3004groupx.smartaccount.Core.PAP;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by chenjunhao on 2017/9/15.
@@ -17,35 +23,30 @@ import java.util.ArrayList;
 public class PAPDAO extends AbstractDAO {
     //CHECKED =0 = Not Check yet
     //CHECKED = 1 = already checked
-    private static final String BASIC_SELECT_QUERY ="SELECT DATE,CHECKED, PAP.ID AS ID, ACCOUNT.NAME AS NAME1, PAP.AMOUNT, NOTE, PURCHASETYPE.NAME AS NAME2 FROM PAP INNER JOIN ACCOUNT ON PAP.ACCOUNT = ACCOUNT.ID INNER JOIN PURCHASETYPE ON PAP.TYPE = PURCHASETYPE.ID";
+    private static final String BASIC_SELECT_QUERY ="SELECT DATE,CHECKED, PAP.ID AS ID, ACCOUNT.NAME AS ACCOUNT, PAP.AMOUNT AS AMOUNT, NOTE, PURCHASETYPE.NAME AS TYPE, PERIOD FROM PAP INNER JOIN ACCOUNT ON PAP.ACCOUNT = ACCOUNT.ID INNER JOIN PURCHASETYPE ON PAP.TYPE = PURCHASETYPE.ID";
+    private static final Map<String,String> CLASS_PAIR = new HashMap<>();
+    private static final Map<String,String> TYPE_PAIR = new HashMap<>();
     public PAPDAO(Context context){
+
         super(context);
         dbname = "PAP";
+        initPairs();
+
     }
-    public boolean addAutoDesc(Transaction transaction){
+
+    public boolean addAutoDesc(PAP pap){
         boolean flag = false;
-        String sqlquery = "INSERT INTO PAP(AMOUNT,DATE,TYPE,ACCOUNT,NOTE,CHECKED) VALUES (?,?,(SELECT ID FROM PURCHASETYPE WHERE NAME = ?),(SELECT ID FROM ACCOUNT WHERE NAME = ?),?,?)";
+        String sqlquery = "INSERT INTO PAP(AMOUNT,DATE,TYPE,ACCOUNT,NOTE,CHECKED,PERIOD) VALUES (?,?,(SELECT ID FROM PURCHASETYPE WHERE NAME = ?),(SELECT ID FROM ACCOUNT WHERE NAME = ?),?,'0','30')";
         try{
-            database.execSQL(sqlquery ,new Object[]{transaction.getAmount(),transaction.getDate(),transaction.getType(),transaction.getAccount(),transaction.getNote(),"0"});
+            database.execSQL(sqlquery ,new Object[]{pap.getAmount(),pap.getDate(),pap.getType(),pap.getAccount(),pap.getNote()});
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
         }
         return flag;
     }
-    public ArrayList<Transaction> getAutoDesc(){
-        ArrayList<Transaction> transactions = new ArrayList<>();
-        String sqlquery = BASIC_SELECT_QUERY;
-        try{
-            Cursor cursor = database.rawQuery(sqlquery,null);
-            while (cursor.moveToNext()){
-                Transaction transaction = parseCursor(cursor);
-                transactions.add(transaction);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return transactions;
+    public ArrayList<PAP> getAutoDesc(){
+        return parseCursor(BASIC_SELECT_QUERY,null);
     }
     public boolean removeAutoDesc(int id){
         boolean flag = false;
@@ -58,94 +59,92 @@ public class PAPDAO extends AbstractDAO {
         return flag;
     }
 
-    public boolean modifyAutoDesc(Transaction transaction){
+    public boolean modifyAutoDesc(PAP pap){
         boolean flag = false;
         try{
-            String sqlquery = "UPDATE PAP SET AMOUNT = ? ,DATE = ? ,TYPE = (SELECT ID FROM PURCHASETYPE WHERE NAME = ?) ,ACCOUNT = (SELECT ID FROM ACCOUNT WHERE NAME = ?) ,NOTE = ? WHERE ID = ?";
-            database.execSQL(sqlquery, new Object[]{transaction.getAmount(),transaction.getDate(),transaction.getType(),transaction.getAccount(),transaction.getNote(),transaction.getId()});
+            String sqlquery = "UPDATE PAP SET AMOUNT = ? ,DATE = ? ,TYPE = (SELECT ID FROM PURCHASETYPE WHERE NAME = ?) ,ACCOUNT = (SELECT ID FROM ACCOUNT WHERE NAME = ?) ,NOTE = ?,PERIOD = ? WHERE ID = ?";
+            database.execSQL(sqlquery, new Object[]{pap.getAmount(),pap.getDate(),pap.getType(),pap.getAccount(),pap.getNote(),pap.getId(),pap.getPERIOD()});
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
         }
         return flag;
     }
-    public ArrayList<Transaction> getPAPBefore(String date_str){
-        ArrayList<Transaction> trans = new ArrayList<>();
+    public ArrayList<PAP> getPAPBefore(String date_str){
         String sqlquery = BASIC_SELECT_QUERY+" WHERE DATE <= ?";
-        try {
-            Cursor cursor = database.rawQuery(sqlquery,new String[]{date_str});
-            while (cursor.moveToNext()){
-                Transaction t = parseCursor(cursor);
-                trans.add(t);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return trans;
+        return parseCursor(sqlquery,new String[]{date_str});
     }
-    public ArrayList<Transaction> getPAPBefore(Date date){
+    public ArrayList<PAP> getPAPBefore(Date date){
         return  getPAPBefore(date.toString());
     }
-    public ArrayList<Transaction> getUncheckedPAPBefore(Date date){
-        ArrayList<Transaction> trans = new ArrayList<>();
+    public ArrayList<PAP> getUncheckedPAPBefore(Date date){
         String sqlquery = BASIC_SELECT_QUERY + " WHERE CHECKED = 0 AND DATE <= ? ORDER BY DATE DESC";
-        try {
-            Cursor cursor = database.rawQuery(sqlquery,new String[]{date.toString()});
-            while (cursor.moveToNext()){
-                Transaction t = parseCursor(cursor);
-                trans.add(t);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return trans;
+        return parseCursor(sqlquery,new String[]{date.toString()});
     }
-    public ArrayList<Transaction> getUncheckedPAP(){
-        ArrayList<Transaction> trans = new ArrayList<>();
+    public ArrayList<PAP> getUncheckedPAP(){
         String sqlquery = BASIC_SELECT_QUERY + " WHERE CHECKED = 0 ORDER BY DATE DESC";
-        try {
-            Cursor cursor = database.rawQuery(sqlquery,null);
-            while (cursor.moveToNext()){
-                Transaction t = parseCursor(cursor);
-                trans.add(t);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return trans;
+        return parseCursor(sqlquery,null);
     }
-    private Transaction parseCursor (Cursor cursor){
-        int id = cursor.getInt(cursor.getColumnIndex("ID"));
-        double amount = cursor.getDouble(cursor.getColumnIndex("AMOUNT"));
-        Date date = new Date(cursor.getString(cursor.getColumnIndex("DATE")));
-        String purchase_type = cursor.getString(cursor.getColumnIndex("NAME2"));
-        String account = cursor.getString(cursor.getColumnIndex("NAME1"));
-        String note = cursor.getString(cursor.getColumnIndex("NOTE"));
-        return new Transaction(id,date,amount,account,note,purchase_type);
+
+    private ArrayList<PAP> parseCursor (String query,String[] args){
+        Cursor cursor = database.rawQuery(query,args);
+        int col_count = cursor.getColumnCount();
+        ArrayList<PAP> allpap = new ArrayList<>();
+        String[] colnames = cursor.getColumnNames();
+        Class cursor_class = cursor.getClass();
+        while (cursor.moveToNext()){
+            PAP pap = new PAP();
+            Class pap_class = pap.getClass();
+            for (int i = 0; i<col_count;i++)
+                try {
+                    Field pap_field = pap_class.getField(colnames[i]);
+                    pap_field.setAccessible(true);
+                    String field_type_str = pap_field.getType().getName();
+                    if (field_type_str.equals("java.lang.String")) {
+                        pap_field.set(pap, cursor.getString(i));
+                    } else {
+                        Class pap_field_cls = pap_field.getClass();
+                        String field_method_str = "set" + TYPE_PAIR.get(field_type_str);
+                        String cursor_method_str = "get" + TYPE_PAIR.get(field_type_str);
+                        Method pap_field_mtd = pap_field_cls.getDeclaredMethod(field_method_str, Object.class, Class.forName(CLASS_PAIR.get(field_type_str)).getDeclaredField("TYPE").getClass());
+                        Method cursor_mtd = cursor_class.getMethod(cursor_method_str, int.class);
+                        Object cursor_result = cursor_mtd.invoke(cursor, i);
+                        pap_field_mtd.invoke(pap_field, pap, cursor_result);
+                    }
+                } catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | ClassNotFoundException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            allpap.add(pap);
+        }
+        return allpap;
+
     }
     public boolean checkPAP(int id){
         boolean flag = false;
         String sqlquery = "UPDATE PAP SET CHECKED = 1 WHERE ID = ?";
         try {
-            database.execSQL(sqlquery,new Object[]{Integer.toString(id)});
+            database.execSQL(sqlquery,new Object[]{id});
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return flag;
     }
-    public ArrayList<Transaction> getCheckedPAP(){
-        ArrayList<Transaction> trans = new ArrayList<>();
+    public ArrayList<PAP> getCheckedPAP(){
         String sqlquery = BASIC_SELECT_QUERY + " WHERE CHECKED = 1";
-        try {
-            Cursor cursor = database.rawQuery(sqlquery,null);
-            while (cursor.moveToNext()){
-                trans.add(parseCursor(cursor));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return trans;
+        return parseCursor(sqlquery,null);
+    }
+    private void initPairs(){
+        CLASS_PAIR.put("int","java.lang.Integer");
+        CLASS_PAIR.put("double","java.lang.Double");
+        CLASS_PAIR.put("boolean","java.langBoolean");
+        CLASS_PAIR.put("float","java.langFloat");
+        CLASS_PAIR.put("long","java.lang.Long");
+        TYPE_PAIR.put("int","Int");
+        TYPE_PAIR.put("double","Double");
+        TYPE_PAIR.put("boolean","Boolean");
+        TYPE_PAIR.put("float","Float");
+        TYPE_PAIR.put("long","Long");
     }
 
 }
