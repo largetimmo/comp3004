@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/textView11"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="@color/orange"
         android:text="Statistics"
         android:textAlignment="center"
@@ -182,41 +182,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/pieChartArea"
+        android:id="@+id/chartArea"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="500dp"
         android:orientation="vertical">
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart"
-            android:layout_width="match_parent"
-            android:layout_height="490dp">
-
-        </com.github.mikephil.charting.charts.PieChart>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lineChartArea"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical">
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lineChart"
-            android:layout_width="match_parent"
-            android:layout_height="490dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/barChartArea"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical">
-
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barChart"
-            android:layout_width="match_parent"
-            android:layout_height="490dp" />
     </LinearLayout>
 
 </LinearLayout>
