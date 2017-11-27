@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
+import com.comp3004groupx.smartaccount.Core.PAP;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
@@ -310,10 +311,10 @@ public class NewTransaction extends AppCompatActivity {
                                 //Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
 
                                 //Create Transaction obj
-                                Transaction newTrans = new Transaction(preDate, Amount, accountName, Note, Type);
+                                PAP newPAP = new PAP(preDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj
 
-                                if (PAPDAO.addAutoDesc(newTrans) && setAccountRealBalanceMinus(accountName,Amount)) {
+                                if (PAPDAO.addAutoDesc(newPAP) && setAccountRealBalanceMinus(accountName,Amount)) {
                                     //Finish
                                     Context context = getApplicationContext();
                                     CharSequence text = "Success";
@@ -464,9 +465,9 @@ public class NewTransaction extends AppCompatActivity {
                                 Amount = checkIsCredit(accounts.getAccount(accountName).getType(), Amount);
 
                                 //Create Transaction obj
-                                Transaction newTrans = new Transaction(preDate, Amount, accountName, Note, Type);
+                                PAP newPAP = new PAP(preDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj
-                                if (PAPDAO.addAutoDesc(newTrans) && setAccountRealBalancePlus(accountName,Amount)) {
+                                if (PAPDAO.addAutoDesc(newPAP) && setAccountRealBalancePlus(accountName,Amount)) {
                                     //Finish
                                     Context context = getApplicationContext();
                                     CharSequence text = "Success";
