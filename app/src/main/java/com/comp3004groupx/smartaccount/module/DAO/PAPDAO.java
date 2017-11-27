@@ -97,7 +97,7 @@ public class PAPDAO extends AbstractDAO {
             Class pap_class = pap.getClass();
             for (int i = 0; i<col_count;i++)
                 try {
-                    Field pap_field = pap_class.getField(colnames[i]);
+                    Field pap_field = pap_class.getDeclaredField(colnames[i]);
                     pap_field.setAccessible(true);
                     String field_type_str = pap_field.getType().getName();
                     if (field_type_str.equals("java.lang.String")) {
@@ -107,7 +107,7 @@ public class PAPDAO extends AbstractDAO {
                         String field_method_str = "set" + TYPE_PAIR.get(field_type_str);
                         String cursor_method_str = "get" + TYPE_PAIR.get(field_type_str);
                         Method pap_field_mtd = pap_field_cls.getDeclaredMethod(field_method_str, Object.class, Class.forName(CLASS_PAIR.get(field_type_str)).getDeclaredField("TYPE").getClass());
-                        Method cursor_mtd = cursor_class.getMethod(cursor_method_str, int.class);
+                        Method cursor_mtd = cursor_class.getDeclaredMethod(cursor_method_str, int.class);
                         Object cursor_result = cursor_mtd.invoke(cursor, i);
                         pap_field_mtd.invoke(pap_field, pap, cursor_result);
                     }
