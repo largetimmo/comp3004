@@ -257,15 +257,16 @@ public class Edit_PAP extends AppCompatActivity {
                 String upPurchaseType = purchaseTypeSpinner.getSelectedItem().toString();
                 String upAccountName = accountSpinner.getSelectedItem().toString();
                 String upNotes = notes.getText().toString();
+                double difference = tran.getAmount()-upAmount;
                 if (errorChecking(upAmount) && checkingDate(upDate)){
                     tran.setAccount(upAccountName);
                     tran.setAmount(upAmount);
                     tran.setDate(upDate);
                     tran.setType(upPurchaseType);
                     tran.setNote(upNotes);
-                    if (papdao.modifyAutoDesc(tran)) {
-                        toast("Success");
-                        finish();
+                    if (papdao.modifyAutoDesc(tran)&&modifyRealBalance(tran, difference)){
+                            toast("Success");
+                            finish();
                     }
 
                 }
@@ -275,7 +276,7 @@ public class Edit_PAP extends AppCompatActivity {
     private void deletePAP(){
         deleteButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                if(papdao.removeAutoDesc(tran.getId())){
+                if(papdao.removeAutoDesc(tran.getId())&&modifyRealBalance(tran, tran.getAmount())){
                     toast("Success");
                     finish();
                 }
@@ -313,6 +314,18 @@ public class Edit_PAP extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
+    private boolean modifyRealBalance(Transaction tran, double amount){
+        ArrayList<Account> allAccounts = accounts.getAllAccount();
+        Account modify = null;
 
+        for(Account a : allAccounts){
+            if(a.getName().equals(tran.getAccount())) {
+                modify = a;
+                break;
+            }
+        }
+        modify.setReal_balance(modify.getRealAmount()+amount);
+        return accounts.updateAccount(modify);
+    }
 
 }

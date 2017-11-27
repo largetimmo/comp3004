@@ -41,8 +41,6 @@ public class PAP_List extends AppCompatActivity{
 
     Calendar calendar;
     DatePickerDialog.OnDateSetListener datePickerDialog;
-    //selection is for identify which edittext should be put value in
-    //1 for date_to
     int selection = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -133,13 +131,8 @@ public class PAP_List extends AppCompatActivity{
                     TextView date = new TextView(getApplicationContext());
                     type.setText(t.getType());
 
-                    if (t.getAmount() >0){
-                        amount.setText(decimalFormat.format(t.getAmount()));
-                        amount.setTextColor(getResources().getColor(R.color.red));
-                    }else{
-                        amount.setText(decimalFormat.format(-1*t.getAmount()));
-                        amount.setTextColor(getResources().getColor(R.color.green));
-                    }
+                    amount.setText(decimalFormat.format(t.getAmount()));
+                    amount.setTextColor(getResources().getColor(R.color.red));
 
                     account_name.setText(t.getAccount());
                     date.setText(t.getDate().toString());
