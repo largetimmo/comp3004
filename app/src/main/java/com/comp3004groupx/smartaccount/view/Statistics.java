@@ -515,18 +515,22 @@ public class Statistics extends AppCompatActivity {
             }
         } else if (selectBalance.isChecked()) {
             ArrayList<Account> accountList = accountDataBase.getAllAccount();
-            if (checkLiab.isChecked()) {//FIXME: IndexOutOfBoundsException WTF?!?!?!
+            if (checkLiab.isChecked()) {
+                int count = 0;
                 for (int i = 0; i < accountList.size(); i++) {
                     if (accountList.get(i).getBalance() < 0) {
-                        barEntries.add(new BarEntry((float) i, (float) Math.abs(accountList.get(i).getBalance())));
+                        barEntries.add(new BarEntry((float) count, (float) Math.abs(accountList.get(i).getBalance())));
                         xLabel.add(accountList.get(i).getName());
+                        count++;
                     }
                 }
             } else if (checkProp.isChecked()) {
+                int count = 0;
                 for (int i = 0; i < accountList.size(); i++) {
                     if (accountList.get(i).getBalance() >= 0) {
-                        barEntries.add(new BarEntry((float) i, (float) Math.abs(accountList.get(i).getBalance())));
+                        barEntries.add(new BarEntry((float) count, (float) Math.abs(accountList.get(i).getBalance())));
                         xLabel.add(accountList.get(i).getName());
+                        count++;
                     }
                 }
             }
@@ -551,9 +555,9 @@ public class Statistics extends AppCompatActivity {
             set = new BarDataSet(barEntries, "No Data");
         }
 
-
         xAxis.setValueFormatter((value, axis) -> xLabel.get((int) value));
-
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
 
         BarData data = new BarData(set);
         data.setBarWidth(0.9f); // set custom bar width
@@ -561,9 +565,7 @@ public class Statistics extends AppCompatActivity {
         barchart.setFitBars(true); // make the x-axis fit exactly all bars
         barchart.invalidate(); // refresh
 
-
         chartArea.addView(barchart);
-
 
         //update size
         chartSizeParams = barchart.getLayoutParams();
@@ -611,9 +613,6 @@ public class Statistics extends AppCompatActivity {
         List<Entry> incEntries = new ArrayList<>();
         LineDataSet expSet;
         LineDataSet incSet;
-
-
-
 
         ArrayList<String> xLabel = new ArrayList<>();
 
