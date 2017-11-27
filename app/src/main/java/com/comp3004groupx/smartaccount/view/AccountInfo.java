@@ -120,7 +120,7 @@ public class AccountInfo extends AppCompatActivity {
 
 
             //Show per balance
-            double perBalance = accountBalance - account.getReal_balance();
+            double perBalance = (accountBalance - account.getReal_balance());
             accountPerBalance = (TextView) findViewById(R.id.perBalance);
             accountPerBalance.setText(decimalFormat.format(perBalance));
         }

@@ -126,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
         Double balance = 0.00;
         for (int i = 0;i<accountList.size();i++){
 
-                if (accountList.get(i).getBalance() > 0) {
+
                     balance += accountList.get(i).getBalance();
-                }
+
             }
 
         if (balance <= 300 && accountList.size() != 0){
@@ -164,6 +164,12 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0;i<papTransaction2.size();i++){
                 if (currDate.compareTo(papTransaction2.get(i).getDate()) != -1){
                     transactionDAO.addTrans(papTransaction2.get(i));
+//                    if (papTransaction2.get(i).getAmount()>0){
+//                        setAccountRealBalancePlus(papTransaction2.get(i).getAccount(),papTransaction2.get(i).getAmount());
+//                    }
+//                    else {
+//                        setAccountRealBalanceMinus(papTransaction2.get(i).getAccount(),papTransaction2.get(i).getAmount());
+//                    }
                     papTransaction2.get(i).getDate().plusDate(30);
                     papDAO.removeAutoDesc(papTransaction2.get(i).getId());
                     papDAO.addAutoDesc(papTransaction2.get(i));
@@ -210,6 +216,36 @@ public class MainActivity extends AppCompatActivity {
         });
         pap_dialog.show();
         return  pap_dialog;
+    }
+
+    private boolean setAccountRealBalanceMinus(String accountName, double amount){
+        ArrayList<Account> accountList = accountDataBase.getAllAccount();
+        Account account = null;
+        for (int i = 0; i<accountList.size(); i++){
+            if (accountName.equals(accountList.get(i).getName())){
+                account = accountList.get(i);
+                break;
+                //accounts.getAccount(accountList.get(i).getID()).setReal_balance(accounts.getAccount(accountList.get(i).getID()).getReal_balance()-amount);
+                //accounts.updateAccount(accounts.getAccount(accountList.get(i).getID()));
+            }
+        }
+        account.setReal_balance(account.getReal_balance()+amount);
+        return accountDataBase.updateAccount(account);
+    }
+
+    private boolean setAccountRealBalancePlus(String accountName, double amount){
+        ArrayList<Account> accountList = accountDataBase.getAllAccount();
+        Account account = null;
+        for (int i = 0; i<accountList.size(); i++){
+            if (accountName.equals(accountList.get(i).getName())){
+                account = accountList.get(i);
+                break;
+                //accounts.getAccount(accountList.get(i).getID()).setReal_balance(accounts.getAccount(accountList.get(i).getID()).getReal_balance()-amount);
+                //accounts.updateAccount(accounts.getAccount(accountList.get(i).getID()));
+            }
+        }
+        account.setReal_balance(account.getReal_balance()+amount);
+        return accountDataBase.updateAccount(account);
     }
 
     private Date getCheckDate() {
