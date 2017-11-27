@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         setting = (TextView) findViewById(R.id.main_setting);
         statistics = (TextView) findViewById(R.id.main_statistic);
         newTrans = (Button) findViewById(R.id.newTrans);
-        income = (TextView) findViewById(R.id.income);
-        cost = (TextView) findViewById(R.id.cost);
+        income = (TextView) findViewById(R.id.main_income);
+        cost = (TextView) findViewById(R.id.main_cost);
         transactionDAO = new TransactionDAO(getApplicationContext());
         decimalFormat = new DecimalFormat("0.00");
 
