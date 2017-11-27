@@ -51,7 +51,7 @@ public class Edit_PAP extends AppCompatActivity {
     DecimalFormat decimalFormat;
     List<Integer> Day = new ArrayList<>();
     List<Transaction> allpap = new ArrayList<>();
-    int status = 0;  //0 == purchase, 1 == income
+    int status = 0;
 
 
 
@@ -133,16 +133,15 @@ public class Edit_PAP extends AppCompatActivity {
         monthSpinner.setSelection(monthPosition);
 
         //Set daySpinner
-        int check = daySpinner.getAdapter().getCount();  //Debug code
         int dayPosition = getTypePosition(daySpinner,Integer.toString(tran.getDate().getDay()));
         daySpinner.setSelection(dayPosition);
 
 
         //Update Transaction
-        updateTransaction();
+        updatePAP();
 
         //Delete Transaction
-        deleteTransaction();
+        deletePAP();
 
 
 
@@ -237,14 +236,13 @@ public class Edit_PAP extends AppCompatActivity {
         for (int i = 0; i<TypeSpinner.getAdapter().getCount(); i++){
             String checkS=TypeSpinner.getAdapter().getItem(i).toString();
             if(toComp.equals(TypeSpinner.getAdapter().getItem(i).toString())){
-                int check =i;
                 return i;
             }
         }
         return 0;
     }
 
-    private void updateTransaction(){
+    private void updatePAP(){
         yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
         amount = (EditText) findViewById(R.id.amount);
         purchaseTypeSpinner = (Spinner) findViewById(R.id.purchaseTypeSpinner);
@@ -274,10 +272,10 @@ public class Edit_PAP extends AppCompatActivity {
             }
         });
     }
-    private void deleteTransaction(){
+    private void deletePAP(){
         deleteButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                if(papdao.removeAutoDesc(tran.getId()) && setAccountRealBalancePlus(tran.getAccount(),tran.getAmount()) ){
+                if(papdao.removeAutoDesc(tran.getId())){
                     toast("Success");
                     finish();
                 }
@@ -316,18 +314,5 @@ public class Edit_PAP extends AppCompatActivity {
         toast.show();
     }
 
-    private boolean setAccountRealBalancePlus(String accountName, double amount){
-        ArrayList<Account> accountList = accounts.getAllAccount();
-        Account account = null;
-        for (int i = 0; i<accountList.size(); i++){
-            if (accountName.equals(accountList.get(i).getName())){
-                account = accountList.get(i);
-                break;
-                //accounts.getAccount(accountList.get(i).getID()).setReal_balance(accounts.getAccount(accountList.get(i).getID()).getReal_balance()-amount);
-                //accounts.updateAccount(accounts.getAccount(accountList.get(i).getID()));
-            }
-        }
-        account.setReal_balance(account.getReal_balance()+amount);
-        return accounts.updateAccount(account);
-    }
+
 }
