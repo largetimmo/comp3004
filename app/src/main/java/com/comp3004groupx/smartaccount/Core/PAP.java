@@ -16,7 +16,26 @@ public class PAP {
     public PAP(){
 
     }
+    public PAP(Date date, double amount, String account, String note, String type) {
+        this.DATE = date;
+        this.AMOUNT = amount;
+        this.ACCOUNT = account;
+        this.NOTE = note;
+        this.TYPE = type;
+        this.CHECKED = "0";
+        this.PERIOD = 30;
+    }
 
+    public PAP(int id, Date date, double amount, String account, String note, String type) {
+        this.ID = id;
+        this.DATE = date;
+        this.AMOUNT = amount;
+        this.ACCOUNT = account;
+        this.TYPE = type;
+        this.NOTE = note;
+        this.CHECKED = "0";
+        this.PERIOD = 30;
+    }
     public int getId() {
         return ID;
     }
