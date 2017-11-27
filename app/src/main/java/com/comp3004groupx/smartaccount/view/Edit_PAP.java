@@ -11,11 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
+import com.comp3004groupx.smartaccount.Core.PAP;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
@@ -38,10 +38,11 @@ public class Edit_PAP extends AppCompatActivity {
     PurchaseTypeDAO purchaseTypeList;
     AccountDAO accounts;
     PAPDAO papdao;
-    Transaction tran;
+    PAP tran;
     Spinner yearSpinner;
     Spinner monthSpinner;
     Spinner daySpinner;
+    Spinner periodSpinner;
     EditText amount;
     Spinner purchaseTypeSpinner;
     Spinner accountSpinner;
@@ -50,7 +51,7 @@ public class Edit_PAP extends AppCompatActivity {
     Button deleteButton;
     DecimalFormat decimalFormat;
     List<Integer> Day = new ArrayList<>();
-    List<Transaction> allpap = new ArrayList<>();
+    List<PAP> allpap = new ArrayList<>();
     int status = 0;
 
 
@@ -69,7 +70,7 @@ public class Edit_PAP extends AppCompatActivity {
         int tranId = intent.getIntExtra("ID",0);
         papdao = new PAPDAO(getApplicationContext());
         allpap = papdao.getAutoDesc();
-        for(Transaction t : allpap){
+        for(PAP t : allpap){
             if(t.getId()==tranId)
                 tran = t;
         }
@@ -77,7 +78,7 @@ public class Edit_PAP extends AppCompatActivity {
         //Init Type Spinner
         purchaseTypeSpinner = (Spinner) findViewById(R.id.purchaseTypeSpinner);
         purchaseTypeList = new PurchaseTypeDAO(getApplicationContext());
-            //Init purchaseTypeSpinner
+            //Init purchaseTypeSpinner)
             List<String> purchaseTypes = purchaseTypeList.getALLExpenseType();
             setTypeSpinner(purchaseTypeSpinner, purchaseTypes);
 
@@ -96,6 +97,15 @@ public class Edit_PAP extends AppCompatActivity {
             accountsNames.add(accountTypes.get(i).getName());
         }
         setTypeSpinner(accountSpinner,accountsNames);
+
+        //Set periodSpinner
+        /*periodSpinner = (Spinner) findViewById(R.id.period);
+        List<String> periods = new ArrayList<>();
+        periods.add("Select a Number");
+        for(int i=1; i<=12;i++){
+            periods.add(Integer.toString(i));
+        }
+        setTypeSpinner(periodSpinner, periods);*/
 
         //Set amount
         amount = (EditText) findViewById(R.id.amount);
@@ -314,7 +324,7 @@ public class Edit_PAP extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
-    private boolean modifyRealBalance(Transaction tran, double amount){
+    private boolean modifyRealBalance(PAP tran, double amount){
         ArrayList<Account> allAccounts = accounts.getAllAccount();
         Account modify = null;
 

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.comp3004groupx.smartaccount.Core.Date;
+import com.comp3004groupx.smartaccount.Core.PAP;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
@@ -113,9 +114,9 @@ public class PAP_List extends AppCompatActivity{
 
     private void refreshList(){
             Date to = new Date(date_to.getText().toString());
-                ArrayList<Transaction> allpap = papDAO.getPAPBefore(to);
+                ArrayList<PAP> allpap = papDAO.getPAPBefore(to);
                 pap_list.removeAllViews();
-                for (Transaction t: allpap){
+                for (PAP t: allpap){
                     final LinearLayout parent = new LinearLayout(getApplicationContext());
                     parent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     parent.setOrientation(LinearLayout.VERTICAL);

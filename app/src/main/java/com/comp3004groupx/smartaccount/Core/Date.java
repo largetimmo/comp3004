@@ -89,11 +89,11 @@ public class Date {
     public void plusMonth(int n){
         Calendar calendar = Calendar.getInstance();
         calendar.set(year,month-1,day);
-        month = (calendar.get(Calendar.MONTH)+1+n)%12;
+        calendar.add(Calendar.MONTH,+n);
+        month = (calendar.get(Calendar.MONTH)+1)%12;
         if(month==0)
             month =12;
-        if(calendar.get(Calendar.MONTH)+1+n>12)
-            year++;
+        year = calendar.get(Calendar.YEAR);
     }
 
     public void plusYear(int n){
