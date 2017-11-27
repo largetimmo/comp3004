@@ -31,7 +31,10 @@ public class Date {
         sb.append("-");
         sb.append(this.month);
         sb.append("-");
-        sb.append(this.day);
+        if (this.day<=9){
+            sb.append("0");
+        }
+        sb.append(this.day<=9);
         return sb.toString();
     }
     public int getYear() { return year; }
