@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
+import com.comp3004groupx.smartaccount.Core.PAP;
 import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
@@ -37,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     Pap_Dialog pap_dialog;
     Low_Balance_Dialog low_balance_dialog;
     int number = 0;
-    ArrayList<Transaction> papTransaction;
-    ArrayList<Transaction> papTransaction2;
+    ArrayList<PAP> papTransaction;
+    ArrayList<PAP> papTransaction2;
     DecimalFormat decimalFormat;
     AccountDAO accountDataBase;
 
