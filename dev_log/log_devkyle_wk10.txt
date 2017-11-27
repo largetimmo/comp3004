@@ -1,0 +1,6 @@
+Junhao Chen     101010964
+
+1.Finish architecture part of D3 documentation
+2.Finish architecture part of D3 slides
+3.Fix bug in low_balance_dialog layout
+4.Fix bug in toString() in Date(When day less than 10, the output should add 0 before the day)
