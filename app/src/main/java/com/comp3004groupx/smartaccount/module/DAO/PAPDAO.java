@@ -102,7 +102,11 @@ public class PAPDAO extends AbstractDAO {
                     String field_type_str = pap_field.getType().getName();
                     if (field_type_str.equals("java.lang.String")) {
                         pap_field.set(pap, cursor.getString(i));
-                    } else {
+                    }else if (field_type_str.equals("com.comp3004groupx.smartaccount.Core.Date")){
+                        String date_str = cursor.getString(i);
+                        pap.setDate(new Date(date_str));
+                    }
+                    else {
                         Class pap_field_cls = pap_field.getClass();
                         String field_method_str = "set" + TYPE_PAIR.get(field_type_str);
                         String cursor_method_str = "get" + TYPE_PAIR.get(field_type_str);
