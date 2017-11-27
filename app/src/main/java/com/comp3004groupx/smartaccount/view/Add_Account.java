@@ -72,35 +72,38 @@ public class Add_Account extends AppCompatActivity{
         AccountAmount = (EditText) findViewById(R.id.Amount);
         accountTypeSpinner = (Spinner) findViewById(R.id.AccountTypeSpinner);
 
-        CreateButton.setOnClickListener(view -> {
-            boolean isCreate;
-            String accountName = AccountName.getText().toString();
-            double amount = Double.parseDouble(AccountAmount.getText().toString());
-            String accountType = accountTypeSpinner.getSelectedItem().toString();
-            if (!checkSpinner(accountType)){
-                Context context = getApplicationContext();
-                CharSequence text = "Please select a type of account!";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-            else{
-                Account newAccount = new Account(accountName, accountType, amount,amount);
-                isCreate = accountDAO.addAccount(newAccount);
-                if (isCreate){
+        CreateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                boolean isCreate = false;
+                String accountName = AccountName.getText().toString();
+                double amount = Double.parseDouble(AccountAmount.getText().toString());
+                String accountType = accountTypeSpinner.getSelectedItem().toString();
+                if (checkSpinner(accountType) == false){
                     Context context = getApplicationContext();
-                    CharSequence text = "Success";
+                    CharSequence text = "Please select a type of account!";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
-                    finish();
                 }
                 else{
-                    Context context = getApplicationContext();
-                    CharSequence text = "Fail";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
+                    Account newAccount = new Account(accountName, accountType, amount,amount);
+                    isCreate = accountDAO.addAccount(newAccount);
+                    if (isCreate == true){
+                        Context context = getApplicationContext();
+                        CharSequence text = "Success";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        finish();
+                    }
+                    else{
+                        Context context = getApplicationContext();
+                        CharSequence text = "Fail";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
                 }
             }
         });

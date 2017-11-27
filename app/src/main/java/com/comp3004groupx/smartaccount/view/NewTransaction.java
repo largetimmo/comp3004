@@ -312,7 +312,8 @@ public class NewTransaction extends AppCompatActivity {
                                 //Create Transaction obj
                                 Transaction newTrans = new Transaction(preDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj
-                                if (PAPDAO.addAutoDesc(newTrans)) {
+
+                                if (PAPDAO.addAutoDesc(newTrans) && setAccountRealBalanceMinus(accountName,Amount)) {
                                     //Finish
                                     Context context = getApplicationContext();
                                     CharSequence text = "Success";
@@ -465,7 +466,7 @@ public class NewTransaction extends AppCompatActivity {
                                 //Create Transaction obj
                                 Transaction newTrans = new Transaction(preDate, Amount, accountName, Note, Type);
                                 //Create Autodesc obj
-                                if (PAPDAO.addAutoDesc(newTrans)) {
+                                if (PAPDAO.addAutoDesc(newTrans) && setAccountRealBalancePlus(accountName,Amount)) {
                                     //Finish
                                     Context context = getApplicationContext();
                                     CharSequence text = "Success";
@@ -591,6 +592,36 @@ public class NewTransaction extends AppCompatActivity {
             amount *= -1;
         }
         return amount;
+    }
+
+    private boolean setAccountRealBalanceMinus(String accountName, double amount){
+        ArrayList<Account> accountList = accounts.getAllAccount();
+        Account account = null;
+        for (int i = 0; i<accountList.size(); i++){
+            if (accountName.equals(accountList.get(i).getName())){
+                account = accountList.get(i);
+                break;
+                //accounts.getAccount(accountList.get(i).getID()).setReal_balance(accounts.getAccount(accountList.get(i).getID()).getReal_balance()-amount);
+                //accounts.updateAccount(accounts.getAccount(accountList.get(i).getID()));
+            }
+        }
+        account.setReal_balance(account.getReal_balance()-amount);
+        return accounts.updateAccount(account);
+    }
+
+    private boolean setAccountRealBalancePlus(String accountName, double amount){
+        ArrayList<Account> accountList = accounts.getAllAccount();
+        Account account = null;
+        for (int i = 0; i<accountList.size(); i++){
+            if (accountName.equals(accountList.get(i).getName())){
+                account = accountList.get(i);
+                break;
+                //accounts.getAccount(accountList.get(i).getID()).setReal_balance(accounts.getAccount(accountList.get(i).getID()).getReal_balance()-amount);
+                //accounts.updateAccount(accounts.getAccount(accountList.get(i).getID()));
+            }
+        }
+        account.setReal_balance(account.getReal_balance()-amount);
+        return accounts.updateAccount(account);
     }
 
 }

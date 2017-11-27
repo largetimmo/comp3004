@@ -277,7 +277,7 @@ public class Edit_PAP extends AppCompatActivity {
     private void deleteTransaction(){
         deleteButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                if(papdao.removeAutoDesc(tran.getId())){
+                if(papdao.removeAutoDesc(tran.getId()) && setAccountRealBalancePlus(tran.getAccount(),tran.getAmount()) ){
                     toast("Success");
                     finish();
                 }
@@ -314,5 +314,20 @@ public class Edit_PAP extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    private boolean setAccountRealBalancePlus(String accountName, double amount){
+        ArrayList<Account> accountList = accounts.getAllAccount();
+        Account account = null;
+        for (int i = 0; i<accountList.size(); i++){
+            if (accountName.equals(accountList.get(i).getName())){
+                account = accountList.get(i);
+                break;
+                //accounts.getAccount(accountList.get(i).getID()).setReal_balance(accounts.getAccount(accountList.get(i).getID()).getReal_balance()-amount);
+                //accounts.updateAccount(accounts.getAccount(accountList.get(i).getID()));
+            }
+        }
+        account.setReal_balance(account.getReal_balance()+amount);
+        return accounts.updateAccount(account);
     }
 }
