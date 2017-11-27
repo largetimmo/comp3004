@@ -87,6 +87,9 @@ public class Add_Account extends AppCompatActivity{
                     toast.show();
                 }
                 else{
+                    if (isCreditCard(accountType)){
+                        amount *= -1;
+                    }
                     Account newAccount = new Account(accountName, accountType, amount,amount);
                     isCreate = accountDAO.addAccount(newAccount);
                     if (isCreate == true){
@@ -111,6 +114,11 @@ public class Add_Account extends AppCompatActivity{
     private boolean checkSpinner(String selectText){
         String equalText = "----Select Account Type------------------------------";
         return !selectText.equals(equalText);
+    }
+
+    private boolean isCreditCard(String selectText){
+        String equalText = "Credit Card";
+        return selectText.equals(equalText);
     }
 
 }
