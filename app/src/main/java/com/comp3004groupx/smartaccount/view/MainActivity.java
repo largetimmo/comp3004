@@ -164,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
             Date currDate = getDate();
             for (int i = 0;i<papTransaction2.size();i++){
                 if (currDate.compareTo(papTransaction2.get(i).getDate()) != -1){
-                    transactionDAO.addTrans(papTransaction2.get(i));
+                    Transaction newTran = new Transaction(papTransaction2.get(i).getDate(),papTransaction2.get(i).getAmount(),papTransaction2.get(i).getAccount(),papTransaction2.get(i).getNote(),papTransaction2.get(i).getType());
+                    transactionDAO.addTrans(newTran);
 //                    if (papTransaction2.get(i).getAmount()>0){
 //                        setAccountRealBalancePlus(papTransaction2.get(i).getAccount(),papTransaction2.get(i).getAmount());
 //                    }
