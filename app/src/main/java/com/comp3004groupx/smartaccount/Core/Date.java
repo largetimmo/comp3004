@@ -29,6 +29,9 @@ public class Date {
         StringBuffer sb = new StringBuffer();
         sb.append(this.year);
         sb.append("-");
+        if (month<=9){
+            sb.append("0");
+        }
         sb.append(this.month);
         sb.append("-");
         if (this.day<=9){
