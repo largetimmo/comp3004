@@ -63,7 +63,7 @@ public class PAPDAO extends AbstractDAO {
         boolean flag = false;
         try{
             String sqlquery = "UPDATE PAP SET AMOUNT = ? ,DATE = ? ,TYPE = (SELECT ID FROM PURCHASETYPE WHERE NAME = ?) ,ACCOUNT = (SELECT ID FROM ACCOUNT WHERE NAME = ?) ,NOTE = ?,PERIOD = ? WHERE ID = ?";
-            database.execSQL(sqlquery, new Object[]{pap.getAmount(),pap.getDate(),pap.getType(),pap.getAccount(),pap.getNote(),pap.getId(),pap.getPERIOD()});
+            database.execSQL(sqlquery, new Object[]{pap.getAmount(),pap.getDate(),pap.getType(),pap.getAccount(),pap.getNote(),pap.getPERIOD(),pap.getId()});
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
