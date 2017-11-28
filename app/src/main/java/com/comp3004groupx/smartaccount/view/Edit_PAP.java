@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.comp3004groupx.smartaccount.Core.Account;
 import com.comp3004groupx.smartaccount.Core.Date;
 import com.comp3004groupx.smartaccount.Core.PAP;
-import com.comp3004groupx.smartaccount.Core.Transaction;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DAO.AccountDAO;
 import com.comp3004groupx.smartaccount.module.DAO.PAPDAO;
@@ -76,7 +75,7 @@ public class Edit_PAP extends AppCompatActivity {
         }
 
         //Init Type Spinner
-        purchaseTypeSpinner = (Spinner) findViewById(R.id.purchaseTypeSpinner);
+        purchaseTypeSpinner = (Spinner) findViewById(R.id.PAPpurchaseTypeSpinner);
         purchaseTypeList = new PurchaseTypeDAO(getApplicationContext());
             //Init purchaseTypeSpinner)
             List<String> purchaseTypes = purchaseTypeList.getALLExpenseType();
@@ -89,7 +88,7 @@ public class Edit_PAP extends AppCompatActivity {
         setDateSpinner(yearSpinner, monthSpinner, daySpinner);
 
         //Init accountSpinner
-        accountSpinner = (Spinner) findViewById(R.id.accountSpinner);
+        accountSpinner = (Spinner) findViewById(R.id.PAPaccountSpinner);
         accounts = new AccountDAO(getApplicationContext());
         ArrayList<Account> accountTypes = accounts.getAllAccount();
         List<String> accountsNames = new ArrayList<>();
@@ -107,7 +106,7 @@ public class Edit_PAP extends AppCompatActivity {
         setTypeSpinner(periodSpinner,periods);
 
         //Set amount
-        amount = (EditText) findViewById(R.id.amount);
+        amount = (EditText) findViewById(R.id.PAPamount);
         amount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
         if (status == 0){
             amount.setText(decimalFormat.format(tran.getAmount()));
@@ -251,9 +250,9 @@ public class Edit_PAP extends AppCompatActivity {
 
     private void updatePAP(){
         yearSpinner = (Spinner) findViewById(R.id.PAPyearSpinner);
-        amount = (EditText) findViewById(R.id.amount);
-        purchaseTypeSpinner = (Spinner) findViewById(R.id.purchaseTypeSpinner);
-        accountSpinner = (Spinner) findViewById(R.id.accountSpinner);
+        amount = (EditText) findViewById(R.id.PAPamount);
+        purchaseTypeSpinner = (Spinner) findViewById(R.id.PAPpurchaseTypeSpinner);
+        accountSpinner = (Spinner) findViewById(R.id.PAPaccountSpinner);
         monthSpinner = (Spinner) findViewById(R.id.PAPmonthSpinner);
         daySpinner = (Spinner) findViewById(R.id.PAPdaySpinner);
         notes = (EditText) findViewById(R.id.PAPnotes);

@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import android.content.DialogInterface;
 import com.comp3004groupx.smartaccount.R;
 import com.comp3004groupx.smartaccount.module.DecimalDigitsInputFilter;
 
@@ -78,7 +77,7 @@ public class Pap_Dialog extends Dialog {
     private void initView(){
         save = (Button) findViewById(R.id.save);
         later = (Button) findViewById(R.id.later);
-        amount = (EditText) findViewById(R.id.amount);
+        amount = (EditText) findViewById(R.id.PAPamount);
         date = (TextView) findViewById(R.id.date);
         type = (TextView) findViewById(R.id.type);
         amount.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
