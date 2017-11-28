@@ -4,3 +4,5 @@ Junhao Chen     101010964
 2.Finish architecture part of D3 slides
 3.Fix bug in low_balance_dialog layout
 4.Fix bug in toString() in Date(When day less than 10, the output should add 0 before the day)
+5.Refactor PAPDAO
+6.create PAP pojo
