@@ -5,3 +5,5 @@ Implemented the low_balance notification of our app.
 Include: A new Custom Dialog.
 
 Fix some bugs in our app.
+
+Fix PAP problem with Kyle together. And do all error checking in our app
