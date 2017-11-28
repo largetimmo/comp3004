@@ -59,11 +59,11 @@ public class Edit_PAP extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.show_transaction);
+        setContentView(R.layout.edit_pap);
         decimalFormat = new DecimalFormat("0.00");
         //Get button
-        saveButton = (Button) findViewById(R.id.saveButton);
-        deleteButton = (Button) findViewById(R.id.deleteButton);
+        saveButton = (Button) findViewById(R.id.save);
+        deleteButton = (Button) findViewById(R.id.delete);
 
         //Get tran from last activity
         Intent intent = getIntent();
@@ -83,9 +83,9 @@ public class Edit_PAP extends AppCompatActivity {
             setTypeSpinner(purchaseTypeSpinner, purchaseTypes);
 
         //Init DateSpinner
-        yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
-        monthSpinner = (Spinner) findViewById(R.id.monthSpinner);
-        daySpinner = (Spinner) findViewById(R.id.daySpinner);
+        yearSpinner = (Spinner) findViewById(R.id.PAPyearSpinner);
+        monthSpinner = (Spinner) findViewById(R.id.PAPmonthSpinner);
+        daySpinner = (Spinner) findViewById(R.id.PAPdaySpinner);
         setDateSpinner(yearSpinner, monthSpinner, daySpinner);
 
         //Init accountSpinner
@@ -98,14 +98,13 @@ public class Edit_PAP extends AppCompatActivity {
         }
         setTypeSpinner(accountSpinner,accountsNames);
 
-        //Set periodSpinner
-        /*periodSpinner = (Spinner) findViewById(R.id.period);
+        periodSpinner = (Spinner)findViewById(R.id.period);
         List<String> periods = new ArrayList<>();
         periods.add("Select a Number");
         for(int i=1; i<=12;i++){
             periods.add(Integer.toString(i));
         }
-        setTypeSpinner(periodSpinner, periods);*/
+        setTypeSpinner(periodSpinner,periods);
 
         //Set amount
         amount = (EditText) findViewById(R.id.amount);
@@ -118,13 +117,8 @@ public class Edit_PAP extends AppCompatActivity {
         }
 
         //Set notes
-        notes = (EditText) findViewById(R.id.notes);
-        if (tran.getNote().equals("")){
-            notes.setHint("Notes");
-        }
-        else {
+        notes = (EditText) findViewById(R.id.PAPnotes);
             notes.setText(tran.getNote());
-        }
 
         //Set PurchaseTypeSpinner
         int purchaseTypePosition = getTypePosition(purchaseTypeSpinner, tran.getType());
@@ -146,6 +140,9 @@ public class Edit_PAP extends AppCompatActivity {
         int dayPosition = getTypePosition(daySpinner,Integer.toString(tran.getDate().getDay()));
         daySpinner.setSelection(dayPosition);
 
+        //Set period
+        int periodPosition = getTypePosition(periodSpinner,Integer.toString(tran.getPERIOD()));
+        periodSpinner.setSelection(periodPosition);
 
         //Update Transaction
         updatePAP();
@@ -253,13 +250,13 @@ public class Edit_PAP extends AppCompatActivity {
     }
 
     private void updatePAP(){
-        yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
+        yearSpinner = (Spinner) findViewById(R.id.PAPyearSpinner);
         amount = (EditText) findViewById(R.id.amount);
         purchaseTypeSpinner = (Spinner) findViewById(R.id.purchaseTypeSpinner);
         accountSpinner = (Spinner) findViewById(R.id.accountSpinner);
-        monthSpinner = (Spinner) findViewById(R.id.monthSpinner);
-        daySpinner = (Spinner) findViewById(R.id.daySpinner);
-        notes = (EditText) findViewById(R.id.notes);
+        monthSpinner = (Spinner) findViewById(R.id.PAPmonthSpinner);
+        daySpinner = (Spinner) findViewById(R.id.PAPdaySpinner);
+        notes = (EditText) findViewById(R.id.PAPnotes);
         saveButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 Date upDate = getDate(yearSpinner,monthSpinner,daySpinner);
@@ -267,6 +264,7 @@ public class Edit_PAP extends AppCompatActivity {
                 String upPurchaseType = purchaseTypeSpinner.getSelectedItem().toString();
                 String upAccountName = accountSpinner.getSelectedItem().toString();
                 String upNotes = notes.getText().toString();
+                int upPeriod = Integer.parseInt(periodSpinner.getSelectedItem().toString());
                 double difference = tran.getAmount()-upAmount;
                 if (errorChecking(upAmount) && checkingDate(upDate)){
                     tran.setAccount(upAccountName);
@@ -274,6 +272,7 @@ public class Edit_PAP extends AppCompatActivity {
                     tran.setDate(upDate);
                     tran.setType(upPurchaseType);
                     tran.setNote(upNotes);
+                    tran.setPERIOD(upPeriod);
                     if (papdao.modifyAutoDesc(tran) && modifyRealBalance(tran, difference)){
                             toast("Success");
                             finish();
