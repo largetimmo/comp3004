@@ -23,7 +23,7 @@ public class PAP {
         this.NOTE = note;
         this.TYPE = type;
         this.CHECKED = "0";
-        this.PERIOD = 30;
+        this.PERIOD = 1;
     }
 
     public PAP(int id, Date date, double amount, String account, String note, String type) {
@@ -34,7 +34,7 @@ public class PAP {
         this.TYPE = type;
         this.NOTE = note;
         this.CHECKED = "0";
-        this.PERIOD = 30;
+        this.PERIOD = 1;
     }
     public int getId() {
         return ID;
