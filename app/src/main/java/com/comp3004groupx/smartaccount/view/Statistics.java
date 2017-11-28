@@ -387,19 +387,24 @@ public class Statistics extends AppCompatActivity {
         PieChart piechart = new PieChart(getApplicationContext());
         ArrayList<PieEntry> pieChartEntries = new ArrayList<>();
         PieDataSet dataSet;
+
+        String label = "";
+
         //check data setup
         if (selectBalance.isChecked()) {
             ArrayList<Account> accountList = accountDataBase.getAllAccount();
             if (checkLiab.isChecked()) {
                 for (int i = 0; i < accountList.size(); i++) {
                     if (accountList.get(i).getBalance() < 0) {
-                        pieChartEntries.add(new PieEntry(((float) Math.abs(accountList.get(i).getBalance())), accountList.get(i).getName()));
+                        label = accountList.get(i).getName() + "-" + Math.abs(accountList.get(i).getBalance());
+                        pieChartEntries.add(new PieEntry(((float) Math.abs(accountList.get(i).getBalance())), label));
                     }
                 }
             } else if (checkProp.isChecked()) {
                 for (int i = 0; i < accountList.size(); i++) {
                     if (accountList.get(i).getBalance() >= 0) {
-                        pieChartEntries.add(new PieEntry(((float) Math.abs(accountList.get(i).getBalance())), accountList.get(i).getName()));
+                        label = accountList.get(i).getName() + "-" + Math.abs(accountList.get(i).getBalance());
+                        pieChartEntries.add(new PieEntry(((float) Math.abs(accountList.get(i).getBalance())), label));
                     }
                 }
             }
@@ -420,7 +425,10 @@ public class Statistics extends AppCompatActivity {
                         amount += transList.get(j).getAmount();
                     }
                 }
-                pieChartEntries.add(new PieEntry(((float) Math.abs(amount)), typeList.get(i)));
+                if (amount != 0) {
+                    label = typeList.get(i) + "-" + Math.abs(amount);
+                    pieChartEntries.add(new PieEntry(((float) Math.abs(amount)), label));
+                }
             }
         }
 
@@ -451,8 +459,11 @@ public class Statistics extends AppCompatActivity {
         data.setValueTextColor(Color.BLACK);
 
         //set label
+
+        piechart.setUsePercentValues(true);
         piechart.setEntryLabelColor(Color.BLACK);
         piechart.setEntryLabelTextSize(12f);
+        piechart.setDrawEntryLabels(true);
 
         piechart.setDrawHoleEnabled(false);
         piechart.setData(data);
