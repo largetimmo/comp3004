@@ -1,0 +1,15 @@
+Week_9
+101010914
+Runyu Jiang
+
+
+01
+Bar chart finished.
+
+Bug fix on pie chart
+        negative input value ont available
+        income and liability pie not showing
+
+02
+change the layout back to dynamic layout.
+the three hide & show chart layout is too slow and waste of space.

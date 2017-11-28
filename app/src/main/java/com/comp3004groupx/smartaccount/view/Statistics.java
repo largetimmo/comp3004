@@ -265,8 +265,11 @@ public class Statistics extends AppCompatActivity {
         });
 
         //change CHART TYPE select chart
-        chartTypeGroup.setOnCheckedChangeListener((group, checkedId) -> {
+        chartTypeGroup.setOnCheckedChangeListener((group, checkedId) ->
+
+        {
             if (checkedId == R.id.selectPieChart) {
+                selectBalance.setClickable(true);
                 checkInc.setChecked(false);
                 checkExp.setChecked(true);
                 checkLiab.setChecked(false);
@@ -274,6 +277,7 @@ public class Statistics extends AppCompatActivity {
                 chaType = "Pie";
             }
             if (checkedId == R.id.selectBarChart) {
+                selectBalance.setClickable(true);
                 checkInc.setChecked(false);
                 checkExp.setChecked(true);
                 checkLiab.setChecked(false);
@@ -282,11 +286,16 @@ public class Statistics extends AppCompatActivity {
             }
             if (checkedId == R.id.selectLineChart) {
                 chaType = "Line";
+                selectTrans.setChecked(true);
+                selectBalance.setClickable(false);
+                checkTimeLine.setChecked(true);
             }
         });
 
         //only line chart & transaction work for timeline
-        checkTimeLine.setOnCheckedChangeListener((ButtonView, isChecked) -> {
+        checkTimeLine.setOnCheckedChangeListener((ButtonView, isChecked) ->
+
+        {
             if (isChecked) {
                 selectLine.setChecked(true);
                 selectPie.setClickable(false);
@@ -295,6 +304,8 @@ public class Statistics extends AppCompatActivity {
                 selectTrans.setChecked(true);
                 selectBalance.setClickable(false);
             } else {
+                selectBar.setChecked(true);
+
                 selectPie.setClickable(true);
                 selectBar.setClickable(true);
 
@@ -304,12 +315,16 @@ public class Statistics extends AppCompatActivity {
         });
 
         //click on date text
-        startDateText.setOnClickListener((v) -> {
+        startDateText.setOnClickListener((v) ->
+
+        {
             textOnClick = "start";
             DialogFragment datepickerDialog = new DatePickerFragment();
             datepickerDialog.show(getFragmentManager(), "datePicker");
         });
-        endDateText.setOnClickListener((v) -> {
+        endDateText.setOnClickListener((v) ->
+
+        {
             textOnClick = "end";
             DialogFragment datepickerDialog = new DatePickerFragment();
             datepickerDialog.show(getFragmentManager(), "datePicker");
@@ -560,6 +575,8 @@ public class Statistics extends AppCompatActivity {
         xAxis.setGranularityEnabled(true);
 
         BarData data = new BarData(set);
+        data.setValueTextSize(12f);
+        data.setValueTextColor(Color.BLACK);
         data.setBarWidth(0.9f); // set custom bar width
         barchart.setData(data);
         barchart.setFitBars(true); // make the x-axis fit exactly all bars
@@ -583,11 +600,15 @@ public class Statistics extends AppCompatActivity {
         //make chart
         //clear chart area
         chartArea.removeAllViews();
-        //make new chart
+        //make new chart=
         LineChart linechart = new LineChart(getApplicationContext());
         linechart.setMaxVisibleValueCount(60);
+        linechart.setDragEnabled(true);
+        linechart.setScaleEnabled(true);
         linechart.setPinchZoom(false);
         linechart.setDrawGridBackground(true);
+        linechart.getDescription().setEnabled(false);
+        linechart.setTouchEnabled(true);
 
         // X axis
         XAxis xAxis = linechart.getXAxis();
@@ -609,12 +630,17 @@ public class Statistics extends AppCompatActivity {
         linechart.getAxisRight().setEnabled(false);//left axis only
 
         //add data
+
         List<Entry> expEntries = new ArrayList<>();
         List<Entry> incEntries = new ArrayList<>();
         LineDataSet expSet;
         LineDataSet incSet;
 
         ArrayList<String> xLabel = new ArrayList<>();
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
 
 
         int startYear = 0;
@@ -626,15 +652,35 @@ public class Statistics extends AppCompatActivity {
         String start = sdf.format(startDate.getTime());
         startYear = Integer.parseInt(start.substring(0, 4));
         startMonth = Integer.parseInt(start.substring(5, 7));
-        String end = sdf.format(startDate.getTime());
-        endYear = Integer.parseInt(end.substring(0, 3));
-        endMonth = Integer.parseInt(end.substring(0, 3));
+        String end = sdf.format(endDate.getTime());
+        endYear = Integer.parseInt(end.substring(0, 4));
+        endMonth = Integer.parseInt(end.substring(5, 7));
+
+        //add one for check
+        endMonth++;
+        if (endMonth == 13) {
+            endMonth = 1;
+            endYear++;
+        }
 
         int count = 0;
-        while (startYear == endYear && startMonth == endMonth) {
+        while (startYear != endYear || startMonth != endMonth) {
 
-            ArrayList<Transaction> transList = transDataBase.getAllTransThisMonth(startYear, startMonth);
+
+//TODO commented for test, revert later            ArrayList<Transaction> transList = transDataBase.getAllTransThisMonth(startYear, startMonth);
             ArrayList<String> expTypeList = purchaseTypeDataBase.getALLExpenseType();
+
+
+// TODO change back, test only              begin here
+            ArrayList<Transaction> transListUnsorted = transDataBase.getAllTransaction();
+            ArrayList<Transaction> transList = new ArrayList<>();
+            for (int i = 0; i < transListUnsorted.size(); i++) {
+                if (transListUnsorted.get(i).getDate().getYear() == startYear
+                        && transListUnsorted.get(i).getDate().getMonth() == startMonth) {
+                    transList.add(transListUnsorted.get(i));
+                }
+            }
+// TODO change back, test only              end here
 
             int expAmount = 0;
             int incAmount = 0;
@@ -653,12 +699,10 @@ public class Statistics extends AppCompatActivity {
                 }
 
             }
-
-
             expEntries.add(new Entry((float) count, (float) Math.abs(expAmount)));
             incEntries.add(new Entry((float) count, (float) Math.abs(incAmount)));
 
-            xLabel.add(startYear+"-"+startMonth);
+            xLabel.add(startYear + "-" + startMonth);
 
 
             count++;
@@ -667,34 +711,52 @@ public class Statistics extends AppCompatActivity {
                 startMonth = 1;
                 startYear++;
             }
+
+
+//            if (startYear == endYear && startMonth==(endMonth+1)%12){
+//
+//            }
         }
 
 
         //dataSet label setup
-        List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        List<ILineDataSet> dataSets = new ArrayList<>();
 
         if (checkExp.isChecked()) {
             expSet = new LineDataSet(expEntries, "Expense Transaction");
+
+            expSet.setLineWidth(2.5f);
+            expSet.setCircleRadius(4f);
+
+            expSet.setColor(colors.get((0)));
+            expSet.setCircleColor(colors.get((0)));
             dataSets.add(expSet);
 
-        } else if (checkInc.isChecked()) {
+        }
+        if (checkInc.isChecked()) {
             incSet = new LineDataSet(incEntries, "Income Transaction");
+
+            incSet.setLineWidth(2.5f);
+            incSet.setCircleRadius(4f);
+
+            incSet.setColor(colors.get((3)));
+            incSet.setCircleColor(colors.get((3)));
             dataSets.add(incSet);
 
-        }  else {
         }
 
-
         xAxis.setValueFormatter((value, axis) -> xLabel.get((int) value));
-
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
 
         LineData data = new LineData(dataSets);
+        data.setValueTextSize(12f);
+        data.setValueTextColor(Color.BLACK);
 
         linechart.setData(data);
         linechart.invalidate(); // refresh
 
         chartArea.addView(linechart);
-
 
         //update size
         chartSizeParams = linechart.getLayoutParams();
