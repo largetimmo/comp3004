@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 //                    else {
 //                        setAccountRealBalanceMinus(papTransaction2.get(i).getAccount(),papTransaction2.get(i).getAmount());
 //                    }
-                    papTransaction2.get(i).getDate().plusMonth(1);
+                    papTransaction2.get(i).getDate().plusMonth(papTransaction2.get(i).getPERIOD());
                     papDAO.removeAutoDesc(papTransaction2.get(i).getId());
                     papDAO.addAutoDesc(papTransaction2.get(i));
                     toast("Created a transaction for you.");
