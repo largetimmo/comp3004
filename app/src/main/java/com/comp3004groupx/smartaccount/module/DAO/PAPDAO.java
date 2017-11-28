@@ -100,19 +100,21 @@ public class PAPDAO extends AbstractDAO {
                     Field pap_field = pap_class.getDeclaredField(colnames[i]);
                     pap_field.setAccessible(true);
                     String field_type_str = pap_field.getType().getName();
+                    String cur_result = cursor.getString(i);
                     if (field_type_str.equals("java.lang.String")) {
-                        pap_field.set(pap, cursor.getString(i));
+                        pap_field.set(pap, cur_result);
                     }else if (field_type_str.equals("com.comp3004groupx.smartaccount.Core.Date")){
-                        String date_str = cursor.getString(i);
-                        pap.setDate(new Date(date_str));
+                        pap.setDate(new Date(cur_result));
+
                     }
                     else {
                         Class pap_field_cls = pap_field.getClass();
                         String field_method_str = "set" + TYPE_PAIR.get(field_type_str);
-                        String cursor_method_str = "get" + TYPE_PAIR.get(field_type_str);
+                        String parse_mtd_str = "parse"+TYPE_PAIR.get(field_type_str);
                         Method pap_field_mtd = pap_field_cls.getDeclaredMethod(field_method_str, Object.class, Class.forName(CLASS_PAIR.get(field_type_str)).getDeclaredField("TYPE").getClass());
-                        Method cursor_mtd = cursor_class.getDeclaredMethod(cursor_method_str, int.class);
-                        Object cursor_result = cursor_mtd.invoke(cursor, i);
+                        Class parser_cls = Class.forName(CLASS_PAIR.get(field_type_str));
+                        Method parser_mtd = parser_cls.getDeclaredMethod(parse_mtd_str,String.class);
+                        Object cursor_result = parser_mtd.invoke(parser_cls, cur_result);
                         pap_field_mtd.invoke(pap_field, pap, cursor_result);
                     }
                 } catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | ClassNotFoundException | InvocationTargetException e) {
