@@ -31,7 +31,7 @@ public class Setting extends AppCompatActivity {
 //        purchaseM.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 //        accountM.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         user = new UserDAO((getApplicationContext()));
-        welcome.setText("Hi, " + user.getUP().first);
+        welcome.setText("Hi, " + ((user.getUP().first == null)?"User":user.getUP().first));
 
         perpayment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
