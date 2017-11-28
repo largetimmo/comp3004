@@ -274,7 +274,7 @@ public class Edit_PAP extends AppCompatActivity {
                     tran.setDate(upDate);
                     tran.setType(upPurchaseType);
                     tran.setNote(upNotes);
-                    if (papdao.modifyAutoDesc(tran)&&modifyRealBalance(tran, difference)){
+                    if (papdao.modifyAutoDesc(tran) && modifyRealBalance(tran, difference)){
                             toast("Success");
                             finish();
                     }
