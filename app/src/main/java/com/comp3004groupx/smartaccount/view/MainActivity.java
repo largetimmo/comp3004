@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 //                    else {
 //                        setAccountRealBalanceMinus(papTransaction2.get(i).getAccount(),papTransaction2.get(i).getAmount());
 //                    }
-                    papTransaction2.get(i).getDate().plusDate(30);
+                    papTransaction2.get(i).getDate().plusMonth(1);
                     papDAO.removeAutoDesc(papTransaction2.get(i).getId());
                     papDAO.addAutoDesc(papTransaction2.get(i));
                     toast("Created a transaction for you.");
@@ -220,35 +220,7 @@ public class MainActivity extends AppCompatActivity {
         return  pap_dialog;
     }
 
-    private boolean setAccountRealBalanceMinus(String accountName, double amount){
-        ArrayList<Account> accountList = accountDataBase.getAllAccount();
-        Account account = null;
-        for (int i = 0; i<accountList.size(); i++){
-            if (accountName.equals(accountList.get(i).getName())){
-                account = accountList.get(i);
-                break;
-                //accounts.getAccount(accountList.get(i).getID()).setReal_balance(accounts.getAccount(accountList.get(i).getID()).getReal_balance()-amount);
-                //accounts.updateAccount(accounts.getAccount(accountList.get(i).getID()));
-            }
-        }
-        account.setReal_balance(account.getReal_balance()+amount);
-        return accountDataBase.updateAccount(account);
-    }
 
-    private boolean setAccountRealBalancePlus(String accountName, double amount){
-        ArrayList<Account> accountList = accountDataBase.getAllAccount();
-        Account account = null;
-        for (int i = 0; i<accountList.size(); i++){
-            if (accountName.equals(accountList.get(i).getName())){
-                account = accountList.get(i);
-                break;
-                //accounts.getAccount(accountList.get(i).getID()).setReal_balance(accounts.getAccount(accountList.get(i).getID()).getReal_balance()-amount);
-                //accounts.updateAccount(accounts.getAccount(accountList.get(i).getID()));
-            }
-        }
-        account.setReal_balance(account.getReal_balance()+amount);
-        return accountDataBase.updateAccount(account);
-    }
 
     private Date getCheckDate() {
 

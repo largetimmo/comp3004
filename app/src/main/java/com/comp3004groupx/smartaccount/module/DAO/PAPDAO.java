@@ -91,8 +91,9 @@ public class PAPDAO extends AbstractDAO {
         int col_count = cursor.getColumnCount();
         ArrayList<PAP> allpap = new ArrayList<>();
         String[] colnames = cursor.getColumnNames();
-        Class cursor_class = cursor.getClass();
+
         while (cursor.moveToNext()){
+            Class cursor_class = cursor.getClass();
             PAP pap = new PAP();
             Class pap_class = pap.getClass();
             for (int i = 0; i<col_count;i++)
@@ -111,7 +112,7 @@ public class PAPDAO extends AbstractDAO {
                         Class pap_field_cls = pap_field.getClass();
                         String field_method_str = "set" + TYPE_PAIR.get(field_type_str);
                         String parse_mtd_str = "parse"+TYPE_PAIR.get(field_type_str);
-                        Method pap_field_mtd = pap_field_cls.getDeclaredMethod(field_method_str, Object.class, Class.forName(CLASS_PAIR.get(field_type_str)).getDeclaredField("TYPE").getClass());
+                        Method pap_field_mtd = pap_field_cls.getDeclaredMethod(field_method_str, Object.class,(Class) Class.forName(CLASS_PAIR.get(field_type_str)).getDeclaredField("TYPE").get(Class.forName(CLASS_PAIR.get(field_type_str))));
                         Class parser_cls = Class.forName(CLASS_PAIR.get(field_type_str));
                         Method parser_mtd = parser_cls.getDeclaredMethod(parse_mtd_str,String.class);
                         Object cursor_result = parser_mtd.invoke(parser_cls, cur_result);
