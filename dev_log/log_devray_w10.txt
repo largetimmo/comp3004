@@ -1,0 +1,20 @@
+Week_7
+101010914
+Runyu Jiang
+
+
+01
+Line chart finished.
+
+debug
+    bar chart
+        chart, multi label bug----fixed.
+        application crushed on bar chart of liability--fixed.
+    line chart
+        application crushed on generate (label array out of range)  ---fixed
+        application crushed on generate (dataSets array out of range)  ---fixed
+        getAllTransThisMonth method on beginning, rebuild sort function --- fixed
+        label not showing  ----fixed
+        date range not correct, last month not showing -----fixed
+
+statistics finished!!!!!
